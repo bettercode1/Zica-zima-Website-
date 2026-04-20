@@ -58,10 +58,10 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="relative py-24 bg-surface-container-low overflow-hidden">
+    <section className="relative py-16 md:py-24 bg-surface-container-low overflow-hidden">
       {/* Background Animated Blobs */}
-      <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] animate-pulse" />
-      <div className="absolute bottom-[-15%] left-[-5%] w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] animate-pulse delay-1000" />
+      <div className="absolute top-[-5%] right-[-5%] md:top-[-10%] md:right-[-5%] w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-primary/5 rounded-full blur-[80px] md:blur-[100px] animate-pulse" />
+      <div className="absolute bottom-[-10%] left-[-5%] md:bottom-[-15%] md:left-[-5%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] bg-orange-500/5 rounded-full blur-[100px] md:blur-[120px] animate-pulse delay-1000" />
 
       {/* Floating Particles */}
       <div className="absolute inset-0 pointer-events-none">
@@ -88,19 +88,19 @@ export default function Testimonials() {
         ))}
       </div>
 
-      <div className="container mx-auto px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-8 relative z-10">
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-12 md:mb-16">
           <span className="text-orange-600 font-extrabold text-[10px] uppercase tracking-[0.2em] block mb-3">Student Voice</span>
-          <h2 className="font-headline text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
             Our Student <span className="text-primary italic">Testimonials</span>
           </h2>
           <div className="w-16 h-1 bg-orange-500 mt-6 rounded-full" />
         </div>
 
         {/* Content */}
-        <div className="flex flex-col items-center gap-12 max-w-4xl mx-auto">
-          <div className="relative min-h-[300px] md:min-h-[250px] w-full flex flex-col items-center justify-center text-center">
+        <div className="flex flex-col items-center gap-8 md:gap-12 max-w-4xl mx-auto">
+          <div className="relative min-h-[350px] sm:min-h-[300px] md:min-h-[250px] w-full flex flex-col items-center justify-center text-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -108,9 +108,9 @@ export default function Testimonials() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -30, scale: 0.95 }}
                 transition={transition}
-                className="space-y-10"
+                className="space-y-6 md:space-y-10"
               >
-                <blockquote className="text-2xl md:text-3xl font-medium text-slate-800 leading-relaxed font-headline italic">
+                <blockquote className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-slate-800 leading-relaxed font-headline italic px-4">
                   "{testimonials[currentIndex].quote}"
                 </blockquote>
 

@@ -23,13 +23,13 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="admissions" className="py-24 px-8 lg:px-24 bg-surface-container-low relative overflow-hidden">
+    <section id="admissions" className="py-16 md:py-24 px-4 sm:px-8 lg:px-24 bg-surface-container-low relative overflow-hidden">
       <div className="container mx-auto max-w-6xl relative z-10">
-        <div className="bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col lg:flex-row border border-black/5">
+        <div className="bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row border border-black/5">
           {/* Left Panel */}
-          <div className="lg:w-1/2 kinetic-gradient p-12 lg:p-20 text-white flex flex-col justify-between">
+          <div className="lg:w-1/2 kinetic-gradient p-8 sm:p-12 lg:p-20 text-white flex flex-col justify-between">
             <div>
-              <h2 className="font-headline text-4xl lg:text-5xl font-extrabold mb-6 leading-tight">
+              <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 leading-tight text-center lg:text-left">
                 Ready to <br />
                 Start Your <br />
                 Journey?
@@ -40,16 +40,44 @@ export default function ContactForm() {
               </p>
               <div className="space-y-6 font-body">
                 <div className="flex items-center gap-4">
-                  <span className="material-symbols-outlined">mail</span>
-                  <span>admissions@kineticcanvas.edu</span>
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-white">mail</span>
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-[10px] font-extrabold text-white/50 uppercase tracking-[0.2em]">Email Us</span>
+                    <a href="mailto:admissions@zicazimapcmc.com" className="text-white hover:text-orange-200 transition-colors font-medium">
+                      admissions@zicazimapcmc.com
+                    </a>
+                  </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className="material-symbols-outlined">call</span>
-                  <span>+91 98765 43210</span>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-white">call</span>
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-[10px] font-extrabold text-white/50 uppercase tracking-[0.2em]">Call Us</span>
+                    <div className="flex flex-col">
+                      <a href="tel:+9190287570421" className="text-white hover:text-orange-200 transition-colors font-medium">+91 90287 570421</a>
+                      <a href="tel:+919028757042" className="text-white hover:text-orange-200 transition-colors font-medium">+91 90287 57042</a>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className="material-symbols-outlined">location_on</span>
-                  <span>Creative District, Plot 42, Multimedia City</span>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-white">location_on</span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-extrabold text-white/50 uppercase tracking-[0.2em]">Our Campus</span>
+                    <a 
+                      href="https://maps.app.goo.gl/xbdHwj1onKYMvKUaA" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-sm md:text-base text-white hover:text-orange-200 transition-colors leading-relaxed font-medium"
+                    >
+                      Ground Floor, Navkar Saraswati Building, <br />
+                      PCMC Link Rd, Chinchwad, Pune - 411033
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -113,7 +141,7 @@ export default function ContactForm() {
           </div>
 
           {/* Right Form */}
-          <div className="lg:w-1/2 p-12 lg:p-20">
+          <div className="lg:w-1/2 p-8 sm:p-12 lg:p-20">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-1.5">
@@ -143,11 +171,11 @@ export default function ContactForm() {
                       name="phone"
                       value={form.phone}
                       onChange={(e) => {
-                        // Remove non-digits, then remove leading zeros, then limit to 10 chars
-                        const val = e.target.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 10);
+                        // Remove non-digits, then remove leading zeros, then limit to 12 chars
+                        const val = e.target.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 12);
                         setForm(prev => ({ ...prev, phone: val }));
                       }}
-                      placeholder="98765 43210"
+                      placeholder="90287 57042"
                       className="flex-1 bg-slate-50 px-5 py-5 outline-none text-slate-900 font-semibold placeholder:text-slate-300 focus:bg-white transition-all"
                       required
                     />
@@ -249,7 +277,7 @@ export default function ContactForm() {
 
               <button
                 type="submit"
-                className="w-full kinetic-gradient text-on-primary py-5.5 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-95 duration-200 mt-2"
+                className="w-full kinetic-gradient text-on-primary py-4 md:py-5 rounded-xl font-bold text-base md:text-lg shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-95 duration-200 mt-2"
               >
                 Book Your Free Session
               </button>

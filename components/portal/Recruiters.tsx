@@ -30,11 +30,11 @@ export default function Recruiters() {
   const doubledRecruiters = [...recruiters, ...recruiters];
 
   return (
-    <section className="py-32 bg-slate-50 overflow-hidden border-y border-slate-100 relative">
-      <div className="container mx-auto px-8 mb-12 relative z-10">
+    <section className="py-16 md:py-32 bg-slate-50 overflow-hidden border-y border-slate-100 relative">
+      <div className="container mx-auto px-4 sm:px-8 mb-8 md:mb-12 relative z-10">
         <div className="flex flex-col items-center text-center">
           <span className="text-orange-600 font-bold text-sm uppercase tracking-widest block mb-2">Our Network</span>
-          <h2 className="font-headline text-4xl font-extrabold text-slate-900">
+          <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-slate-900">
             Our Top <span className="text-primary">Recruiters</span>
           </h2>
           <div className="w-20 h-1 bg-orange-500 mt-4 rounded-full" />
@@ -55,9 +55,9 @@ export default function Recruiters() {
           {doubledRecruiters.map((logo, index) => (
             <div 
               key={index} 
-              className="mx-12 flex items-center justify-center transition-all duration-300 hover:scale-110"
+              className="mx-6 md:mx-12 flex items-center justify-center transition-all duration-300 hover:scale-110"
             >
-              <div className="relative h-16 w-32 md:w-40">
+              <div className="relative h-12 w-24 md:h-16 md:w-40">
                 <Image
                   src={logo}
                   alt={`Recruiter Logo ${index + 1}`}

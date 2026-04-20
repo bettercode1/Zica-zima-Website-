@@ -33,20 +33,20 @@ const features = [
 
 export default function WhyUs() {
   return (
-    <section id="about" className="py-24 px-8 lg:px-24 bg-surface-container-low/30">
+    <section id="about" className="py-16 md:py-24 px-4 sm:px-8 lg:px-24 bg-surface-container-low/30">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
+        <div className="flex flex-col lg:flex-row gap-12 md:gap-16 items-start">
           {/* Left Sticky Text */}
-          <div className="lg:w-1/3 lg:sticky top-32">
-            <h2 className="font-headline text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 text-black">
+          <div className="lg:w-1/3 lg:sticky top-32 text-center lg:text-left">
+            <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 text-black">
               Designed for the{' '}
               <span className="text-primary">Next Gen</span> of Creators.
             </h2>
-            <p className="text-slate-800 mb-8 leading-relaxed">
+            <p className="text-slate-800 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
               We don't just teach software; we build careers through a
               curriculum that mirrors the fast-paced animation industry.
             </p>
-            <div className="space-y-4">
+            <div className="space-y-4 inline-block text-left">
               <div className="flex items-center gap-3">
                 <span
                   className="material-symbols-outlined text-primary"

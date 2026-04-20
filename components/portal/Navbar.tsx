@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 export default function Navbar() {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const pathname = usePathname();
 
@@ -35,12 +36,18 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close menu when clicking a link
+  const handleNavLinkClick = (section: string) => {
+    setActiveSection(section);
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="sticky top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-xl shadow-slate-900/5 font-headline tracking-tight">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 lg:px-12 py-4">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-12 py-3 md:py-4">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <Link href="/" className="block relative h-20 w-52 scale-110">
+          <Link href="/" className="block relative h-14 w-36 md:h-20 md:w-52 md:scale-110">
             <Image 
               src="/image/ZICA ZIMA PCMC LOGO.png" 
               alt="ZICA ZIMA PCMC" 
@@ -213,6 +220,26 @@ export default function Navbar() {
           </div>
 
           <Link
+            href="/blogs"
+            onClick={() => setActiveSection('blogs')}
+            className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
+              activeSection === 'blogs' ? 'text-orange-600' : 'text-slate-500 hover:text-blue-600'
+            }`}
+          >
+            Blogs
+            {activeSection === 'blogs' && (
+              <motion.span 
+                layoutId="active-nav-underline"
+                className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-600"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            {activeSection !== 'blogs' && (
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full" />
+            )}
+          </Link>
+
+          <Link
             href="#admissions"
             onClick={() => setActiveSection('admissions')}
             className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
@@ -235,15 +262,116 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="flex items-center gap-4">
-          <button className="kinetic-gradient text-on-primary px-7 py-3 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200">
+          <button className="hidden sm:block kinetic-gradient text-on-primary px-7 py-3 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200">
             Enquiry Now
           </button>
-          <button className="md:hidden text-on-surface">
-            <span className="material-symbols-outlined">menu</span>
+          <button 
+            className="md:hidden text-slate-900 p-2"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span className="material-symbols-outlined text-3xl">
+              {isMenuOpen ? 'close' : 'menu'}
+            </span>
           </button>
         </div>
-
       </div>
+
+      {/* Mobile Menu Drawer */}
+      <motion.div
+        initial={false}
+        animate={isMenuOpen ? { x: 0, opacity: 1 } : { x: '100%', opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="fixed inset-0 top-[68px] md:top-[88px] z-40 bg-white md:hidden overflow-y-auto"
+      >
+        <div className="flex flex-col p-6 space-y-6">
+          <Link
+            href="#home"
+            onClick={() => handleNavLinkClick('home')}
+            className={`text-xl font-bold uppercase tracking-wide ${activeSection === 'home' ? 'text-orange-600' : 'text-slate-900'}`}
+          >
+            Home
+          </Link>
+          
+          <div className="space-y-4">
+            <button 
+              onClick={() => setIsAboutOpen(!isAboutOpen)}
+              className={`flex items-center justify-between w-full text-xl font-bold uppercase tracking-wide ${activeSection === 'about' ? 'text-orange-600' : 'text-slate-900'}`}
+            >
+              About
+              <span className={`material-symbols-outlined transition-transform ${isAboutOpen ? 'rotate-180' : ''}`}>
+                expand_more
+              </span>
+            </button>
+            {isAboutOpen && (
+              <div className="pl-4 space-y-3 border-l-2 border-slate-100">
+                <Link href="#about" onClick={() => handleNavLinkClick('about')} className="block text-slate-600 font-bold">About Us</Link>
+                <Link href="#team" onClick={() => handleNavLinkClick('about')} className="block text-slate-600 font-bold">Our Team</Link>
+                <Link href="#director" onClick={() => handleNavLinkClick('about')} className="block text-slate-600 font-bold">Our Director</Link>
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            <button 
+              onClick={() => setIsCoursesOpen(!isCoursesOpen)}
+              className={`flex items-center justify-between w-full text-xl font-bold uppercase tracking-wide ${activeSection === 'courses' ? 'text-orange-600' : 'text-slate-900'}`}
+            >
+              Courses
+              <span className={`material-symbols-outlined transition-transform ${isCoursesOpen ? 'rotate-180' : ''}`}>
+                expand_more
+              </span>
+            </button>
+            {isCoursesOpen && (
+              <div className="pl-4 space-y-6 border-l-2 border-slate-100 py-2">
+                <div className="space-y-2">
+                  <h3 className="text-sm font-extrabold text-blue-600 uppercase tracking-widest">ZICA</h3>
+                  <div className="grid grid-cols-1 gap-2 text-slate-600 font-medium text-sm">
+                    <div className="hover:text-blue-600 cursor-pointer">3D Animation & VFX</div>
+                    <div className="hover:text-blue-600 cursor-pointer">Graphic Design</div>
+                    <div className="hover:text-blue-600 cursor-pointer">UI/UX</div>
+                    <div className="hover:text-blue-600 cursor-pointer">Web Design</div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-sm font-extrabold text-blue-600 uppercase tracking-widest">ZIMA</h3>
+                  <div className="grid grid-cols-1 gap-2 text-slate-600 font-medium text-sm">
+                    <div className="hover:text-blue-600 cursor-pointer">Film Making</div>
+                    <div className="hover:text-blue-600 cursor-pointer">Direction</div>
+                    <div className="hover:text-blue-600 cursor-pointer">Acting</div>
+                  </div>
+                </div>
+                <Link 
+                  href="#courses" 
+                  onClick={() => handleNavLinkClick('courses')}
+                  className="block text-primary font-bold text-sm"
+                >
+                  View All Courses →
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Link
+            href="/blogs"
+            onClick={() => handleNavLinkClick('blogs')}
+            className={`text-xl font-bold uppercase tracking-wide ${activeSection === 'blogs' ? 'text-orange-600' : 'text-slate-900'}`}
+          >
+            Blogs
+          </Link>
+
+          <Link
+            href="#admissions"
+            onClick={() => handleNavLinkClick('admissions')}
+            className={`text-xl font-bold uppercase tracking-wide ${activeSection === 'admissions' ? 'text-orange-600' : 'text-slate-900'}`}
+          >
+            Contact Us
+          </Link>
+
+          <button className="kinetic-gradient text-on-primary w-full py-4 rounded-xl font-bold shadow-lg mt-4">
+            Enquiry Now
+          </button>
+        </div>
+      </motion.div>
     </nav>
   );
 }

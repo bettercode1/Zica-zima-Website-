@@ -12,7 +12,13 @@ const fontMono = Geist_Mono({
   variable: "--font-mono",
 })
 
+import { Metadata } from "next"
 import { SmoothCursor } from "@/components/ui/smooth-cursor"
+
+export const metadata: Metadata = {
+  title: 'ZICA ZIMA PCMC | Animation & Film Making Institute',
+  description: 'Premier Animation, VFX, and Film Making Institute in PCMC. Backed by Zee Learn.',
+}
 
 export default function RootLayout({
   children,

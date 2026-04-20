@@ -26,7 +26,7 @@ export default function Programs() {
   return (
     <section
       id="programs"
-      className="py-24 bg-inverse-surface text-white rounded-xl mx-4 lg:mx-8 px-8 lg:px-24"
+      className="py-16 md:py-24 bg-inverse-surface text-white rounded-2xl md:rounded-3xl mx-2 sm:mx-4 lg:mx-8 px-4 sm:px-8 lg:px-24"
     >
       <div className="container mx-auto">
         {/* Header */}

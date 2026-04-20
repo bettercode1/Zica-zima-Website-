@@ -197,21 +197,23 @@
     }
   body {
     @apply bg-background text-foreground;
-    cursor: none !important;
     }
   html {
     @apply font-sans;
     }
 
-  input,
-  textarea,
-  select {
-    cursor: text !important;
-  }
-
-  button,
-  a,
-  [role="button"] {
-    cursor: none !important;
+  @media (any-hover: hover) and (any-pointer: fine) {
+    body,
+    button,
+    a,
+    [role="button"] {
+      cursor: none !important;
+    }
+    
+    input,
+    textarea,
+    select {
+      cursor: text !important;
+    }
   }
 }

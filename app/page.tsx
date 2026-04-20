@@ -25,13 +25,13 @@ export default function Page() {
       <Footer />
 
       {/* Floating Action Button */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50">
         <button
-          className="kinetic-gradient w-16 h-16 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-transform active:scale-95"
+          className="kinetic-gradient w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-transform active:scale-95"
           title="Chat with us"
         >
           <span
-            className="material-symbols-outlined"
+            className="material-symbols-outlined text-2xl md:text-3xl"
             style={{ fontVariationSettings: "'FILL' 1" }}
           >
             chat_bubble

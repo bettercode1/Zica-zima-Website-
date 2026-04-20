@@ -52,21 +52,21 @@ export default function CourseShowcase() {
   const courses = activeTab === 'zica' ? zicaCourses : zimaCourses;
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      <div className="container mx-auto px-8 relative z-10">
+    <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-8 relative z-10">
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-12 md:mb-16">
           <span className="text-orange-600 font-extrabold text-[10px] uppercase tracking-[0.2em] block mb-3">Courses</span>
-          <h2 className="font-headline text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
-            We provide career <br />
+          <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight px-4">
+            We provide career <br className="hidden sm:block" />
             <span className="text-primary italic">oriented creative courses.</span>
           </h2>
           
           {/* Tab Switcher */}
-          <div className="flex bg-slate-100 p-1.5 rounded-full mt-10 w-fit border border-slate-200">
+          <div className="flex bg-slate-100 p-1 rounded-full mt-8 md:mt-10 w-fit border border-slate-200">
             <button
               onClick={() => setActiveTab('zica')}
-              className={`px-8 py-2.5 rounded-full font-bold text-sm transition-all duration-300 relative ${
+              className={`px-4 sm:px-8 py-2 md:py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 relative ${
                 activeTab === 'zica' ? 'text-white' : 'text-slate-500 hover:text-orange-600'
               }`}
             >
@@ -77,11 +77,11 @@ export default function CourseShowcase() {
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
-              <span className="relative z-10 uppercase tracking-widest">ZICA Courses</span>
+              <span className="relative z-10 uppercase tracking-widest">ZICA</span>
             </button>
             <button
               onClick={() => setActiveTab('zima')}
-              className={`px-8 py-2.5 rounded-full font-bold text-sm transition-all duration-300 relative ${
+              className={`px-4 sm:px-8 py-2 md:py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 relative ${
                 activeTab === 'zima' ? 'text-white' : 'text-slate-500 hover:text-[#3131b1]'
               }`}
             >
@@ -92,7 +92,7 @@ export default function CourseShowcase() {
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
-              <span className="relative z-10 uppercase tracking-widest">ZIMA Courses</span>
+              <span className="relative z-10 uppercase tracking-widest">ZIMA</span>
             </button>
           </div>
         </div>
