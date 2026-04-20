@@ -53,7 +53,7 @@ export default function Testimonials() {
   }, []);
 
   const transition = {
-    type: "spring",
+    type: "spring" as const,
     duration: 0.5,
     bounce: 0.3
   };
