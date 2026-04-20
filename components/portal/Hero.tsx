@@ -1,9 +1,16 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function Hero() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <section className="relative min-h-[600px] flex items-center overflow-hidden bg-surface-container-low px-4 sm:px-8 lg:px-24 py-16 md:py-24">
       {/* Background Animated Blobs */}
@@ -74,7 +81,7 @@ export default function Hero() {
 
       {/* Floating Particles/Dots */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
+        {mounted && [...Array(6)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}

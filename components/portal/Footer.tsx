@@ -1,18 +1,20 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
     <footer className="bg-slate-900 w-full rounded-t-[2rem] md:rounded-t-[3rem] mt-16 md:mt-20 font-body text-sm">
       <div className="flex flex-col lg:flex-row justify-between items-center px-6 md:px-12 py-12 md:py-16 gap-10 container mx-auto text-center lg:text-left">
         {/* Brand */}
-        <div className="flex flex-col items-center lg:items-start gap-4">
-          <div className="flex items-center">
-            <img 
+        <div className="flex flex-col items-center lg:items-start gap-6">
+          <Link href="/" className="block relative h-16 w-48 md:h-20 md:w-56">
+            <Image 
               src="/image/ZICA ZIMA PCMC LOGO.png" 
               alt="ZICA ZIMA PCMC Logo" 
-              className="h-14 md:h-16 w-auto object-contain brightness-0 invert"
+              fill
+              className="object-contain"
             />
-          </div>
+          </Link>
 
           <p className="text-slate-400 max-w-xs font-body">
             Defying static boundaries through world-class animation and design
@@ -37,7 +39,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="text-slate-400 font-medium text-center lg:text-right font-body">
-          © 2024 ZICA ZIMA PCMC Animation Institute.{' '}
+          © 2026 ZICA ZIMA PCMC Animation Institute.{' '}
           <br className="hidden lg:block" />
           Empowering creators worldwide.
         </div>

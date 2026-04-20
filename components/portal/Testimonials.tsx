@@ -42,9 +42,10 @@ const StarIcon = () => (
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
-  // Auto-slide every 5 seconds
   useEffect(() => {
+    setMounted(true);
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 6000);
@@ -65,7 +66,7 @@ export default function Testimonials() {
 
       {/* Floating Particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(5)].map((_, i) => (
+        {mounted && [...Array(5)].map((_, i) => (
           <motion.div
             key={i}
             animate={{ 
