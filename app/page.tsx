@@ -1,0 +1,43 @@
+import Navbar from "@/components/portal/Navbar";
+import Hero from "@/components/portal/Hero";
+import AboutSection from "@/components/portal/AboutSection";
+import WhyUs from "@/components/portal/WhyUs";
+import Programs from "@/components/portal/Programs";
+import CourseShowcase from "@/components/portal/CourseShowcase";
+import Testimonials from "@/components/portal/Testimonials";
+import Recruiters from "@/components/portal/Recruiters";
+import ContactForm from "@/components/portal/ContactForm";
+import Footer from "@/components/portal/Footer";
+
+export default function Page() {
+  return (
+    <main className="min-h-screen bg-surface-bright selection:bg-primary/20">
+      <Navbar />
+      <div id="home"><Hero /></div>
+      <div id="about"><AboutSection /><WhyUs /></div>
+      <div id="courses">
+        <Programs />
+        <CourseShowcase />
+        <Testimonials />
+        <Recruiters />
+      </div>
+      <div id="admissions"><ContactForm /></div>
+      <Footer />
+
+      {/* Floating Action Button */}
+      <div className="fixed bottom-8 right-8 z-50">
+        <button
+          className="kinetic-gradient w-16 h-16 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-transform active:scale-95"
+          title="Chat with us"
+        >
+          <span
+            className="material-symbols-outlined"
+            style={{ fontVariationSettings: "'FILL' 1" }}
+          >
+            chat_bubble
+          </span>
+        </button>
+      </div>
+    </main>
+  );
+}
