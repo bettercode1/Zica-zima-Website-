@@ -63,27 +63,6 @@ export default function Testimonials() {
       <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] animate-pulse" />
       <div className="absolute bottom-[-15%] left-[-5%] w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] animate-pulse delay-1000" />
 
-      {/* Animated Dot Grids */}
-      <motion.div 
-        animate={{ x: [0, 15, 0], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-20 left-20 grid grid-cols-5 gap-3 pointer-events-none opacity-20"
-      >
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="w-1 h-1 bg-orange-500 rounded-full" />
-        ))}
-      </motion.div>
-
-      <motion.div 
-        animate={{ x: [0, -15, 0], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
-        className="absolute bottom-20 right-20 grid grid-cols-5 gap-3 pointer-events-none opacity-20"
-      >
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="w-1 h-1 bg-orange-500 rounded-full" />
-        ))}
-      </motion.div>
-
       {/* Floating Particles */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(5)].map((_, i) => (

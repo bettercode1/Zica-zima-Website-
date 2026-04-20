@@ -31,27 +31,6 @@ export default function Recruiters() {
 
   return (
     <section className="py-32 bg-slate-50 overflow-hidden border-y border-slate-100 relative">
-      {/* Animated Dot Grids */}
-      <motion.div 
-        animate={{ y: [0, 15, 0], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-10 right-10 grid grid-cols-5 gap-3 pointer-events-none opacity-20"
-      >
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="w-1 h-1 bg-orange-500 rounded-full" />
-        ))}
-      </motion.div>
-
-      <motion.div 
-        animate={{ y: [0, -15, 0], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        className="absolute bottom-20 left-10 grid grid-cols-5 gap-3 pointer-events-none opacity-20"
-      >
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="w-1 h-1 bg-orange-500 rounded-full" />
-        ))}
-      </motion.div>
-
       <div className="container mx-auto px-8 mb-12 relative z-10">
         <div className="flex flex-col items-center text-center">
           <span className="text-orange-600 font-bold text-sm uppercase tracking-widest block mb-2">Our Network</span>
@@ -76,7 +55,7 @@ export default function Recruiters() {
           {doubledRecruiters.map((logo, index) => (
             <div 
               key={index} 
-              className="mx-12 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+              className="mx-12 flex items-center justify-center transition-all duration-300 hover:scale-110"
             >
               <div className="relative h-16 w-32 md:w-40">
                 <Image

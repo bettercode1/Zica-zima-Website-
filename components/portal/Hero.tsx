@@ -135,17 +135,6 @@ export default function Hero() {
       >
         <span className="material-symbols-outlined text-7xl">palette</span>
       </motion.div>
-
-      {/* Animated Dot Grid */}
-      <motion.div 
-        animate={{ y: [0, -20, 0], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[20%] left-[10%] grid grid-cols-5 gap-3 pointer-events-none opacity-30"
-      >
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="w-1 h-1 bg-orange-500 rounded-full" />
-        ))}
-      </motion.div>
     </section>
   );
 }

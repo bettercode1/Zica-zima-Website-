@@ -24,27 +24,6 @@ export default function ContactForm() {
 
   return (
     <section id="admissions" className="py-24 px-8 lg:px-24 bg-surface-container-low relative overflow-hidden">
-      {/* Animated Dot Grids */}
-      <motion.div 
-        animate={{ y: [0, 20, 0], opacity: [0.1, 0.3, 0.1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-10 right-10 grid grid-cols-5 gap-3 pointer-events-none opacity-20"
-      >
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
-        ))}
-      </motion.div>
-
-      <motion.div 
-        animate={{ y: [0, -20, 0], opacity: [0.1, 0.3, 0.1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-        className="absolute bottom-10 left-10 grid grid-cols-5 gap-3 pointer-events-none opacity-20"
-      >
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
-        ))}
-      </motion.div>
-
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col lg:flex-row border border-black/5">
           {/* Left Panel */}
