@@ -16,6 +16,7 @@ export interface BlogSection {
 export interface BlogData {
   slug: string;
   title: string;
+  author: string;
   category: string;
   coverImage: string;
   date: string;
@@ -34,6 +35,7 @@ export const LOCAL_BLOGS: Record<string, BlogData> = {
   "notebooklm-digital-marketing-ai": {
     slug: "notebooklm-digital-marketing-ai",
     title: "The Silent AI Revolution: How NotebookLM is Rewriting Digital Marketing",
+    author: "ZICA ZIMA Team",
     category: "AI & Marketing",
     coverImage: "/image/Blogs/NotebookLLM.png",
     date: "14 April, 2026",
@@ -296,6 +298,7 @@ export const LOCAL_BLOGS: Record<string, BlogData> = {
   "technical-seo-skills-2026": {
     slug: "technical-seo-skills-2026",
     title: "Top Technical SEO Skills for 2026",
+    author: "ZICA ZIMA Team",
     category: "SEO",
     coverImage: "/image/Blogs/SEO.png",
     date: "19 March, 2026",
