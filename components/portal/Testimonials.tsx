@@ -9,21 +9,21 @@ const testimonials = [
       "I'm thrilled to begin my UI/UX design course at Zee Institute of Creative & Media Arts, Pimpri Chinchwad! The faculty is super amazing and is doing a great job in enhancing our skills and knowledge in the field of creative arts and media arts. Excited to learn, grow, and create impactful designs!",
     name: "Mrudula Lanke",
     designation: "Student",
-    src: "https://ui-avatars.com/api/?name=Mrudula+Lanke&background=3131b1&color=fff&size=512",
+    src: "/image/Testimonials/ML.jpeg",
   },
   {
     quote:
       "I'm Starting my design course 3d's max In Zee Institute of Creative Arts & Zee Institute of Media Arts in Pimpri Chinchwad. The faculty is good, Politely, friendly supporting & their mentor & guidance is amazing. Their wisdom shapes our mindset their encouragement fuels our strength, & their belief becomes the foundation of our confidence. We rise higher not just because of dreams but shows us how to turn those dreams into reality.",
     name: "Vikrant Tambe",
     designation: "Student",
-    src: "https://ui-avatars.com/api/?name=Vikrant+Tambe&background=3131b1&color=fff&size=512",
+    src: "/image/Testimonials/VT.png",
   },
   {
     quote:
       "Knowledgeable & Supportive Faculty Many students praise experienced teachers who provide personal attention and practical skills. 🏆",
     name: "Aavez Maniyar",
     designation: "Student",
-    src: "https://ui-avatars.com/api/?name=Aavez+Maniyar&background=3131b1&color=fff&size=512",
+    src: "/image/Testimonials/A.png",
   },
   {
     quote:

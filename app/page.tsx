@@ -8,6 +8,7 @@ import Testimonials from "@/components/portal/Testimonials";
 import Recruiters from "@/components/portal/Recruiters";
 import ContactForm from "@/components/portal/ContactForm";
 import Footer from "@/components/portal/Footer";
+import BlogSection from "@/components/portal/BlogSection";
 
 export default function Page() {
   return (
@@ -21,6 +22,7 @@ export default function Page() {
         <Testimonials />
         <Recruiters />
       </div>
+      <BlogSection />
       <div id="admissions"><ContactForm /></div>
       <Footer />
 

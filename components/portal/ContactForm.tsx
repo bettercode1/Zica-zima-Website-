@@ -279,7 +279,7 @@ export default function ContactForm() {
                 type="submit"
                 className="w-full kinetic-gradient text-on-primary py-4 md:py-5 rounded-xl font-bold text-base md:text-lg shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-95 duration-200 mt-2"
               >
-                Book Your Free Session
+                Register Now
               </button>
             </form>
           </div>

@@ -12,14 +12,14 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[600px] flex items-center overflow-hidden bg-surface-container-low px-4 sm:px-8 lg:px-24 py-16 md:py-24">
+    <section className="relative min-h-[600px] flex items-center overflow-hidden bg-surface-container-low px-4 sm:px-8 lg:px-24 pt-32 pb-16 md:py-24">
       {/* Background Animated Blobs */}
       <div className="absolute top-[-5%] right-[-5%] md:top-[-10%] md:right-[-10%] w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-primary/10 rounded-full blur-[80px] md:blur-[120px] animate-pulse" />
       <div className="absolute bottom-[-10%] left-[-5%] md:bottom-[-20%] md:left-[-10%] w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-orange-500/10 rounded-full blur-[100px] md:blur-[150px] animate-pulse delay-1000" />
       
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
         {/* Left Content */}
-        <div className="space-y-6 md:space-y-8 text-center lg:text-left order-2 lg:order-1">
+        <div className="space-y-6 md:space-y-8 text-center lg:text-left order-1">
           <div className="space-y-4">
             <div className="flex flex-col items-center lg:items-start gap-1 ml-1">
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-[0.2em]">Backed by</span>
@@ -64,7 +64,7 @@ export default function Hero() {
         </div>
 
         {/* Right Image/Video */}
-        <div className="relative order-1 lg:order-2 w-full max-w-2xl mx-auto lg:max-w-none">
+        <div className="relative order-2 w-full max-w-2xl mx-auto lg:max-w-none">
           <div className="absolute -inset-4 bg-primary/20 rounded-xl blur-3xl transition-all duration-500" />
           <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-[4/3] shadow-2xl border-4 border-white/10">
             <video
@@ -73,7 +73,7 @@ export default function Hero() {
               muted
               loop
               playsInline
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover scale-[1.3] lg:scale-100"
             />
           </div>
         </div>

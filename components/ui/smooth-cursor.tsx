@@ -89,9 +89,9 @@ const DefaultCursorSVG: FC = () => {
 export function SmoothCursor({
   cursor = <DefaultCursorSVG />,
   springConfig = {
-    damping: 45,
-    stiffness: 400,
-    mass: 1,
+    damping: 30,
+    stiffness: 100,
+    mass: 0.8,
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
@@ -167,11 +167,10 @@ export function SmoothCursor({
 
       const currentPos = { x: e.clientX, y: e.clientY }
       
-      // Update global CSS variables for high-performance tracking (GlowCard, etc.)
-      document.documentElement.style.setProperty('--mouse-x', currentPos.x.toFixed(2))
-      document.documentElement.style.setProperty('--mouse-y', currentPos.y.toFixed(2))
-      document.documentElement.style.setProperty('--mouse-xp', (currentPos.x / window.innerWidth).toFixed(2))
-      document.documentElement.style.setProperty('--mouse-yp', (currentPos.y / window.innerHeight).toFixed(2))
+      // We'll skip setting global CSS variables on documentElement here 
+      // because updating them on every mouse move causes massive style 
+      // recalculation and scrolling lag.
+      // document.documentElement.style.setProperty('--mouse-x', currentPos.x.toFixed(2))
 
       updateVelocity(currentPos)
 
@@ -244,8 +243,10 @@ export function SmoothCursor({
     <motion.div
       style={{
         position: "fixed",
-        left: cursorX,
-        top: cursorY,
+        left: 0,
+        top: 0,
+        x: cursorX,
+        y: cursorY,
         translateX: "-50%",
         translateY: "-50%",
         rotate: rotation,
