@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google"
+import { Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -33,7 +33,8 @@ export default function RootLayout({
       className={cn("antialiased scroll-smooth", fontMono.variable, inter.variable, plusJakarta.variable)}
     >
       <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=optional" />
       </head>
       <body className="cursor-none" suppressHydrationWarning>
         <ThemeProvider>

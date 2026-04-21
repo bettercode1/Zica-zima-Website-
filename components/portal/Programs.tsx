@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const programs = [
   {
     title: '3D Animation',
@@ -48,11 +50,12 @@ export default function Programs() {
               key={program.title}
               className="group relative bg-slate-800/50 rounded-xl overflow-hidden transition-all duration-300"
             >
-              <div className="aspect-[4/3] overflow-hidden bg-slate-900/50 flex items-center justify-center">
-                <img
+              <div className="relative aspect-[4/3] overflow-hidden bg-slate-900/50 flex items-center justify-center">
+                <Image
                   src={program.img}
                   alt={program.alt}
-                  className="w-full h-full object-contain transition-transform duration-500"
+                  fill
+                  className="object-contain transition-transform duration-500"
                 />
               </div>
               <div className="p-8">

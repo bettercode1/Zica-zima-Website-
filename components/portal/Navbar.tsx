@@ -4,14 +4,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import CardNav from '@/components/ui/CardNav';
 
 export default function Navbar() {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const pathname = usePathname();
 
   const navItems = [
@@ -70,9 +70,9 @@ export default function Navbar() {
   }, []);
 
   // Close menu when clicking a link
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleNavLinkClick = (section: string) => {
     setActiveSection(section);
-    setIsMenuOpen(false);
   };
 
   return (
@@ -96,7 +96,7 @@ export default function Navbar() {
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-10">
             <Link
-              href="#home"
+              href="/"
               onClick={() => setActiveSection('home')}
               className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
                 activeSection === 'home' ? 'text-orange-600' : 'text-slate-500 hover:text-blue-600'
@@ -297,9 +297,11 @@ export default function Navbar() {
 
           {/* CTA */}
           <div className="flex items-center gap-4">
-            <button className="hidden sm:block kinetic-gradient text-on-primary px-7 py-3 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200">
-              Enquiry Now
-            </button>
+            <Link href="#admissions">
+              <button className="hidden sm:block kinetic-gradient text-on-primary px-7 py-3 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200">
+                Enquiry Now
+              </button>
+            </Link>
           </div>
         </div>
       </nav>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 const testimonials = [
   {
@@ -44,8 +45,17 @@ export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
 
+  const [particles, setParticles] = useState<{top:number, left:number, duration:number, delay:number}[]>([]);
+
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
+    setParticles([...Array(5)].map((_, i) => ({
+      top: Math.random() * 80 + 10,
+      left: Math.random() * 80 + 10,
+      duration: 8 + i,
+      delay: i * 0.7
+    })));
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 6000);
@@ -66,7 +76,7 @@ export default function Testimonials() {
 
       {/* Floating Particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {mounted && [...Array(5)].map((_, i) => (
+        {mounted && particles.map((p, i) => (
           <motion.div
             key={i}
             animate={{ 
@@ -75,15 +85,15 @@ export default function Testimonials() {
               scale: [1, 1.2, 1]
             }}
             transition={{ 
-              duration: 8 + i, 
+              duration: p.duration, 
               repeat: Infinity, 
               ease: "easeInOut",
-              delay: i * 0.7 
+              delay: p.delay 
             }}
             className="absolute w-1.5 h-1.5 bg-primary/20 rounded-full"
             style={{ 
-              top: `${Math.random() * 80 + 10}%`, 
-              left: `${Math.random() * 80 + 10}%` 
+              top: `${p.top}%`, 
+              left: `${p.left}%` 
             }}
           />
         ))}
@@ -112,18 +122,21 @@ export default function Testimonials() {
                 className="space-y-6 md:space-y-10"
               >
                 <blockquote className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-slate-800 leading-relaxed font-headline italic px-4">
-                  "{testimonials[currentIndex].quote}"
+                  &quot;{testimonials[currentIndex].quote}&quot;
                 </blockquote>
 
-                <div className="flex flex-col items-center gap-4">
-                  <div className="relative">
-                    <div className="absolute -inset-1 bg-gradient-to-tr from-primary to-orange-500 rounded-full blur-sm opacity-30" />
-                    <img
-                      src={testimonials[currentIndex].src}
-                      alt={testimonials[currentIndex].name}
-                      className="relative w-20 h-20 rounded-full border-2 border-white shadow-lg object-cover"
-                    />
-                  </div>
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="relative">
+                      <div className="absolute -inset-1 bg-gradient-to-tr from-primary to-orange-500 rounded-full blur-sm opacity-30" />
+                      <div className="relative w-20 h-20 overflow-hidden rounded-full border-2 border-white shadow-lg">
+                        <Image
+                          src={testimonials[currentIndex].src}
+                          alt={testimonials[currentIndex].name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
                   
                   <div className="flex flex-col items-center">
                     <p className="text-xl font-bold text-slate-900">{testimonials[currentIndex].name}</p>

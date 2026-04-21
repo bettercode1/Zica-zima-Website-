@@ -7,8 +7,19 @@ import { motion } from 'framer-motion';
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
 
+  const [particles, setParticles] = useState<{x:number, y:number, top:number, left:number, duration:number, delay:number}[]>([]);
+
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
+    setParticles([...Array(6)].map((_, i) => ({
+      x: Math.random() * 100 - 50,
+      y: Math.random() * 100 - 50,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      duration: 10 + i * 2,
+      delay: i * 0.5
+    })));
   }, []);
 
   return (
@@ -49,7 +60,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-base md:text-lg text-slate-800 leading-relaxed max-w-xl font-medium mx-auto lg:mx-0">
-            Master the art of visual storytelling at India's premier animation
+            Master the art of visual storytelling at India&apos;s premier animation
             institute. From 2D classics to 3D blockbusters, we give your
             creativity the kinetic energy it needs to defy boundaries.
           </p>
@@ -81,26 +92,26 @@ export default function Hero() {
 
       {/* Floating Particles/Dots */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {mounted && [...Array(6)].map((_, i) => (
+        {mounted && particles.map((p, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ 
               opacity: [0.1, 0.3, 0.1], 
               scale: [1, 1.5, 1],
-              x: [0, Math.random() * 100 - 50, 0],
-              y: [0, Math.random() * 100 - 50, 0]
+              x: [0, p.x, 0],
+              y: [0, p.y, 0]
             }}
             transition={{ 
-              duration: 10 + i * 2, 
+              duration: p.duration, 
               repeat: Infinity, 
               ease: "easeInOut",
-              delay: i * 0.5 
+              delay: p.delay 
             }}
             className="absolute w-2 h-2 bg-primary/20 rounded-full"
             style={{ 
-              top: `${Math.random() * 100}%`, 
-              left: `${Math.random() * 100}%` 
+              top: `${p.top}%`, 
+              left: `${p.left}%` 
             }}
           />
         ))}

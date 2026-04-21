@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { GoArrowUpRight } from 'react-icons/go';
+import Image from 'next/image';
 import './CardNav.css';
 
 interface NavLink {
@@ -177,7 +178,14 @@ const CardNav = ({
           </div>
 
           <div className="logo-container">
-            <img src={logo} alt={logoAlt} className="logo" />
+            <div className="relative w-32 h-10">
+              <Image 
+                src={logo} 
+                alt={logoAlt} 
+                fill 
+                className="object-contain" 
+              />
+            </div>
           </div>
 
           <button

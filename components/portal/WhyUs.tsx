@@ -43,7 +43,7 @@ export default function WhyUs() {
               <span className="text-primary">Next Gen</span> of Creators.
             </h2>
             <p className="text-slate-800 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              We don't just teach software; we build careers through a
+              We don&apos;t just teach software; we build careers through a
               curriculum that mirrors the fast-paced animation industry.
             </p>
             <div className="space-y-4 inline-block text-left">
