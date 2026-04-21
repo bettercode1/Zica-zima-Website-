@@ -128,7 +128,7 @@ export default function Testimonials() {
                   <div className="flex flex-col items-center gap-4">
                     <div className="relative">
                       <div className="absolute -inset-1 bg-gradient-to-tr from-primary to-orange-500 rounded-full blur-sm opacity-30" />
-                      <div className="relative w-20 h-20 overflow-hidden rounded-full border-2 border-white shadow-lg">
+                      <div className="relative w-28 h-28 overflow-hidden rounded-full border-2 border-white shadow-lg">
                         <Image
                           src={testimonials[currentIndex].src}
                           alt={testimonials[currentIndex].name}

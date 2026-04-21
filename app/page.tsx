@@ -1,14 +1,18 @@
+'use client';
+
+import dynamic from 'next/dynamic';
 import Navbar from "@/components/portal/Navbar";
 import Hero from "@/components/portal/Hero";
 import AboutSection from "@/components/portal/AboutSection";
 import WhyUs from "@/components/portal/WhyUs";
-import Programs from "@/components/portal/Programs";
-import CourseShowcase from "@/components/portal/CourseShowcase";
-import Testimonials from "@/components/portal/Testimonials";
-import Recruiters from "@/components/portal/Recruiters";
-import ContactForm from "@/components/portal/ContactForm";
-import Footer from "@/components/portal/Footer";
-import BlogSection from "@/components/portal/BlogSection";
+
+const Programs = dynamic(() => import("@/components/portal/Programs"), { ssr: false });
+const CourseShowcase = dynamic(() => import("@/components/portal/CourseShowcase"), { ssr: false });
+const Testimonials = dynamic(() => import("@/components/portal/Testimonials"), { ssr: false });
+const Recruiters = dynamic(() => import("@/components/portal/Recruiters"), { ssr: false });
+const ContactForm = dynamic(() => import("@/components/portal/ContactForm"), { ssr: false });
+const Footer = dynamic(() => import("@/components/portal/Footer"), { ssr: false });
+const BlogSection = dynamic(() => import("@/components/portal/BlogSection"), { ssr: false });
 
 export default function Page() {
   return (

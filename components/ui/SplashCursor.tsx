@@ -74,16 +74,16 @@ function SplashCursor({
       color: { r: 0, g: 0, b: 0 }
     }];
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
     const config = {
-      SIM_RESOLUTION: isMobile ? 64 : SIM_RESOLUTION,
-      DYE_RESOLUTION: isMobile ? 256 : DYE_RESOLUTION,
+      SIM_RESOLUTION: isMobile ? 32 : SIM_RESOLUTION, // Reduced further for mobile
+      DYE_RESOLUTION: isMobile ? 128 : DYE_RESOLUTION, // Reduced further for mobile
       CAPTURE_RESOLUTION,
       DENSITY_DISSIPATION,
       VELOCITY_DISSIPATION,
       PRESSURE,
-      PRESSURE_ITERATIONS: isMobile ? 8 : PRESSURE_ITERATIONS,
+      PRESSURE_ITERATIONS: isMobile ? 4 : PRESSURE_ITERATIONS, // Reduced further for mobile
       CURL,
       SPLAT_RADIUS,
       SPLAT_FORCE,

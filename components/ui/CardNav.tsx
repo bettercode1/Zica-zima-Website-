@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { GoArrowUpRight } from 'react-icons/go';
+import { IconArrowUpRight } from '@tabler/icons-react';
 import Image from 'next/image';
 import './CardNav.css';
 
@@ -209,7 +209,7 @@ const CardNav = ({
               <div className="nav-card-links">
                 {item.links?.map((lnk, i) => (
                   <a key={`${lnk.label}-${i}`} className="nav-card-link" href={lnk.href} aria-label={lnk.ariaLabel}>
-                    <GoArrowUpRight className="nav-card-link-icon" aria-hidden="true" />
+                    <IconArrowUpRight className="nav-card-link-icon" aria-hidden="true" />
                     {lnk.label}
                   </a>
                 ))}
