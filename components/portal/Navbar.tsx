@@ -30,9 +30,9 @@ export default function Navbar() {
       bgColor: "#eff6ff",
       textColor: "#1d4ed8",
       links: [
-        { label: "ZICA Courses", href: "#courses", ariaLabel: "ZICA Courses" },
-        { label: "ZIMA Courses", href: "#courses", ariaLabel: "ZIMA Courses" },
-        { label: "All Modules", href: "#courses", ariaLabel: "All Modules" }
+        { label: "ZICA Courses", href: "/courses?brand=zica", ariaLabel: "ZICA Courses" },
+        { label: "ZIMA Courses", href: "/courses?brand=zima", ariaLabel: "ZIMA Courses" },
+        { label: "All Modules", href: "/courses", ariaLabel: "All Modules" }
       ]
     },
     {
@@ -143,18 +143,65 @@ export default function Navbar() {
                 )}
               </button>
 
-              {/* Dropdown Menu */}
-              <div className={`absolute top-full left-0 w-56 bg-white rounded-xl shadow-2xl border border-slate-100 p-3 transition-all duration-300 origin-top-left ${isAboutOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
-                <div className="space-y-1">
-                  <Link href="#about" className="block p-3 rounded-lg hover:bg-blue-50 group/item transition-colors">
-                    <div className="font-bold text-slate-900 group-hover/item:text-blue-600">About Us</div>
-                  </Link>
-                  <Link href="#team" className="block p-3 rounded-lg hover:bg-blue-50 group/item transition-colors">
-                    <div className="font-bold text-slate-900 group-hover/item:text-blue-600">Our Team</div>
-                  </Link>
-                  <Link href="#director" className="block p-3 rounded-lg hover:bg-blue-50 group/item transition-colors">
-                    <div className="font-bold text-slate-900 group-hover/item:text-blue-600">Our Director</div>
-                  </Link>
+              {/* About Mega Dropdown Menu */}
+              <div className={`absolute top-full left-0 w-[600px] bg-white/95 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-8 transition-all duration-500 origin-top-left overflow-hidden ${isAboutOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}>
+                <div className="relative z-10 grid grid-cols-2 gap-8">
+                  {/* Left Column: Navigation */}
+                  <div className="space-y-6">
+                    <div className="border-b border-slate-100 pb-3">
+                      <h3 className="text-slate-900 font-black text-sm uppercase tracking-[0.2em]">Our Identity</h3>
+                    </div>
+                    <div className="space-y-1">
+                      {[
+                        { label: "About Us", desc: "Our journey and mission in creative education.", href: "#about", icon: "info" },
+                        { label: "Our Team", desc: "The creative minds behind our success.", href: "#team", icon: "groups" },
+                        { label: "Our Director", desc: "Visionary leadership guiding our future.", href: "#director", icon: "person" }
+                      ].map((item) => (
+                        <Link key={item.label} href={item.href} className="group flex items-start gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300">
+                          <div className="w-10 h-10 rounded-xl bg-white shadow-md flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors">
+                            <span className="material-symbols-outlined text-xl">{item.icon}</span>
+                          </div>
+                          <div>
+                            <div className="font-bold text-slate-900 group-hover:text-primary transition-colors">{item.label}</div>
+                            <div className="text-[11px] text-slate-500 font-medium leading-tight">{item.desc}</div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right Column: Why Choose Us / Quick Info */}
+                  <div className="bg-slate-50/50 rounded-3xl p-6 border border-slate-100 flex flex-col justify-between">
+                    <div>
+                      <h4 className="text-slate-900 font-black text-sm mb-4 uppercase tracking-widest">Why Choose ZICA ZIMA?</h4>
+                      <ul className="space-y-4">
+                        <li className="flex items-start gap-3">
+                          <span className="material-symbols-outlined text-green-500 text-sm mt-0.5">check_circle</span>
+                          <span className="text-[11px] text-slate-600 font-bold">Industry Standard Labs & Tech</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="material-symbols-outlined text-green-500 text-sm mt-0.5">check_circle</span>
+                          <span className="text-[11px] text-slate-600 font-bold">100% Placement Assistance</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="material-symbols-outlined text-green-500 text-sm mt-0.5">check_circle</span>
+                          <span className="text-[11px] text-slate-600 font-bold">Expert Faculty from the Industry</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="mt-6 pt-6 border-t border-slate-200/50">
+                      <div className="flex items-center gap-3">
+                        <div className="flex -space-x-2">
+                          {[1, 2, 3].map((i) => (
+                            <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden">
+                              <div className="w-full h-full bg-gradient-to-br from-slate-300 to-slate-400" />
+                            </div>
+                          ))}
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Join 10k+ Students</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -189,65 +236,80 @@ export default function Navbar() {
 
 
               {/* Mega Dropdown Menu */}
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-8 transition-all duration-300 origin-top ${isCoursesOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
-                <div className="grid grid-cols-3 gap-8">
-                  {/* ZICA Column */}
-                  <div className="space-y-4">
-                    <h3 className="text-blue-600 font-extrabold text-sm uppercase tracking-widest border-b pb-2">ZICA</h3>
-                    <ul className="space-y-2 text-[13px] text-slate-600 font-medium">
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">B.Voc Degree in 3D Animation & VFX</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">2D Animation</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Visual Effects (VFX)</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Graphic Design</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">UI/UX</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Web Design</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Digital Marketing</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Game Art & Design</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Architectural Design & Animation</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Visual Promotion & AD Design</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Photography</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Blender</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Houdini</li>
-                    </ul>
+              <div className={`absolute top-full left-1/2 -translate-x-1/2 w-[95vw] max-w-[1100px] bg-white/95 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-10 transition-all duration-500 origin-top overflow-hidden ${isCoursesOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}>
+                {/* Decorative Background Elements */}
+                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-100/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-100/30 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+                <div className="relative z-10 grid grid-cols-12 gap-10">
+                  {/* ZICA Column (5/12) */}
+                  <div className="col-span-5 space-y-6">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-12 h-12 rounded-xl bg-white shadow-md p-2 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
+                          <Image src="/image/zica_logo.png" alt="ZICA" fill className="object-contain p-1" />
+                        </div>
+                        <div>
+                          <h3 className="text-slate-900 font-black text-lg tracking-tight">ZICA</h3>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Digital Arts & Animation</p>
+                        </div>
+                      </div>
+                      <Link href="/courses?brand=zica" className="text-[11px] font-black text-orange-600 hover:underline uppercase tracking-widest">Explore All</Link>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-1">
+                      {[
+                        "B.Voc Degree in 3D VFX", "2D Animation", "Visual Effects (VFX)", "Graphic Design", 
+                        "UI/UX Design", "Web Design", "Digital Marketing", "Game Art & Design",
+                        "Architectural Design", "Photography", "Blender", "Houdini"
+                      ].map((item) => (
+                        <Link key={item} href={`/courses?brand=zica&search=${item.split(' ')[0]}`} className="group flex items-center gap-2 py-2 px-3 rounded-xl hover:bg-orange-50 transition-all duration-300">
+                          <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-orange-600 transition-colors" />
+                          <span className="text-[13px] text-slate-600 font-bold group-hover:text-slate-900 transition-colors">{item}</span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
 
-                  {/* ZIMA Column */}
-                  <div className="space-y-4">
-                    <h3 className="text-blue-600 font-extrabold text-sm uppercase tracking-widest border-b pb-2">ZIMA</h3>
-                    <ul className="space-y-2 text-[13px] text-slate-600 font-medium">
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Film Making</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Screen Writing</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Direction</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Cinematography</li>
-                      <li className="hover:text-orange-600 cursor-pointer transition-colors">Vertical Cinematography</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Film & TV Editing</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Film & TV Production</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Sound Recording</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Sound Engineering</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Audio Production</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Music Production</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Film Acting</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Fashion Modelling Personal Grooming</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">Dancing</li>
-                    </ul>
+                  {/* ZIMA Column (5/12) */}
+                  <div className="col-span-5 space-y-6">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-12 h-12 rounded-xl bg-white shadow-md p-2 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
+                          <Image src="/image/zima_logo.png" alt="ZIMA" fill className="object-contain p-1" />
+                        </div>
+                        <div>
+                          <h3 className="text-slate-900 font-black text-lg tracking-tight">ZIMA</h3>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Film & Media Arts</p>
+                        </div>
+                      </div>
+                      <Link href="/courses?brand=zima" className="text-[11px] font-black text-[#3131b1] hover:underline uppercase tracking-widest">Explore All</Link>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-1">
+                      {[
+                        "Film Making", "Screen Writing", "Direction", "Cinematography", 
+                        "Film & TV Editing", "Sound Recording", "Music Production", "Film Acting",
+                        "Fashion Modelling", "Dancing", "Audio Production", "Sound Engineering"
+                      ].map((item) => (
+                        <Link key={item} href={`/courses?brand=zima&search=${item.split(' ')[0]}`} className="group flex items-center gap-2 py-2 px-3 rounded-xl hover:bg-blue-50 transition-all duration-300">
+                          <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-[#3131b1] transition-colors" />
+                          <span className="text-[13px] text-slate-600 font-bold group-hover:text-slate-900 transition-colors">{item}</span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
 
-                  {/* Modular Column */}
-                  <div className="space-y-4">
-                    <h3 className="text-blue-600 font-extrabold text-sm uppercase tracking-widest border-b pb-2">Modular Courses</h3>
-                    <ul className="space-y-2 text-[13px] text-slate-600 font-bold uppercase tracking-wide">
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">ILLUSTRATOR</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">PHOTOSHOP</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">AFTER EFFECTS</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">PREMIER PRO</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">COREL DRAW</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">ZBRUSH</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">NOTION</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">FIGMA</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">MAYA</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">UNREAL ENGINE</li>
-                      <li className="hover:text-blue-600 cursor-pointer transition-colors">BLENDER</li>
-                    </ul>
+                  {/* Call to Action Column (2/12) */}
+                  <div className="col-span-2 bg-slate-50/50 rounded-[2rem] p-6 flex flex-col items-center justify-center text-center border border-slate-100">
+                    <div className="w-16 h-16 rounded-full bg-white shadow-xl flex items-center justify-center mb-4">
+                      <span className="material-symbols-outlined text-primary text-3xl animate-bounce">school</span>
+                    </div>
+                    <h4 className="text-slate-900 font-black text-sm mb-2 leading-tight">Ready to start your career?</h4>
+                    <p className="text-[11px] text-slate-500 font-medium mb-6">Join 10,000+ successful alumni worldwide.</p>
+                    <Link href="#admissions" className="w-full py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-colors shadow-lg shadow-slate-900/10">
+                      Apply Now
+                    </Link>
                   </div>
                 </div>
               </div>

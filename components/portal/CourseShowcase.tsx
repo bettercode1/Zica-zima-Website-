@@ -4,52 +4,26 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 
-const zicaCourses = [
-  {
-    title: "3D Animation & VFX",
-    description: "Master the art of 3D modeling, rigging, and high-end visual effects for films and games.",
-    icon: "animation",
-    color: "from-blue-400 to-indigo-600"
-  },
-  {
-    title: "Graphic Design",
-    description: "Learn typography, branding, and layout design using industry-standard professional tools.",
-    icon: "palette",
-    color: "from-green-400 to-emerald-600"
-  },
-  {
-    title: "UI/UX Design",
-    description: "Craft seamless digital experiences and intuitive interfaces for modern web and mobile apps.",
-    icon: "devices",
-    color: "from-orange-400 to-rose-500"
-  }
-];
+import { zicaCourses, zimaCourses } from '@/lib/courses';
 
-const zimaCourses = [
-  {
-    title: "Film Making",
-    description: "A comprehensive journey through scriptwriting, cinematography, and post-production.",
-    icon: "movie",
-    color: "from-purple-400 to-violet-600"
-  },
-  {
-    title: "Acting",
-    description: "Develop your craft through method acting, voice modulation, and stage presence workshops.",
-    icon: "theater_comedy",
-    color: "from-pink-400 to-rose-600"
-  },
-  {
-    title: "Direction",
-    description: "Lead the creative vision of a production from script to screen with professional techniques.",
-    icon: "video_camera_front",
-    color: "from-amber-400 to-orange-600"
-  }
-];
+const zicaShowcase = zicaCourses.slice(0, 3).map((c, i) => ({
+  title: c.name,
+  description: c.description,
+  icon: ["animation", "palette", "devices"][i],
+  color: ["from-blue-400 to-indigo-600", "from-green-400 to-emerald-600", "from-orange-400 to-rose-500"][i]
+}));
+
+const zimaShowcase = zimaCourses.slice(0, 3).map((c, i) => ({
+  title: c.name,
+  description: c.description,
+  icon: ["movie", "theater_comedy", "video_camera_front"][i],
+  color: ["from-purple-400 to-violet-600", "from-pink-400 to-rose-600", "from-amber-400 to-orange-600"][i]
+}));
 
 export default function CourseShowcase() {
   const [activeTab, setActiveTab] = useState<'zica' | 'zima'>('zica');
 
-  const courses = activeTab === 'zica' ? zicaCourses : zimaCourses;
+  const courses = activeTab === 'zica' ? zicaShowcase : zimaShowcase;
 
   return (
     <section className="py-16 md:py-24 bg-white relative overflow-hidden">
@@ -124,12 +98,7 @@ export default function CourseShowcase() {
                   {course.description}
                 </p>
 
-                <div className="flex items-center justify-between w-full mt-auto">
-                  <span className="text-slate-900 font-bold text-sm">Read more</span>
-                  <button className={`w-11 h-11 rounded-full bg-gradient-to-br ${course.color} flex items-center justify-center text-white shadow-md group-hover:translate-x-1 transition-all`}>
-                    <span className="material-symbols-outlined text-xl">arrow_forward</span>
-                  </button>
-                </div>
+
 
                 {/* Decorative Wave at bottom */}
                 <div className="absolute bottom-0 left-0 w-full opacity-5 pointer-events-none translate-y-1/2">
@@ -145,7 +114,7 @@ export default function CourseShowcase() {
         {/* Footer Link */}
         <div className="flex flex-col items-center">
           <Link 
-            href={activeTab === 'zica' ? "/zica-courses" : "/zima-courses"}
+            href={`/courses?brand=${activeTab}`}
             className={`group flex items-center gap-3 text-slate-900 font-extrabold text-lg transition-colors ${
               activeTab === 'zica' ? 'hover:text-orange-600' : 'hover:text-[#3131b1]'
             }`}
