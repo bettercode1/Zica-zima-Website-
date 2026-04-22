@@ -306,7 +306,7 @@ export default function Navbar() {
                       <span className="material-symbols-outlined text-primary text-3xl animate-bounce">school</span>
                     </div>
                     <h4 className="text-slate-900 font-black text-sm mb-2 leading-tight">Ready to start your career?</h4>
-                    <p className="text-[11px] text-slate-500 font-medium mb-6">Join 10,000+ successful alumni worldwide.</p>
+                    <p className="text-[11px] text-slate-500 font-medium mb-6">Join 1,000+ successful alumni worldwide.</p>
                     <Link href="#admissions" className="w-full py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-colors shadow-lg shadow-slate-900/10">
                       Apply Now
                     </Link>

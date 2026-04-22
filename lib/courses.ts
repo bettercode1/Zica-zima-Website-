@@ -69,7 +69,7 @@ export const zicaCourses: Course[] = [
     duration: "24 Months",
     description: "Covers the art and science of enhancing interior spaces to achieve healthier, more aesthetically pleasing, and functional environments.",
     category: 'zica',
-    icon: "interior_designer",
+    icon: "weekend",
     color: "from-cyan-400 to-blue-500"
   },
   {
