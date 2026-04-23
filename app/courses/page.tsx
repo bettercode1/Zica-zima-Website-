@@ -1,229 +1,235 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import React, { useState, useEffect, Suspense } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams } from 'next/navigation';
 import Navbar from "@/components/portal/Navbar";
-import Footer from "@/components/portal/Footer";
 import { zicaCourses, zimaCourses, Course } from '@/lib/courses';
+
+const Footer = dynamic(() => import("@/components/portal/Footer"), { ssr: false });
 
 function CoursesContent() {
   const searchParams = useSearchParams();
-  const brandParam = searchParams.get('brand');
-  const [activeTab, setActiveTab] = useState<'zica' | 'zima'>('zica');
+  const brandFilter = searchParams.get('brand');
+  
+  const [activeBrand, setActiveBrand] = useState<'all' | 'zica' | 'zima'>(
+    brandFilter === 'zica' ? 'zica' : brandFilter === 'zima' ? 'zima' : 'all'
+  );
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 16;
 
   useEffect(() => {
-    if (brandParam === 'zima') {
-      setActiveTab('zima');
-    } else {
-      setActiveTab('zica');
-    }
-  }, [brandParam]);
+    if (brandFilter === 'zica') setActiveBrand('zica');
+    else if (brandFilter === 'zima') setActiveBrand('zima');
+    else setActiveBrand('all');
+    setCurrentPage(1); // Reset page on brand change
+  }, [brandFilter]);
 
-  const courses = activeTab === 'zica' ? zicaCourses : zimaCourses;
-  const [searchQuery, setSearchQuery] = useState('');
+  // Reset page when search or brand changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, activeBrand]);
 
-  const filteredCourses = courses.filter(course => 
-    course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    course.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredCourses = [...zicaCourses, ...zimaCourses].filter(course => {
+    const matchesBrand = activeBrand === 'all' || course.category === activeBrand;
+    const matchesSearch = course.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                         course.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesBrand && matchesSearch;
+  });
+
+  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+  const paginatedCourses = filteredCourses.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   return (
-    <main className="min-h-screen bg-slate-50 selection:bg-primary/20">
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 overflow-hidden bg-white">
-        {/* Artistic Fluid Background */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="/abstract_bg.png" 
-            alt="Background" 
-            className="w-full h-full object-cover opacity-60 scale-110 blur-[2px]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white" />
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          {/* Centered Back to Home */}
-          <div className="flex justify-center mb-4">
-            <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-primary transition-colors text-xs font-bold uppercase tracking-[0.2em] group">
-              <span className="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
-              Back to Home
-            </Link>
-          </div>
-
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`text-indigo-600 font-black text-[10px] uppercase tracking-[0.3em] block mb-6`}
-          >
-            Our Curriculum
-          </motion.span>
-
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="font-headline text-5xl md:text-7xl font-black text-slate-900 mb-10 tracking-tight leading-[1.1]"
-          >
-            Explore <span className="text-primary italic font-serif">Your Future</span> Career
-          </motion.h1>
+    <div className="pt-24 md:pt-32 pb-20 px-4 sm:px-8 lg:px-12 relative z-10">
+      <div className="max-w-[1800px] mx-auto">
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16 space-y-6"
+        >
+          <span className="text-orange-600 font-black text-xs uppercase tracking-[0.4em] block mb-4">Explore Our Programs</span>
+          <h1 className="font-headline text-5xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none">
+            {activeBrand === 'zica' ? 'ZICA ' : activeBrand === 'zima' ? 'ZIMA ' : 'CREATIVE '}
+            <span className="text-orange-500">COURSES</span>
+          </h1>
           
-          {/* Controls Container (Tabs + Search) */}
-          <div className="flex flex-col items-center gap-8">
-            {/* Tab Switcher - Pill Style */}
-            <div className="flex bg-slate-100/50 backdrop-blur-xl p-1.5 rounded-full border border-slate-200/50 shadow-inner">
-              <button
-                onClick={() => { setActiveTab('zica'); setSearchQuery(''); }}
-                className={`px-12 py-3.5 rounded-full font-black text-xs transition-all duration-500 relative tracking-[0.2em] ${
-                  activeTab === 'zica' ? 'text-white' : 'text-slate-500 hover:text-orange-600'
-                }`}
-              >
-                {activeTab === 'zica' && (
-                  <motion.div 
-                    layoutId="activeTabBg" 
-                    className="absolute inset-0 bg-orange-600 rounded-full shadow-xl shadow-orange-600/30"
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                  />
-                )}
-                <span className="relative z-10">ZICA</span>
-              </button>
-              <button
-                onClick={() => { setActiveTab('zima'); setSearchQuery(''); }}
-                className={`px-12 py-3.5 rounded-full font-black text-xs transition-all duration-500 relative tracking-[0.2em] ${
-                  activeTab === 'zima' ? 'text-white' : 'text-slate-500 hover:text-[#3131b1]'
-                }`}
-              >
-                {activeTab === 'zima' && (
-                  <motion.div 
-                    layoutId="activeTabBg" 
-                    className="absolute inset-0 bg-[#3131b1] rounded-full shadow-xl shadow-[#3131b1]/30"
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                  />
-                )}
-                <span className="relative z-10">ZIMA</span>
-              </button>
+          {/* Controls: Brand Switcher & Search */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-12 max-w-4xl mx-auto">
+            {/* Brand Switcher */}
+            <div className="inline-flex bg-slate-100 p-1.5 rounded-full border border-slate-200 w-fit shrink-0">
+              {['all', 'zica', 'zima'].map((brand) => (
+                <button
+                  key={brand}
+                  onClick={() => setActiveBrand(brand as any)}
+                  className={`px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
+                    activeBrand === brand 
+                    ? 'bg-white text-slate-900 shadow-md' 
+                    : 'text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  {brand}
+                </button>
+              ))}
             </div>
 
             {/* Search Bar */}
-            <div className="relative w-full max-w-xl group">
-              <div className="absolute inset-0 bg-white/40 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity rounded-full -z-10" />
-              <div className="relative flex items-center">
-                <span className="absolute left-6 material-symbols-outlined text-slate-400">search</span>
-                <input 
-                  type="text" 
-                  placeholder={`Search ${activeTab.toUpperCase()} courses...`}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-14 pr-6 py-4.5 bg-white/70 backdrop-blur-xl border border-slate-200/50 rounded-2xl shadow-xl shadow-slate-200/30 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all font-bold text-slate-800 placeholder:text-slate-400"
-                />
-                {searchQuery && (
-                  <button 
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-6 text-slate-400 hover:text-slate-600 transition-colors"
-                  >
-                    <span className="material-symbols-outlined text-sm">close</span>
-                  </button>
-                )}
-              </div>
+            <div className="relative w-full max-w-md">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400">search</span>
+              <input 
+                type="text"
+                placeholder="Search courses by name or field..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-white border border-slate-200 rounded-full py-3.5 pl-12 pr-6 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all shadow-sm"
+              />
             </div>
           </div>
-        </div>
-      </section>
+        </motion.div>
 
-      {/* Course Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab + searchQuery}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {filteredCourses.length > 0 ? (
-                filteredCourses.map((course, index) => (
-                  <CourseCard key={course.id} course={course} index={index} />
-                ))
-              ) : (
-                <div className="col-span-full py-20 text-center">
-                  <span className="material-symbols-outlined text-6xl text-slate-200 mb-4 block">sentiment_dissatisfied</span>
-                  <h3 className="text-xl font-bold text-slate-400">No courses found matching "{searchQuery}"</h3>
-                  <button 
-                    onClick={() => setSearchQuery('')}
-                    className="mt-4 text-primary font-bold hover:underline"
+        {/* Courses Grid */}
+        {paginatedCourses.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <AnimatePresence mode="popLayout">
+                {paginatedCourses.map((course, idx) => (
+                  <motion.div
+                    key={course.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.4 }}
+                    className="h-full"
                   >
-                    Clear search and see all courses
-                  </button>
+                    <Link href={`/courses/${course.id}`} className="block h-full">
+                      <div className="group bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all flex flex-col h-full relative overflow-hidden">
+                        {/* Course Image Header */}
+                        <div className="relative w-full aspect-video overflow-hidden shrink-0">
+                          {course.image ? (
+                            <Image 
+                              src={course.image} 
+                              alt={course.name} 
+                              fill 
+                              className="object-cover object-center group-hover:scale-105 transition-transform duration-1000"
+                            />
+                          ) : (
+                            <div className={`absolute inset-0 bg-gradient-to-br ${course.color} opacity-20`} />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                          
+                          {/* Category Tag */}
+                          <div className="absolute top-4 left-4 z-10">
+                            <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                              course.category === 'zica' ? 'bg-orange-500 text-white' : 'bg-blue-600 text-white'
+                            }`}>
+                              {course.category}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Course Info */}
+                        <div className="p-8 flex flex-col flex-grow">
+                          <span className="text-orange-600 font-black text-[10px] uppercase tracking-[0.2em] block mb-3">
+                            {course.duration}
+                          </span>
+                          <h3 className="text-xl font-extrabold text-slate-900 mb-4 font-headline leading-tight group-hover:text-orange-500 transition-colors">
+                            {course.name}
+                          </h3>
+                          <p className="text-slate-600 text-sm font-medium leading-relaxed mb-8 flex-grow line-clamp-3">
+                            {course.description}
+                          </p>
+
+                          <div className="mt-auto">
+                            <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-br ${course.color} text-white font-bold text-[10px] uppercase tracking-widest shadow-lg transition-all duration-300 active:scale-95`}>
+                              View Curriculum
+                              <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-4 mt-16">
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-orange-600 hover:border-orange-600 disabled:opacity-30 disabled:pointer-events-none transition-all"
+                >
+                  <span className="material-symbols-outlined">chevron_left</span>
+                </button>
+                
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`w-12 h-12 rounded-full text-xs font-black transition-all ${
+                        currentPage === page 
+                        ? 'bg-orange-600 text-white shadow-lg' 
+                        : 'text-slate-400 hover:text-slate-900 hover:bg-slate-100'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
                 </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
 
-      <Footer />
-    </main>
-  );
-}
-
-function CourseCard({ course, index }: { course: Course, index: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: index * 0.02 }}
-      whileHover={{ y: -8 }}
-      className="group bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-primary/10 transition-all flex flex-col relative overflow-hidden"
-    >
-      {/* Brand Accent Top Edge */}
-      <div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${course.color}`} />
-      
-      {/* Icon/Decoration with Glow */}
-      <div className="relative mb-8">
-        {/* Glow effect */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${course.color} blur-2xl opacity-20 group-hover:opacity-40 transition-opacity rounded-full`} />
-        
-        {/* Icon Box */}
-        <div className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${course.color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-          <span className="material-symbols-outlined text-3xl">
-            {course.icon}
-          </span>
-        </div>
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-orange-600 hover:border-orange-600 disabled:opacity-30 disabled:pointer-events-none transition-all"
+                >
+                  <span className="material-symbols-outlined">chevron_right</span>
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
+            <span className="material-symbols-outlined text-5xl text-slate-300 mb-4">search_off</span>
+            <p className="text-slate-500 font-bold">No courses found matching "{searchQuery}"</p>
+            <button 
+              onClick={() => {setSearchQuery(''); setActiveBrand('all');}}
+              className="mt-4 text-orange-600 font-black text-xs uppercase tracking-widest hover:underline"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
       </div>
-
-      <div className="mb-4">
-        <h3 className="text-xl font-extrabold text-slate-900 font-headline leading-tight group-hover:text-primary transition-colors duration-300">
-          {course.name}
-        </h3>
-        <div className="flex items-center gap-2 mt-3">
-          <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-br ${course.color}`} />
-          <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">{course.duration}</span>
-        </div>
-      </div>
-
-      <p className="text-slate-600 font-medium leading-relaxed text-sm mb-6 flex-grow">
-        {course.description}
-      </p>
-
-      {/* Decorative Wave at bottom */}
-      <div className="absolute bottom-0 left-0 w-full opacity-[0.03] pointer-events-none translate-y-1/2 group-hover:translate-y-1/3 transition-transform duration-700">
-         <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill="currentColor" d="M0 10C50 0 50 20 100 10C150 0 150 20 200 10V20H0V10Z" />
-         </svg>
-      </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function CoursesPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-white"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div></div>}>
-      <CoursesContent />
-    </Suspense>
+    <main className="min-h-screen bg-[#fafafa] selection:bg-primary/20 cursor-none relative overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-orange-100/30 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-blue-100/30 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      
+      <Navbar />
+      
+      <Suspense fallback={<div className="h-screen flex items-center justify-center font-headline font-black text-3xl">LOADING...</div>}>
+        <CoursesContent />
+      </Suspense>
+
+      <Footer />
+    </main>
   );
 }

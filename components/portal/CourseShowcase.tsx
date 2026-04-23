@@ -3,22 +3,31 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { zicaCourses, zimaCourses } from '@/lib/courses';
 
-const zicaShowcase = zicaCourses.slice(0, 3).map((c, i) => ({
-  title: c.name,
-  description: c.description,
-  icon: ["animation", "palette", "devices"][i],
-  color: ["from-blue-400 to-indigo-600", "from-green-400 to-emerald-600", "from-orange-400 to-rose-500"][i]
-}));
+const zicaShowcase = zicaCourses
+  .filter(c => ['zica-1', 'zica-12', 'zica-20'].includes(c.id))
+  .map((c) => ({
+    id: c.id,
+    title: c.name,
+    description: c.description,
+    icon: c.icon,
+    color: c.color,
+    image: c.image
+  }));
 
-const zimaShowcase = zimaCourses.slice(0, 3).map((c, i) => ({
-  title: c.name,
-  description: c.description,
-  icon: ["movie", "theater_comedy", "video_camera_front"][i],
-  color: ["from-purple-400 to-violet-600", "from-pink-400 to-rose-600", "from-amber-400 to-orange-600"][i]
-}));
+const zimaShowcase = zimaCourses
+  .filter(c => ['zima-8', 'zima-9', 'zima-1'].includes(c.id))
+  .map((c) => ({
+    id: c.id,
+    title: c.name,
+    description: c.description,
+    icon: c.icon,
+    color: c.color,
+    image: c.image
+  }));
 
 export default function CourseShowcase() {
   const [activeTab, setActiveTab] = useState<'zica' | 'zima'>('zica');
@@ -81,22 +90,39 @@ export default function CourseShowcase() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: index * 0.1 }}
-                className="group bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-primary/10 transition-all flex flex-col items-start relative overflow-hidden"
+                className="group bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-primary/10 transition-all flex flex-col items-start relative overflow-hidden"
               >
-                {/* Colored Top Edge */}
-                <div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${course.color}`} />
-                
-                {/* Icon Box */}
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${course.color} flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform`}>
-                  <span className="material-symbols-outlined text-3xl">{course.icon}</span>
-                </div>
+                {/* Course Image Header */}
+                {course.image && (
+                  <div className="relative w-full aspect-video overflow-hidden rounded-t-[2.5rem]">
+                    <Image 
+                      src={course.image} 
+                      alt={course.title} 
+                      fill 
+                      className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+                )}
 
-                <h3 className="text-2xl font-extrabold text-slate-900 mb-4 font-headline leading-tight">
-                  {course.title}
-                </h3>
-                <p className="text-slate-600 font-medium leading-relaxed mb-8 flex-grow">
-                  {course.description}
-                </p>
+                <div className="p-8 flex flex-col flex-grow">
+                  <h3 className="text-2xl font-extrabold text-slate-900 mb-4 font-headline leading-tight group-hover:text-primary transition-colors">
+                    {course.title}
+                  </h3>
+                  <p className="text-slate-600 font-medium leading-relaxed mb-8 flex-grow">
+                    {course.description}
+                  </p>
+
+                  <div className="mt-auto">
+                    <Link 
+                      href={`/courses/${course.id}`}
+                      className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-br ${course.color} text-white font-bold text-xs uppercase tracking-widest shadow-lg group-hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-95`}
+                    >
+                      Read More
+                      <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
 
 
 

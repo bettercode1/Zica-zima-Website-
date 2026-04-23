@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function AboutSection() {
@@ -73,16 +74,18 @@ export default function AboutSection() {
             </div>
 
             <div className="flex justify-center lg:justify-start">
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-orange-400 to-rose-500 text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-orange-500/20 flex items-center gap-2 group transition-all"
-              >
-                Read More
-                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
-                  arrow_forward
-                </span>
-              </motion.button>
+              <Link href="/about">
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-orange-400 to-rose-500 text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-orange-500/20 flex items-center gap-2 group transition-all"
+                >
+                  Read More
+                  <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
+                    arrow_forward
+                  </span>
+                </motion.button>
+              </Link>
             </div>
           </motion.div>
         </div>

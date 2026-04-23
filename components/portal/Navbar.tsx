@@ -20,9 +20,9 @@ export default function Navbar() {
       bgColor: "#f8fafc",
       textColor: "#0f172a",
       links: [
-        { label: "About Us", href: "#about", ariaLabel: "About Us" },
+        { label: "About Us", href: "/about", ariaLabel: "About Us" },
         { label: "Our Team", href: "#team", ariaLabel: "Our Team" },
-        { label: "Our Director", href: "#director", ariaLabel: "Our Director" }
+        { label: "Our Director", href: "/director", ariaLabel: "Our Director" }
       ]
     },
     {
@@ -153,9 +153,9 @@ export default function Navbar() {
                     </div>
                     <div className="space-y-1">
                       {[
-                        { label: "About Us", desc: "Our journey and mission in creative education.", href: "#about", icon: "info" },
+                        { label: "About Us", desc: "Our journey and mission in creative education.", href: "/about", icon: "info" },
                         { label: "Our Team", desc: "The creative minds behind our success.", href: "#team", icon: "groups" },
-                        { label: "Our Director", desc: "Visionary leadership guiding our future.", href: "#director", icon: "person" }
+                        { label: "Our Director", desc: "Visionary leadership guiding our future.", href: "/director", icon: "person" }
                       ].map((item) => (
                         <Link key={item.label} href={item.href} className="group flex items-start gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300">
                           <div className="w-10 h-10 rounded-xl bg-white shadow-md flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors">
