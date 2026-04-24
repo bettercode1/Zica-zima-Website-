@@ -13,8 +13,7 @@ const fontMono = Geist_Mono({
 })
 
 import { Metadata } from "next"
-import { SmoothCursor } from "@/components/ui/smooth-cursor"
-import SplashCursor from "@/components/ui/SplashCursor"
+import { InteractiveOverlays } from "@/components/ui/InteractiveOverlays"
 
 export const metadata: Metadata = {
   title: 'ZICA ZIMA PCMC | Animation & Film Making Institute',
@@ -42,21 +41,7 @@ export default function RootLayout({
       </head>
       <body className="cursor-none" suppressHydrationWarning>
         <ThemeProvider>
-          <SplashCursor 
-            SIM_RESOLUTION={64}
-            DYE_RESOLUTION={512}
-            DENSITY_DISSIPATION={2.5}
-            VELOCITY_DISSIPATION={2.0}
-            PRESSURE={0.2}
-            PRESSURE_ITERATIONS={10}
-            CURL={10}
-            SPLAT_RADIUS={0.15}
-            SPLAT_FORCE={4000}
-            COLOR_UPDATE_SPEED={10}
-            SHADING={false}
-            RAINBOW_MODE={true}
-          />
-          <SmoothCursor />
+          <InteractiveOverlays />
           {children}
         </ThemeProvider>
       </body>

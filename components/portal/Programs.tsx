@@ -50,13 +50,15 @@ export default function Programs() {
               key={program.title}
               className="group relative bg-slate-800/50 rounded-xl overflow-hidden transition-all duration-300"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-slate-900/50 flex items-center justify-center">
-                <Image
-                  src={program.img}
-                  alt={program.alt}
-                  fill
-                  className="object-contain transition-transform duration-500"
-                />
+              <div className="relative aspect-[4/3] p-px">
+                <div className="relative w-full h-full overflow-hidden rounded-[0.9rem] bg-slate-900/50 flex items-center justify-center">
+                  <Image
+                    src={program.img}
+                    alt={program.alt}
+                    fill
+                    className="object-contain transition-transform duration-500"
+                  />
+                </div>
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-bold mb-2 font-headline">{program.title}</h3>

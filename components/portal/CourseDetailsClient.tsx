@@ -71,7 +71,7 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
         )}
       </div>
 
-      <div className="relative z-10 pt-6 pb-20 px-6 sm:px-12 lg:px-24">
+      <div className="relative z-10 pt-6 pb-20 px-6 sm:px-10 lg:px-16 xl:px-24">
         <div className="max-w-[1800px] mx-auto">
           {/* Back Link */}
           <motion.div 
@@ -88,7 +88,7 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
             </Link>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-24 items-start">
             
             {/* LEFT COLUMN: HERO INFO */}
             <motion.div 
@@ -96,7 +96,7 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="lg:col-span-5 space-y-12 lg:sticky lg:top-12"
+              className="lg:col-span-6 xl:col-span-5 space-y-12 lg:sticky lg:top-12"
             >
               <div className="space-y-6">
                 <motion.span 
@@ -107,16 +107,39 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
                   Professional Certification
                 </motion.span>
                 
-                <h1 className="font-headline text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.95] flex flex-wrap gap-x-[0.2em]">
-                  {(course.curriculum?.title || course.name).split(' ').map((word, i) => (
-                    <span key={i} className={i % 2 === 0 ? 'text-white' : 'text-[#f1711c]'}>
-                      {word}
-                    </span>
-                  ))}
+                <h1 className="font-headline font-black tracking-tighter leading-[0.9] flex flex-col gap-0">
+                  {(() => {
+                    const fullTitle = (course.curriculum?.title || course.name).toUpperCase();
+                    const splitIndex = fullTitle.indexOf(" IN ");
+                    
+                    if (splitIndex !== -1) {
+                      const prefix = fullTitle.substring(0, splitIndex);
+                      const courseName = fullTitle.substring(splitIndex + 4);
+                      
+                      return (
+                        <>
+                          <span className="text-white text-base md:text-lg lg:text-xl opacity-80 tracking-[0.3em] mb-2 block font-sans font-bold">
+                            {prefix} <span className="opacity-40">IN</span>
+                          </span>
+                          <span className="text-[#f1711c] text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-7xl 2xl:text-8xl break-words leading-tight">
+                            {courseName}
+                          </span>
+                        </>
+                      );
+                    }
+                    
+                    return (
+                      <span className="text-[#f1711c] text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-7xl 2xl:text-8xl break-words leading-tight">
+                        {fullTitle}
+                      </span>
+                    );
+                  })()}
                 </h1>
                 
-                <div className="flex items-baseline gap-4">
-                  <span className="text-4xl md:text-6xl font-black text-[#f1711c] font-headline">{course.curriculum?.duration || course.duration}</span>
+                <div className="flex items-baseline gap-4 mt-6">
+                  <span className="text-sm md:text-base lg:text-lg font-bold text-white opacity-80 font-sans uppercase tracking-[0.3em]">
+                    {course.curriculum?.duration || course.duration}
+                  </span>
                 </div>
               </div>
 
@@ -127,16 +150,16 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
               {/* Admission Box */}
               <motion.div 
                 whileHover={{ scale: 1.02 }}
-                className="p-8 rounded-[3rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl relative overflow-hidden group"
+                className="p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl relative overflow-hidden group"
               >
                 <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${course.color} opacity-20 rounded-full blur-3xl -mr-16 -mt-16`} />
                 <div className="relative z-10 space-y-6">
-                  <h3 className="text-2xl font-black font-headline">Ready to Start?</h3>
+                  <h3 className="text-xl md:text-2xl font-black font-headline">Ready to <span className="text-[#f1711c]">Start?</span></h3>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Link href="#admissions" className="px-8 py-4 bg-white text-black rounded-2xl font-black uppercase tracking-widest hover:text-[#f1711c] transition-all text-sm text-center">
+                    <Link href="#admissions" className="px-6 md:px-8 py-3.5 md:py-4 bg-white text-black rounded-xl md:rounded-2xl font-black uppercase tracking-widest hover:text-[#f1711c] transition-all text-xs md:text-sm text-center flex-1">
                       Enquire Now
                     </Link>
-                    <Link href="#brochure" className="px-8 py-4 bg-white/10 text-white rounded-2xl font-black uppercase tracking-widest border border-white/10 hover:bg-white/20 transition-all text-sm text-center">
+                    <Link href="#brochure" className="px-6 md:px-8 py-3.5 md:py-4 bg-white/10 text-white rounded-xl md:rounded-2xl font-black uppercase tracking-widest border border-white/10 hover:bg-white/20 transition-all text-xs md:text-sm text-center flex-1">
                       Brochure
                     </Link>
                   </div>
@@ -145,9 +168,9 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
             </motion.div>
 
             {/* RIGHT COLUMN: CURRICULUM GRID */}
-            <div className="lg:col-span-7 space-y-12">
+            <div className="lg:col-span-6 xl:col-span-7 space-y-12">
               {course.curriculum && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
                   {course.curriculum.modules.map((module, idx) => (
                     <motion.div
                       key={module.name}
@@ -155,14 +178,14 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: "-100px" }}
                       transition={{ duration: 0.6, delay: idx * 0.1 }}
-                      className="p-8 md:p-10 rounded-[2.5rem] bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/50 transition-all group flex flex-col h-full"
+                      className="p-6 md:p-8 lg:p-6 xl:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#f1711c]/50 transition-all group flex flex-col h-full"
                     >
                       <div className="mb-6 flex justify-between items-start">
                         <span className="text-[10px] font-black tracking-[0.3em] text-white/70 uppercase">{module.duration}</span>
-                        <span className="text-white/20 font-black text-4xl font-headline group-hover:text-[#1d4ed8]/30 transition-colors">0{idx + 1}</span>
+                        <span className="text-white/20 font-black text-4xl font-headline group-hover:text-[#f1711c]/30 transition-colors">0{idx + 1}</span>
                       </div>
                       
-                      <h3 className="text-xl md:text-2xl font-black font-headline leading-tight mb-8 group-hover:text-[#1d4ed8] transition-colors">
+                      <h3 className="text-xl md:text-2xl font-black font-headline leading-tight mb-8 group-hover:text-[#f1711c] transition-colors">
                         {module.name}
                       </h3>
 
@@ -170,7 +193,7 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
                         <ul className="space-y-3">
                           {module.topics.map(topic => (
                             <li key={topic} className="flex items-start gap-3 text-slate-200 text-sm font-medium">
-                              <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#f1711c] mt-1.5 flex-shrink-0" />
                               {topic}
                             </li>
                           ))}
@@ -200,13 +223,13 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  className="p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-[#1d4ed8]/20 to-transparent backdrop-blur-2xl border border-white/10 relative overflow-hidden"
+                  className="p-8 md:p-16 lg:p-20 rounded-[3rem] md:rounded-[4rem] bg-gradient-to-br from-[#f1711c]/10 to-transparent backdrop-blur-2xl border border-white/10 relative overflow-hidden"
                 >
-                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#1d4ed8]/20 blur-[100px] -mr-48 -mt-48" />
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#f1711c]/10 blur-[100px] -mr-48 -mt-48" />
                   <div className="relative z-10 space-y-8">
-                    <span className="text-xs font-black tracking-[0.4em] text-[#1d4ed8] uppercase">Outcome</span>
-                    <h2 className="text-4xl md:text-6xl font-black font-headline leading-tight tracking-tighter">
-                      Emerging <br /> <span className="text-[#1d4ed8] underline decoration-[#1d4ed8]/30 underline-offset-8">Student Profile</span>
+                    <span className="text-xs font-black tracking-[0.4em] text-[#f1711c] uppercase">Outcome</span>
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-black font-headline leading-tight tracking-tighter">
+                      Emerging <br /> <span className="text-[#f1711c] underline decoration-[#f1711c]/30 underline-offset-8">Student Profile</span>
                     </h2>
                     <p className="text-slate-200 text-lg md:text-xl leading-relaxed max-w-3xl font-medium">
                       {course.studentProfile}

@@ -38,9 +38,9 @@ export default function WhyUs() {
         <div className="flex flex-col lg:flex-row gap-12 md:gap-16 items-start">
           {/* Left Sticky Text */}
           <div className="lg:w-1/3 lg:sticky top-32 text-center lg:text-left">
-            <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 text-black">
+            <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 text-[#141a3b]">
               Designed for the{' '}
-              <span className="text-primary">Next Gen</span> of Creators.
+              <span className="text-slate-300">Next Gen</span> of Creators.
             </h2>
             <p className="text-slate-800 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
               We don&apos;t just teach software; we build careers through a

@@ -103,8 +103,8 @@ export default function Testimonials() {
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-12 md:mb-16">
           <span className="text-orange-600 font-extrabold text-[10px] uppercase tracking-[0.2em] block mb-3">Student Voice</span>
-          <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Our Student <span className="text-primary italic">Testimonials</span>
+          <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#141a3b] tracking-tight">
+            Our Student <span className="text-slate-300 italic">Testimonials</span>
           </h2>
           <div className="w-16 h-1 bg-orange-500 mt-6 rounded-full" />
         </div>

@@ -5,14 +5,16 @@ import { getAllBlogs, BlogData } from "@/lib/blogs";
 
 const BlogCard = ({ title, desc, link, bgImage, date }: { title: string, desc: string, link: string, bgImage?: string, date?: string }) => {
   return (
-    <div className={`${styles.card} group bg-slate-900`}>
-      {bgImage && (
-        <img 
-          src={bgImage} 
-          alt={title} 
-          className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500"
-        />
-      )}
+    <div className={`${styles.card} group bg-slate-900 p-px`}>
+      <div className="absolute inset-px overflow-hidden rounded-[0.9rem]">
+        {bgImage && (
+          <img 
+            src={bgImage} 
+            alt={title} 
+            className="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500"
+          />
+        )}
+      </div>
       <div className={`${styles.cardContent} relative z-10`}>
         <h2 className={`text-xl md:text-2xl font-bold ${styles.cardTitle}`}>{title}</h2>
         {date && (

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -10,6 +10,125 @@ import Navbar from "@/components/portal/Navbar";
 import { zicaCourses, zimaCourses, Course } from '@/lib/courses';
 
 const Footer = dynamic(() => import("@/components/portal/Footer"), { ssr: false });
+
+const CourseCardVisual = ({ course }: { course: Course }) => {
+  const [imageError, setImageError] = useState(false);
+
+  // Generate a deterministic unique visual based on the course ID
+  const getVisualSeed = (id: string) => {
+    const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return {
+      hue1: (hash * 137) % 360,
+      hue2: (hash * 251) % 360,
+      rotate: (hash * 45) % 360,
+      scale: 0.8 + ((hash % 10) / 20)
+    };
+  };
+
+  const seed = useMemo(() => getVisualSeed(course.id), [course.id]);
+
+  return (
+    <div className="relative w-full aspect-video shrink-0 p-px">
+      <div className="relative w-full h-full overflow-hidden rounded-t-[2.4rem]">
+        {/* BASE LAYER: Generative Design (Always visible or acting as fallback) */}
+        <div 
+          className="absolute inset-0 transition-colors duration-500 overflow-hidden"
+          style={{ 
+            background: `linear-gradient(135deg, hsl(${seed.hue1}, 70%, 45%), hsl(${seed.hue2}, 80%, 35%))` 
+          }}
+        >
+          {/* Grain/Noise Texture */}
+          <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" 
+               style={{ backgroundImage: `url("https://grainy-gradients.vercel.app/noise.svg")` }} 
+          />
+
+          {/* Dynamic Mesh Gradients */}
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, 90, 0],
+              x: [0, 20, 0]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="absolute top-[-30%] left-[-30%] w-[100%] h-[100%] bg-white/20 rounded-[40%] blur-[80px]" 
+          />
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.5, 1],
+              rotate: [0, -120, 0],
+              x: [0, -30, 0]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-[-30%] right-[-30%] w-[100%] h-[100%] bg-black/30 rounded-[40%] blur-[80px]" 
+          />
+          
+          {/* Generative Pattern */}
+          <div className="absolute inset-0 opacity-[0.1] pointer-events-none mix-blend-overlay" 
+               style={{ 
+                 backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                 backgroundSize: '24px 24px',
+                 transform: `rotate(${seed.rotate}deg)`
+               }} 
+          />
+          
+          {/* Central Artistic Element */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative"
+            >
+              {/* Outer Glow */}
+              <div 
+                className="absolute inset-0 blur-3xl opacity-50"
+                style={{ backgroundColor: `hsl(${seed.hue1}, 100%, 70%)` }}
+              />
+              
+              {/* Icon Container */}
+              <div className="w-20 h-20 rounded-[1.5rem] bg-white/10 backdrop-blur-3xl border border-white/20 flex items-center justify-center shadow-2xl relative z-10">
+                <span className="material-symbols-outlined text-4xl text-white/90 drop-shadow-2xl">
+                  {course.icon || 'star'}
+                </span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Metadata ID Overlay */}
+          <div className="absolute bottom-4 right-6 text-white/5 font-black text-[60px] leading-none select-none tracking-tighter">
+            {course.id.split('-')[1]}
+          </div>
+        </div>
+
+        {/* TOP LAYER: Photographic Asset (Renders if available and working) */}
+        {course.image && !imageError && (
+          <Image 
+            src={course.image} 
+            alt={course.name} 
+            fill 
+            className="object-cover object-center group-hover:scale-110 transition-transform duration-1000 z-10"
+            onError={() => setImageError(true)}
+          />
+        )}
+        
+        {/* VIGNETTE & OVERLAYS */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-70 z-20" />
+        <div className="absolute inset-0 ring-1 ring-inset ring-white/10 z-30" />
+        
+        {/* CATEGORY BADGE */}
+        <div className="absolute top-6 left-6 z-40">
+          <motion.span 
+            whileHover={{ scale: 1.05 }}
+            className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-2xl backdrop-blur-xl border border-white/30 ${
+              course.category === 'zica' ? 'bg-orange-500/90 text-white' : 'bg-blue-600/90 text-white'
+            }`}
+          >
+            {course.category}
+          </motion.span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 function CoursesContent() {
   const searchParams = useSearchParams();
@@ -113,28 +232,7 @@ function CoursesContent() {
                     <Link href={`/courses/${course.id}`} className="block h-full">
                       <div className="group bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all flex flex-col h-full relative overflow-hidden">
                         {/* Course Image Header */}
-                        <div className="relative w-full aspect-video overflow-hidden shrink-0">
-                          {course.image ? (
-                            <Image 
-                              src={course.image} 
-                              alt={course.name} 
-                              fill 
-                              className="object-cover object-center group-hover:scale-105 transition-transform duration-1000"
-                            />
-                          ) : (
-                            <div className={`absolute inset-0 bg-gradient-to-br ${course.color} opacity-20`} />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                          
-                          {/* Category Tag */}
-                          <div className="absolute top-4 left-4 z-10">
-                            <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                              course.category === 'zica' ? 'bg-orange-500 text-white' : 'bg-blue-600 text-white'
-                            }`}>
-                              {course.category}
-                            </span>
-                          </div>
-                        </div>
+                        <CourseCardVisual course={course} />
 
                         {/* Course Info */}
                         <div className="p-8 flex flex-col flex-grow">

@@ -40,9 +40,9 @@ export default function CourseShowcase() {
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-12 md:mb-16">
           <span className="text-orange-600 font-extrabold text-[10px] uppercase tracking-[0.2em] block mb-3">Courses</span>
-          <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight px-4">
+          <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#141a3b] tracking-tight px-4">
             We provide career <br className="hidden sm:block" />
-            <span className="text-primary italic">oriented creative courses.</span>
+            <span className="text-slate-300 italic">oriented creative courses.</span>
           </h2>
           
           {/* Tab Switcher */}
@@ -94,14 +94,16 @@ export default function CourseShowcase() {
               >
                 {/* Course Image Header */}
                 {course.image && (
-                  <div className="relative w-full aspect-video overflow-hidden rounded-t-[2.5rem]">
-                    <Image 
-                      src={course.image} 
-                      alt={course.title} 
-                      fill 
-                      className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="relative w-full aspect-video p-px shrink-0">
+                    <div className="relative w-full h-full overflow-hidden rounded-t-[2.4rem]">
+                      <Image 
+                        src={course.image} 
+                        alt={course.title} 
+                        fill 
+                        className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    </div>
                   </div>
                 )}
 
