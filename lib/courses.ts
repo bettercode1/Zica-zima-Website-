@@ -2073,179 +2073,533 @@ export const zicaCourses: Course[] = [
 export const zimaCourses: Course[] = [
   {
     id: "zima-1",
-    name: "Program in Acting",
-    duration: "6 Months",
-    description: "A conservatory programme based on Stanislavsky's 'Method Acting' model, preparing student actors for the profession.",
-    category: 'zima',
-    icon: "theater_comedy",
-    color: "from-green-500 to-teal-600",
-    image: "/image/Courses/zima-1.png",
-    backgroundImage: "/image/Courses/zima-1.png"
-  },
-  {
-    id: "zima-2",
-    name: "Program in Fashion Modelling & Personal Grooming",
-    duration: "4 Months",
-    description: "Helps aspiring models develop confidence, poise, and personal style for a career in fashion.",
-    category: 'zima',
-    icon: "face_retouching_natural",
-    color: "from-pink-400 to-rose-600",
-    image: "/image/Courses/zima-2.png",
-    backgroundImage: "/image/Courses/zima-2.png"
-  },
-  {
-    id: "zima-3",
-    name: "Program in Professional Dancing",
-    duration: "4 Months",
-    description: "Professional training in various dance forms to prepare students for the entertainment industry.",
-    category: 'zima',
-    icon: "diversity_3",
-    color: "from-amber-400 to-orange-600",
-    image: "/image/Courses/zima-3.png",
-    backgroundImage: "/image/Courses/zima-3.png"
-  },
-  {
-    id: "zima-4",
-    name: "Professional Program in Film Making",
+    name: "Professional Programme in Filmmaking",
     duration: "12 Months",
-    description: "A comprehensive one-year journey from developing an idea to delivering a finished film.",
+    description: "The Professional Programme in Filmmaking is a 12-month course for aspiring filmmakers, offering over 700 hours of comprehensive training.",
     category: 'zima',
     icon: "movie",
     color: "from-blue-400 to-indigo-600",
     image: "/image/Courses/zima-4.png",
-    backgroundImage: "/image/Courses/zima-4.png"
+    backgroundImage: "/image/Courses/zima-4.png",
+    curriculum: {
+      title: "PROFESSIONAL PROGRAMME IN FILMMAKING",
+      duration: "12 MONTHS",
+      modules: [
+        {
+          name: "INTRODUCTION AND BASICS",
+          duration: "3 MONTHS",
+          topics: [
+            "Story analysis, characterisation, and dialogue writing",
+            "History of cinema and Indian cinema",
+            "Fundamentals of direction, camera, photography, and lighting",
+            "Acting basics: speech, monologue, and body language",
+            "Introduction to editing, sound, and production basics",
+            "Pre-production and case studies"
+          ]
+        },
+        {
+          name: "SCREENWRITING AND CINEMATOGRAPHY",
+          duration: "3 MONTHS",
+          topics: [
+            "Screenwriting, dialogue, and narrative structure",
+            "Cinematography techniques and creative camera work",
+            "Acting: Improvisation, physical, and voice culture",
+            "Editing: Fiction, non-fiction, and rhythm manipulation",
+            "Sound recording, ADR, and recording instruments",
+            "Economics, budgeting, and pre-production planning"
+          ]
+        },
+        {
+          name: "ADVANCED TECHNIQUES AND POST-PRODUCTION",
+          duration: "3 MONTHS",
+          topics: [
+            "Script structuring, character layering, and second draft",
+            "Casting, shot division, and pre-production",
+            "Lighting and camera movement practicals",
+            "Post-production: Editing, Pro Tools, audio, and surround sound",
+            "Production management, finances, and contracts"
+          ]
+        },
+        {
+          name: "SPECIALISATION AND FINAL PROJECT",
+          duration: "3 MONTHS",
+          topics: [
+            "Specialise in screenwriting, direction, cinematography, acting, editing, or sound",
+            "Work on a final film project with mentorship and creative decision-making"
+          ],
+          software: ["Premiere", "FCP", "Avid Media Composer", "Pro Tools", "Nuendo", "Cubase"]
+        }
+      ]
+    },
+    studentProfile: "The certified professionals will be well-rounded filmmakers proficient in storytelling, screenwriting, cinematography, editing, and sound design. They will have hands-on experience in producing and directing short films, documentaries, and music videos."
   },
   {
-    id: "zima-5",
-    name: "Professional Program in Sound Recording",
-    duration: "12 Months",
-    description: "Focuses on audio engineering, recording, mixing, and mastering for film and music.",
-    category: 'zima',
-    icon: "mic",
-    color: "from-green-400 to-emerald-600",
-    image: "/image/Courses/zima-5.png",
-    backgroundImage: "/image/Courses/zima-5.png"
-  },
-  {
-    id: "zima-6",
-    name: "Sound - Electronic Music Production",
+    id: "zima-2",
+    name: "Programme in Direction",
     duration: "6 Months",
-    description: "Learn the technical and creative aspects of producing electronic music using digital tools.",
-    category: 'zima',
-    icon: "equalizer",
-    color: "from-orange-400 to-rose-500",
-    image: "/image/Courses/zima-6.png",
-    backgroundImage: "/image/Courses/zima-6.png"
-  },
-  {
-    id: "zima-7",
-    name: "Sound - Film Sound Design",
-    duration: "6 Months",
-    description: "Specialized training in creating immersive soundscapes and audio effects for cinema.",
-    category: 'zima',
-    icon: "surround_sound",
-    color: "from-purple-500 to-violet-700",
-    image: "/image/Courses/zima-7.png",
-    backgroundImage: "/image/Courses/zima-7.png"
-  },
-  {
-    id: "zima-8",
-    name: "Program in Cinematography",
-    duration: "6 Months",
-    description: "Teaches the art of visual storytelling through camera techniques, lighting, and composition.",
-    category: 'zima',
-    icon: "video_camera_front",
-    color: "from-pink-500 to-rose-700",
-    image: "/image/Courses/zima-8.png",
-    backgroundImage: "/image/Courses/zima-8.png"
-  },
-  {
-    id: "zima-9",
-    name: "Program in Direction",
-    duration: "6 Months",
-    description: "Focuses on the creative and technical aspects of directing for film and television.",
+    description: "The Programme in Direction is a 6-month course designed to teach aspiring directors the essential skills required for filmmaking and television production.",
     category: 'zima',
     icon: "director_chair",
     color: "from-amber-500 to-orange-700",
     image: "/image/Courses/zima-9.png",
-    backgroundImage: "/image/Courses/zima-9.png"
+    backgroundImage: "/image/Courses/zima-9.png",
+    curriculum: {
+      title: "PROGRAMME IN DIRECTION",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "INTRODUCTION AND BASICS",
+          duration: "3 MONTHS",
+          topics: [
+            "Story analysis, characterisation, and dialogue writing",
+            "History of cinema and Indian cinema",
+            "Fundamentals of direction, camera, photography, and lighting",
+            "Acting basics: speech, monologue, and body language",
+            "Introduction to editing, sound, and production basics",
+            "Pre-production and case studies"
+          ]
+        },
+        {
+          name: "SCREENWRITING AND CINEMATOGRAPHY",
+          duration: "3 MONTHS",
+          topics: [
+            "Screenwriting, dialogue, and narrative structure",
+            "Cinematography techniques and creative camera work",
+            "Acting: Improvisation, physical, and voice culture",
+            "Editing: Fiction, non-fiction, and rhythm manipulation",
+            "Sound recording, ADR, and recording instruments",
+            "Economics, budgeting, and pre-production planning"
+          ],
+          software: ["Premiere", "FCP", "Avid Media Composer", "Pro Tools", "Nuendo", "Cubase"]
+        }
+      ]
+    },
+    studentProfile: "Emerging students will be equipped with a solid foundation in filmmaking, including screenwriting, cinematography, and production management. With practical experience in documentaries, promos, and film projects, they will be prepared to take on the role of a director or assistant director."
   },
   {
-    id: "zima-10",
-    name: "Program in Editing (FCP + AVID + Premiere)",
+    id: "zima-3",
+    name: "Programme in Screenwriting",
     duration: "6 Months",
-    description: "Mastering professional editing software for seamless storytelling.",
-    category: 'zima',
-    icon: "movie_edit",
-    color: "from-cyan-500 to-blue-600",
-    image: "/image/Courses/zima-10.png",
-    backgroundImage: "/image/Courses/zima-10.png"
-  },
-  {
-    id: "zima-11",
-    name: "Program in Film & Television Production",
-    duration: "6 Months",
-    description: "Covers the essentials of production management and the filmmaking process.",
-    category: 'zima',
-    icon: "video_camera_back",
-    color: "from-teal-500 to-emerald-600",
-    image: "/image/Courses/zima-11.png",
-    backgroundImage: "/image/Courses/zima-11.png"
-  },
-  {
-    id: "zima-12",
-    name: "Program in Screen Writing",
-    duration: "6 Months",
-    description: "Teaches the fundamentals of storytelling, character development, and script formatting.",
+    description: "The Programme in Screenwriting is a 6-month course that equips aspiring screenwriters with essential skills for the entertainment industry. Students will learn concept development, story structure, character creation, and dialogue writing.",
     category: 'zima',
     icon: "history_edu",
     color: "from-red-500 to-orange-600",
     image: "/image/Courses/zima-12.png",
-    backgroundImage: "/image/Courses/zima-12.png"
+    backgroundImage: "/image/Courses/zima-12.png",
+    curriculum: {
+      title: "PROGRAMME IN SCREENWRITING",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "SCREENWRITING CURRICULUM",
+          duration: "6 MONTHS",
+          topics: [
+            "Introduction to Screenwriting: Story elements, screenplay structure, and genres",
+            "Story and Structure: 3-act structure, plot points, building conflict, and character arcs",
+            "Writing Process: From idea to screenplay, scene creation, and dialogue writing",
+            "Character Development: Protagonist vs. antagonist, emotional need, and secondary characters",
+            "Screenplay Editing: Weaving, restructuring, and editing the screenplay",
+            "Adaptation: Research, biopics, and writing for TV vs. Film",
+            "Practical Application: Writing short and feature-length screenplays, industry trends, and career opportunities"
+          ],
+          software: ["Final Draft", "Celtx"]
+        }
+      ]
+    },
+    studentProfile: "The certified professional will be equipped with essential skills in story development, character creation, and dialogue writing. They will have a deep understanding of screenwriting techniques, historical perspectives, and Indian scriptwriters."
+  },
+  {
+    id: "zima-4",
+    name: "Programme in Cinematography",
+    duration: "6 Months",
+    description: "The Programme in Cinematography offers comprehensive training in film and video photography, emphasising both theory and practical application.",
+    category: 'zima',
+    icon: "video_camera_front",
+    color: "from-pink-500 to-rose-700",
+    image: "/image/Courses/zima-8.png",
+    backgroundImage: "/image/Courses/zima-8.png",
+    curriculum: {
+      title: "PROGRAMME IN CINEMATOGRAPHY",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "CINEMATOGRAPHY CURRICULUM",
+          duration: "6 MONTHS",
+          topics: [
+            "The principles of still and motion picture photography",
+            "Various types of light sources and their practical application",
+            "Basics of lighting and detailed practicals on different types of lighting situations",
+            "Filters and composition, the study of colour temperature, and depth of field",
+            "Study of movie cameras and various types of film stock",
+            "The grammar of single-camera and multi-camera placements",
+            "Roots and reasons for selecting a camera style",
+            "Study of video cameras and principles of videography",
+            "Principles of optics as applied to photography",
+            "Assignments and group projects for students on digital cameras",
+            "Hands-on training with RED Camera"
+          ]
+        }
+      ]
+    },
+    studentProfile: "The emerging student will possess a solid foundation in film and video photography, equipped with practical skills in lighting, camera techniques, and composition. They will have hands-on experience with various types of cameras, film stock, and multi-camera setups."
+  },
+  {
+    id: "zima-5",
+    name: "Programme in Film and TV Production",
+    duration: "6 Months",
+    description: "The Programme in Film and TV Production offers comprehensive training in all aspects of filmmaking, from pre-production to post-production. Students will gain expertise in budgeting, finance, legal agreements, and the producer's role.",
+    category: 'zima',
+    icon: "video_camera_back",
+    color: "from-teal-500 to-emerald-600",
+    image: "/image/Courses/zima-11.png",
+    backgroundImage: "/image/Courses/zima-11.png",
+    curriculum: {
+      title: "PROGRAMME IN FILM AND TV PRODUCTION",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "PRODUCTION CURRICULUM",
+          duration: "6 MONTHS",
+          topics: [
+            "From script to shoot, an in-depth knowledge of the various departments",
+            "Structure of the Indian film industry, production, distribution and exhibition",
+            "In-depth knowledge about the producer's role during the filmmaking process",
+            "Building up a project with cast and crew - delegation of responsibilities",
+            "Introduction and expertise in various budgeting software",
+            "Legal agreements",
+            "Writing the business plan",
+            "Permissions, Budgeting and finance",
+            "Production and post-production",
+            "Marketing and Promotions - from in-film placements to marketing tie-ups",
+            "Distribution"
+          ]
+        }
+      ]
+    },
+    studentProfile: "Emerging students are skilled in managing all stages of the filmmaking process, from script to shoot. They are proficient in budgeting, finance, legal agreements, and project management, with a strong understanding of the Indian film industry's structure."
+  },
+  {
+    id: "zima-6",
+    name: "Programme in Film and TV Editing",
+    duration: "6 Months",
+    description: "The Programme in Film and TV Editing offers comprehensive training in the art and technique of editing for film and television.",
+    category: 'zima',
+    icon: "movie_edit",
+    color: "from-cyan-500 to-blue-600",
+    image: "/image/Courses/zima-10.png",
+    backgroundImage: "/image/Courses/zima-10.png",
+    curriculum: {
+      title: "PROGRAMME IN FILM AND TV EDITING",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "EDITING CURRICULUM",
+          duration: "6 MONTHS",
+          topics: [
+            "The grammar, the aesthetic and the technique of editing",
+            "History of editing",
+            "The language of cinema",
+            "Practical learning of FCP, AVID, and Adobe Premiere software",
+            "Classroom editing practical",
+            "Visiting studios",
+            "Editing student projects (Ad film, documentary/non-fiction, short film, music video projects)"
+          ],
+          software: ["FCP", "Avid", "Premiere Pro"]
+        }
+      ]
+    },
+    studentProfile: "The emerging student will have a strong grasp of editing grammar, aesthetics, and techniques, along with proficiency in industry-standard software like FCP, Avid, and Adobe Premiere Pro."
+  },
+  {
+    id: "zima-7",
+    name: "Professional Programme in Sound Engineering",
+    duration: "12 Months",
+    description: "The Professional Programme in Sound Engineering is a comprehensive one-year course designed to build expertise in sound recording, mixing, post-production, and music composition.",
+    category: 'zima',
+    icon: "equalizer",
+    color: "from-orange-400 to-rose-500",
+    image: "/image/Courses/zima-5.png",
+    backgroundImage: "/image/Courses/zima-5.png",
+    curriculum: {
+      title: "PROFESSIONAL PROGRAMME IN SOUND ENGINEERING",
+      duration: "12 MONTHS",
+      modules: [
+        {
+          name: "SOUND ENGINEERING CURRICULUM",
+          duration: "12 MONTHS",
+          topics: [
+            "Sound recording, mixing, and post-production",
+            "Music composition and arranging",
+            "Microphone techniques, VST mastering, and studio acoustics",
+            "Modern technologies, including AI in audio and sound design",
+            "Hands-on projects in music mixing, film composition, Foley, ADR, and surround sound"
+          ],
+          software: ["Pro Tools", "Luna", "Nuendo", "Cubase"]
+        }
+      ]
+    },
+    studentProfile: "This programme equips aspiring sound engineers with the skills to excel in music production, film soundtracks, and live audio."
+  },
+  {
+    id: "zima-8",
+    name: "Programme in Sound Recording",
+    duration: "6 Months",
+    description: "The Programme in Sound Recording is a 6-month course designed to build a strong foundation in audio recording and production.",
+    category: 'zima',
+    icon: "mic",
+    color: "from-green-400 to-emerald-600",
+    image: "/image/Courses/zima-5.png",
+    backgroundImage: "/image/Courses/zima-5.png",
+    curriculum: {
+      title: "PROGRAMME IN SOUND RECORDING",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "FOUNDATION STAGE",
+          duration: "3 MONTHS",
+          topics: [
+            "Theory and recording technology",
+            "DAW (Pro Tools and Luna)",
+            "Audio processors"
+          ]
+        },
+        {
+          name: "ADVANCED STAGE",
+          duration: "3 MONTHS",
+          topics: [
+            "Microphone techniques for recording",
+            "Stereo recording methods",
+            "Music mixdown and mixing",
+            "VST audio mastering",
+            "On location sound",
+            "Live recording",
+            "Headphone monitoring system",
+            "Studio acoustics, types and importance",
+            "Home studio vs. Professional studio",
+            "Mixing console"
+          ],
+          software: ["Pro Tools", "Luna"]
+        }
+      ]
+    },
+    studentProfile: "The certified professionals will emerge as skilled sound engineers with a solid foundation in audio recording and production. Proficient in Pro Tools and Luna, they will have expertise in microphone techniques, mixing consoles, VST mastering, and live sound applications."
+  },
+  {
+    id: "zima-9",
+    name: "Programme in Music Production",
+    duration: "6 Months",
+    description: "The Programme in Music Production is a 6-month course designed to equip aspiring producers with essential skills in music creation and production.",
+    category: 'zima',
+    icon: "surround_sound",
+    color: "from-purple-500 to-violet-700",
+    image: "/image/Courses/zima-6.png",
+    backgroundImage: "/image/Courses/zima-6.png",
+    curriculum: {
+      title: "PROGRAMME IN MUSIC PRODUCTION",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "FOUNDATION STAGE",
+          duration: "3 MONTHS",
+          topics: [
+            "Theory and technology",
+            "DAW (Logic Pro and Cubase)",
+            "Audio processors"
+          ]
+        },
+        {
+          name: "ADVANCED STAGE",
+          duration: "3 MONTHS",
+          topics: [
+            "VST instrument",
+            "Drum programming",
+            "MIDI sequencing",
+            "Music arranging basics",
+            "The process for composing for film",
+            "Acoustic instrument studies",
+            "AI technology",
+            "Music composing",
+            "Studio visit"
+          ],
+          software: ["Logic Pro", "Cubase"]
+        }
+      ]
+    },
+    studentProfile: "The certified professionals will be proficient music producers skilled in using Logic Pro and Cubase for music creation. They will have expertise in drum programming, MIDI sequencing, VST instruments, and music arranging."
+  },
+  {
+    id: "zima-10",
+    name: "Programme in Audio Production",
+    duration: "6 Months",
+    description: "The Programme in Audio Production is a 6-month course designed to equip students with the skills needed for professional audio production.",
+    category: 'zima',
+    icon: "speaker",
+    color: "from-indigo-500 to-purple-600",
+    image: "/image/Courses/zima-7.png",
+    backgroundImage: "/image/Courses/zima-7.png",
+    curriculum: {
+      title: "PROGRAMME IN AUDIO PRODUCTION",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "FOUNDATION STAGE",
+          duration: "3 MONTHS",
+          topics: [
+            "Theory and technology",
+            "DAW (Pro Tools and Nuendo)",
+            "Audio processors"
+          ]
+        },
+        {
+          name: "ADVANCED STAGE",
+          duration: "3 MONTHS",
+          topics: [
+            "Film appreciation",
+            "Intro to audio post-production stages",
+            "ADR (Automated dialogue replacement)",
+            "Directing actors in ADR",
+            "Sound design",
+            "Foley artist and recording",
+            "Music editing",
+            "Sync sound",
+            "Video, screen technology and synchronisation",
+            "Production dialogue editing",
+            "Noise reduction and audio restoration",
+            "AI for music and audio",
+            "Surround sound",
+            "Studio visit"
+          ],
+          software: ["Pro Tools", "Nuendo"]
+        }
+      ]
+    },
+    studentProfile: "The graduates will be proficient in Pro Tools and Nuendo for audio production. They will have a solid understanding of audio post-production, including ADR, sound design, foley recording, and music editing."
+  },
+  {
+    id: "zima-11",
+    name: "Programme in Film Acting",
+    duration: "6 Months",
+    description: "The Programme in Film Acting offers comprehensive training in various aspects of acting. Over six months, students will engage in voice and diction exercises, improvisation, and monologue preparation.",
+    category: 'zima',
+    icon: "theater_comedy",
+    color: "from-green-500 to-teal-600",
+    image: "/image/Courses/zima-1.png",
+    backgroundImage: "/image/Courses/zima-1.png",
+    curriculum: {
+      title: "PROGRAMME IN FILM ACTING",
+      duration: "6 MONTHS",
+      modules: [
+        {
+          name: "ACTING CURRICULUM",
+          duration: "6 MONTHS",
+          topics: [
+            "Introduction: Open-up exercises, imagination, and memory training",
+            "Voice and diction: Voice training, relaxation, and diction exercises",
+            "Improvisation: Senses-based improvisation and partner exercises",
+            "Monologue and scene work Preparation, performance, and analysis of monologues and scenes",
+            "Theatre: Reading, casting, preparation, and final performance",
+            "Hollywood scene work: Preparation, shooting, and dubbing",
+            "Music video acting: Preparation, shooting, and final assessment",
+            "Film screenings: Regular screenings and assessments throughout the course"
+          ]
+        }
+      ]
+    },
+    studentProfile: "Emerging students will possess strong foundational skills in voice, diction, and improvisation. They will be proficient in preparing and performing monologues, scenes, and plays."
+  },
+  {
+    id: "zima-12",
+    name: "Programme in Fashion Modelling and Personal Grooming",
+    duration: "4 Months",
+    description: "The Programme in Fashion Modelling and Personal Grooming is a comprehensive 4-month course designed to provide aspiring models with essential skills in runway techniques, personal grooming, styling, and posing.",
+    category: 'zima',
+    icon: "face_retouching_natural",
+    color: "from-pink-400 to-rose-600",
+    image: "/image/Courses/zima-2.png",
+    backgroundImage: "/image/Courses/zima-2.png",
+    curriculum: {
+      title: "PROGRAMME IN FASHION MODELLING AND PERSONAL GROOMING",
+      duration: "4 MONTHS",
+      modules: [
+        {
+          name: "MONTH 1",
+          duration: "1 MONTH",
+          topics: [
+            "Introduction to fashion modelling, runway basics, professionalism",
+            "Confidence building, and body language"
+          ]
+        },
+        {
+          name: "MONTH 2",
+          duration: "1 MONTH",
+          topics: [
+            "Personal grooming, styling, posing techniques, and portfolio building"
+          ]
+        },
+        {
+          name: "MONTH 3",
+          duration: "1 MONTH",
+          topics: [
+            "Advanced posing, fitness and wellness for models and personality development"
+          ]
+        },
+        {
+          name: "MONTH 4",
+          duration: "1 MONTH",
+          topics: [
+            "Career development, fashion industry insights, social media branding",
+            "Castings and auditions, and final runway show"
+          ]
+        }
+      ]
+    },
+    studentProfile: "The emerging student is a confident and polished individual equipped with essential modelling skills. They possess a strong understanding of runway techniques, personal styling, and effective posing for both editorial and commercial photoshoots."
   },
   {
     id: "zima-13",
-    name: "Voicing & TV presentation",
-    duration: "3 Months",
-    description: "Training in voice modulation and presentation skills for television and radio.",
+    name: "Programme in Professional Dancing",
+    duration: "4 Months",
+    description: "The Programme in Professional Dancing offers a comprehensive exploration of Bollywood dance styles, techniques, and choreography.",
     category: 'zima',
-    icon: "record_voice_over",
-    color: "from-indigo-500 to-purple-600",
-    image: "/image/Courses/zima-13.png",
-    backgroundImage: "/image/Courses/zima-13.png"
-  },
-  {
-    id: "zima-14",
-    name: "Final Cut Pro (FCP)",
-    duration: "2 Months",
-    description: "Intensive course on video editing using the professional FCP software.",
-    category: 'zima',
-    icon: "video_file",
-    color: "from-blue-600 to-indigo-800",
-    image: "/image/Courses/zima-14.png",
-    backgroundImage: "/image/Courses/zima-14.png"
-  },
-  {
-    id: "zima-15",
-    name: "Avid Media Composer",
-    duration: "2 Months",
-    description: "Mastering the industry-standard editing tool for professional film and TV.",
-    category: 'zima',
-    icon: "video_settings",
-    color: "from-green-600 to-emerald-800",
-    image: "/image/Courses/zima-15.jpg",
-    backgroundImage: "/image/Courses/zima-15.jpg"
-  },
-  {
-    id: "zima-16",
-    name: "Premiere",
-    duration: "2 Months",
-    description: "Fast-paced course on video editing and storytelling using Adobe Premiere Pro.",
-    category: 'zima',
-    icon: "theaters",
-    color: "from-orange-600 to-rose-700",
-    image: "/image/Courses/zima-16.jpg",
-    backgroundImage: "/image/Courses/zima-16.jpg"
+    icon: "diversity_3",
+    color: "from-amber-400 to-orange-600",
+    image: "/image/Courses/zima-3.png",
+    backgroundImage: "/image/Courses/zima-3.png",
+    curriculum: {
+      title: "PROGRAMME IN PROFESSIONAL DANCING",
+      duration: "4 MONTHS",
+      modules: [
+        {
+          name: "MONTH 1",
+          duration: "1 MONTH",
+          topics: [
+            "Introduction to Bollywood dance styles and basic techniques"
+          ]
+        },
+        {
+          name: "MONTH 2",
+          duration: "1 MONTH",
+          topics: [
+            "Introducing Bollywood style variations and techniques"
+          ]
+        },
+        {
+          name: "MONTH 3",
+          duration: "1 MONTH",
+          topics: [
+            "Advanced techniques, styling, and choreography practice"
+          ]
+        },
+        {
+          name: "MONTH 4",
+          duration: "1 MONTH",
+          topics: [
+            "Performance preparation, advanced choreography, and final showcase"
+          ]
+        }
+      ]
+    },
+    studentProfile: "The emerging student is a versatile and confident dancer skilled in a wide range of Bollywood dance styles. With advanced technical proficiency in footwork, expressions, and choreography, they are capable of performing in high-energy, expressive routines."
   }
 ];
 
