@@ -2,8 +2,53 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Footer() {
+  const affiliations = [
+    {
+      name: 'MKCL',
+      src: '/image/affilations/mkcl.svg',
+      width: 120,
+      height: 48,
+    },
+    {
+      name: 'Medhavi Skills University',
+      src: '/image/affilations/Medhavi.png',
+      width: 180,
+      height: 56,
+    },
+    {
+      name: 'Skill India',
+      src: '/image/affilations/Skill India.png',
+      width: 140,
+      height: 56,
+    },
+  ];
+
   return (
     <footer className="bg-slate-900 w-full rounded-t-[2rem] md:rounded-t-[3rem] mt-16 md:mt-20 font-body text-sm">
+      <div className="container mx-auto px-6 md:px-12 pt-10 md:pt-12">
+        <div className="border-b border-slate-700/60 pb-8 md:pb-10">
+          <h3 className="text-center lg:text-left text-white/90 font-bold tracking-wide uppercase text-xs md:text-sm mb-5">
+            Our Affiliations
+          </h3>
+          <div className="flex items-center justify-center lg:justify-start gap-6 md:gap-8 flex-wrap">
+            {affiliations.map((affiliation) => (
+              <div
+                key={affiliation.name}
+                className="bg-white rounded-xl px-4 py-3 shadow-sm"
+              >
+                <Image
+                  src={affiliation.src}
+                  alt={`${affiliation.name} logo`}
+                  width={affiliation.width}
+                  height={affiliation.height}
+                  className="h-10 w-auto object-contain"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="flex flex-col lg:flex-row justify-between items-center px-6 md:px-12 py-12 md:py-16 gap-10 container mx-auto text-center lg:text-left">
         {/* Brand */}
         <div className="flex flex-col items-center lg:items-start gap-6">

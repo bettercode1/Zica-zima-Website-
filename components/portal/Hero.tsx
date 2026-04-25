@@ -189,8 +189,8 @@ export default function Hero() {
         <span className="material-symbols-outlined text-8xl">movie</span>
       </motion.div>
 
-      {/* Offers Bottom Ticker */}
-      <div className="absolute bottom-0 left-0 w-full z-40 bg-orange-600/90 backdrop-blur-md py-1.5 md:py-2 overflow-hidden border-t border-orange-400/30">
+      {/* Offers Top Ticker */}
+      <div className="absolute top-0 left-0 w-full z-40 bg-orange-600/90 backdrop-blur-md py-1.5 md:py-2 overflow-hidden border-b border-orange-400/30">
         <motion.div 
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
