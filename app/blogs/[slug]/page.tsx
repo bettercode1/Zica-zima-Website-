@@ -6,7 +6,7 @@ import Footer from '@/components/portal/Footer';
 import BlogContentRenderer from '@/components/portal/BlogContentRenderer';
 import { getBlogBySlug, getAllBlogs } from '@/lib/blogs';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
+import type { Metadata } from "next";
 
 interface Props {
   params: Promise<{ slug: string }>;
