@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import LazyImage from '@/components/ui/LazyImage';
 
 import { zicaCourses, zimaCourses } from '@/lib/courses';
 
@@ -96,11 +97,13 @@ export default function CourseShowcase() {
                 {course.image && (
                   <div className="relative w-full aspect-video p-px shrink-0">
                     <div className="relative w-full h-full overflow-hidden rounded-t-[2.4rem]">
-                      <Image 
+                      <LazyImage 
                         src={course.image} 
                         alt={course.title} 
                         fill 
                         className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                        priority={index === 0}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     </div>

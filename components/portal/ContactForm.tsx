@@ -56,7 +56,7 @@ export default function ContactForm() {
                   <div className="flex flex-col gap-0.5">
                     <span className="text-[10px] font-extrabold text-white/50 uppercase tracking-[0.2em]">Call Us</span>
                     <div className="flex flex-col">
-                      <a href="tel:+9190287570421" className="text-white hover:text-orange-200 transition-colors font-medium">+91 90287 570421</a>
+                      <a href="tel:+919028757041" className="text-white hover:text-orange-200 transition-colors font-medium">+91 90287 57041</a>
                       <a href="tel:+919028757042" className="text-white hover:text-orange-200 transition-colors font-medium">+91 90287 57042</a>
                     </div>
                   </div>
@@ -174,7 +174,7 @@ export default function ContactForm() {
                         const val = e.target.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 12);
                         setForm(prev => ({ ...prev, phone: val }));
                       }}
-                      placeholder="90287 57042"
+                      placeholder="90287 57041"
                       className="flex-1 bg-slate-50 px-5 py-5 outline-none text-slate-900 font-semibold placeholder:text-slate-300 focus:bg-white transition-all"
                       required
                     />

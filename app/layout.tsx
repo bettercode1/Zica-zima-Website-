@@ -12,8 +12,8 @@ const fontMono = Geist_Mono({
   variable: "--font-mono",
 })
 
-import { Metadata } from "next"
 import { InteractiveOverlays } from "@/components/ui/InteractiveOverlays"
+import SmoothScroll from "@/components/ui/SmoothScroll"
 
 export const metadata: Metadata = {
   title: 'ZICA ZIMA PCMC | Animation & Film Making Institute',
@@ -41,8 +41,10 @@ export default function RootLayout({
       </head>
       <body className="cursor-none" suppressHydrationWarning>
         <ThemeProvider>
-          <InteractiveOverlays />
-          {children}
+          <SmoothScroll>
+            <InteractiveOverlays />
+            {children}
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

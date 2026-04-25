@@ -1,3 +1,6 @@
+'use client';
+
+import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
 
 const features = [
@@ -32,17 +35,42 @@ const features = [
 ];
 
 export default function WhyUs() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.8, ease: [0.21, 0.45, 0.32, 0.9] }
+    }
+  };
+
   return (
-    <section id="about" className="py-16 md:py-24 px-4 sm:px-8 lg:px-24 bg-surface-container-low/30">
+    <section id="about" className="py-16 md:py-24 px-4 sm:px-8 lg:px-24 bg-surface-container-low/30 overflow-hidden">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row gap-12 md:gap-16 items-start">
           {/* Left Sticky Text */}
-          <div className="lg:w-1/3 lg:sticky top-32 text-center lg:text-left">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="lg:w-1/3 lg:sticky top-32 text-center lg:text-left"
+          >
             <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 text-[#141a3b]">
               Designed for the{' '}
               <span className="text-slate-300">Next Gen</span> of Creators.
             </h2>
-            <p className="text-slate-800 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
+            <p className="text-slate-800 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
               We don&apos;t just teach software; we build careers through a
               curriculum that mirrors the fast-paced animation industry.
             </p>
@@ -66,31 +94,36 @@ export default function WhyUs() {
                 <span className="font-bold text-black">100% Placement Assistance</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Feature Cards Grid */}
-          <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8"
+          >
             {features.map((f) => (
-              <GlowCard 
-                key={f.title} 
-                glowColor="orange"
-                customSize={true}
-                className="w-full h-auto p-0"
-              >
-
-                <div className="p-8 space-y-4 h-full relative z-10">
-                  <div className="w-14 h-14 rounded-lg bg-white shadow-sm flex items-center justify-center text-primary">
-                    <span className="material-symbols-outlined text-3xl">
-                      {f.icon}
-                    </span>
+              <motion.div key={f.title} variants={itemVariants}>
+                <GlowCard 
+                  glowColor="orange"
+                  customSize={true}
+                  className="w-full h-auto p-0"
+                >
+                  <div className="p-8 space-y-4 h-full relative z-10">
+                    <div className="w-14 h-14 rounded-lg bg-white shadow-sm flex items-center justify-center text-primary">
+                      <span className="material-symbols-outlined text-3xl">
+                        {f.icon}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-black">{f.title}</h3>
+                    <p className="text-slate-800 leading-relaxed font-medium">{f.description}</p>
                   </div>
-                  <h3 className="text-xl font-bold text-black">{f.title}</h3>
-                  <p className="text-slate-800 leading-relaxed">{f.description}</p>
-                </div>
-
-              </GlowCard>
+                </GlowCard>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

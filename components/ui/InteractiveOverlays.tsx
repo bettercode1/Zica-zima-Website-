@@ -8,16 +8,20 @@ const SplashCursorInternal = dynamic(() => import("@/components/ui/SplashCursor"
 export function InteractiveOverlays() {
   return (
     <>
+      {/* 
+        Restored SplashCursor with optimized settings to provide 
+        the visual flair without the previous cursor lag.
+      */}
       <SplashCursorInternal 
-        SIM_RESOLUTION={64}
-        DYE_RESOLUTION={512}
-        DENSITY_DISSIPATION={2.5}
+        SIM_RESOLUTION={24}
+        DYE_RESOLUTION={256}
+        DENSITY_DISSIPATION={2.8}
         VELOCITY_DISSIPATION={2.0}
         PRESSURE={0.2}
-        PRESSURE_ITERATIONS={10}
-        CURL={10}
-        SPLAT_RADIUS={0.15}
-        SPLAT_FORCE={4000}
+        PRESSURE_ITERATIONS={2}
+        CURL={8}
+        SPLAT_RADIUS={0.12}
+        SPLAT_FORCE={3500}
         COLOR_UPDATE_SPEED={10}
         SHADING={false}
         RAINBOW_MODE={true}

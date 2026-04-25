@@ -6,27 +6,27 @@ import { motion } from 'framer-motion';
 
 export default function AboutSection() {
   return (
-    <section className="py-16 md:py-24 px-4 sm:px-8 lg:px-24 bg-white overflow-hidden relative">
+    <section className="py-12 md:py-24 px-4 sm:px-8 lg:px-24 bg-white overflow-hidden relative">
       {/* Background elements */}
-      <div className="absolute top-1/4 left-0 w-48 h-48 md:w-64 md:h-64 bg-primary/5 rounded-full blur-3xl -translate-x-1/2" />
-      <div className="absolute bottom-1/4 right-0 w-64 h-64 md:w-96 md:h-96 bg-orange-500/5 rounded-full blur-3xl translate-x-1/2" />
+      <div className="absolute top-1/4 left-0 w-32 h-32 md:w-64 md:h-64 bg-primary/5 rounded-full blur-3xl -translate-x-1/2" />
+      <div className="absolute bottom-1/4 right-0 w-48 h-48 md:w-96 md:h-96 bg-orange-500/5 rounded-full blur-3xl translate-x-1/2" />
 
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div className="flex flex-col lg:flex-row gap-10 md:gap-16 items-center">
           {/* Image Side with Blob Shape */}
           <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative order-2 lg:order-1"
+            className="w-full lg:w-1/2 relative order-2 lg:order-1"
           >
             {/* Organic Shape Container */}
-            <div className="relative w-full max-w-md mx-auto aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center">
+            <div className="relative w-full max-w-[280px] sm:max-w-md mx-auto aspect-square flex items-center justify-center">
               <div 
                 className="absolute inset-0 bg-orange-100 rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%] animate-blob"
               />
-              <div className="relative w-[90%] h-[90%] rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%] overflow-hidden shadow-2xl z-10 border-8 border-white">
+              <div className="relative w-[90%] h-[90%] rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%] overflow-hidden shadow-2xl z-10 border-4 md:border-8 border-white">
                 <Image
                   src="/image/amol_sir-1.jpg"
                   alt="Creative Director"
@@ -35,37 +35,36 @@ export default function AboutSection() {
                 />
               </div>
               
-              {/* Decorative elements from sample */}
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 grid grid-cols-5 gap-2 opacity-30">
+              {/* Decorative elements */}
+              <div className="absolute -bottom-2 -left-2 md:-bottom-4 md:-left-4 w-16 h-16 md:w-24 md:h-24 grid grid-cols-5 gap-1 md:gap-2 opacity-30">
                 {[...Array(25)].map((_, i) => (
                   <div key={i} className="w-1 h-1 bg-orange-500 rounded-full" />
                 ))}
               </div>
-              <div className="absolute top-10 -right-10 w-16 h-16 border-4 border-primary/20 rounded-lg rotate-12" />
             </div>
           </motion.div>
 
           {/* Text Side */}
           <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-6 text-center lg:text-left order-1 lg:order-2"
+            className="w-full lg:w-1/2 space-y-6 text-center lg:text-left order-1 lg:order-2"
           >
-            <div className="space-y-4">
-              <span className="text-orange-600 font-bold text-sm uppercase tracking-widest block mb-2">About us</span>
-              <h3 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
-                Transforming Imagination <br />
+            <div className="space-y-2 md:space-y-4">
+              <span className="text-orange-600 font-black text-[10px] sm:text-xs uppercase tracking-[0.3em] block mb-2">About us</span>
+              <h3 className="font-headline text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight">
+                Transforming Imagination <br className="hidden sm:block" />
                 <span className="text-orange-500">Into Reality</span>
               </h3>
             </div>
 
-            <div className="space-y-6 text-[17px] text-slate-700 leading-relaxed font-medium">
+            <div className="space-y-4 md:space-y-6 text-[15px] sm:text-[17px] text-slate-600 leading-relaxed font-medium">
               <p>
                 Step into a world where imagination is not just encouraged—it is transformed into reality. At ZICA ZIMA PCMC, we blend the power of Animation, Visual Effects, Gaming, and Media Arts with modern technology and industry-driven learning.
               </p>
-              <p>
+              <p className="hidden sm:block">
                 More than an institute, we are a launchpad for creators, designers, and storytellers ready to shape the future. From 2D & 3D animation to filmmaking and sound design, every journey here is built to unlock your creative potential.
               </p>
               <p>
@@ -73,15 +72,15 @@ export default function AboutSection() {
               </p>
             </div>
 
-            <div className="flex justify-center lg:justify-start">
+            <div className="flex justify-center lg:justify-start pt-2">
               <Link href="/about">
                 <motion.button 
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-orange-400 to-rose-500 text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-orange-500/20 flex items-center gap-2 group transition-all"
+                  className="bg-slate-900 text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full font-black text-sm md:text-base shadow-xl shadow-slate-900/10 flex items-center gap-2 group transition-all uppercase tracking-widest"
                 >
                   Read More
-                  <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
+                  <span className="material-symbols-outlined text-sm md:text-base group-hover:translate-x-1 transition-transform">
                     arrow_forward
                   </span>
                 </motion.button>

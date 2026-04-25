@@ -49,7 +49,7 @@ export default function BlogSection() {
   }, []);
 
   return (
-    <section className="py-20 bg-surface relative overflow-hidden" id="blog">
+    <section className="py-20 bg-surface relative overflow-hidden" id="blogs">
       {/* Decorative background elements */}
       <div className="absolute top-1/4 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl -z-10 animate-pulse"></div>
       <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-tertiary-container/5 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }}></div>

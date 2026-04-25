@@ -8,10 +8,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
 import Navbar from "@/components/portal/Navbar";
 import { zicaCourses, zimaCourses, Course } from '@/lib/courses';
+import LazyImage from '@/components/ui/LazyImage';
 
 const Footer = dynamic(() => import("@/components/portal/Footer"), { ssr: false });
 
-const CourseCardVisual = ({ course }: { course: Course }) => {
+const CourseCardVisual = ({ course, priority = false }: { course: Course, priority?: boolean }) => {
   const [imageError, setImageError] = useState(false);
 
   // Generate a deterministic unique visual based on the course ID
@@ -101,12 +102,15 @@ const CourseCardVisual = ({ course }: { course: Course }) => {
 
         {/* TOP LAYER: Photographic Asset (Renders if available and working) */}
         {course.image && !imageError && (
-          <Image 
+          <LazyImage 
             src={course.image} 
             alt={course.name} 
             fill 
-            className="object-cover object-center group-hover:scale-110 transition-transform duration-1000 z-10"
+            className="object-cover object-center group-hover:scale-110 transition-all duration-1000 z-10"
             onError={() => setImageError(true)}
+            loading={priority ? "eager" : "lazy"}
+            priority={priority}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           />
         )}
         
@@ -232,7 +236,7 @@ function CoursesContent() {
                     <Link href={`/courses/${course.id}`} className="block h-full">
                       <div className="group bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all flex flex-col h-full relative overflow-hidden">
                         {/* Course Image Header */}
-                        <CourseCardVisual course={course} />
+                        <CourseCardVisual course={course} priority={idx < 4} />
 
                         {/* Course Info */}
                         <div className="p-8 flex flex-col flex-grow">

@@ -89,9 +89,9 @@ const DefaultCursorSVG: FC = () => {
 export function SmoothCursor({
   cursor = <DefaultCursorSVG />,
   springConfig = {
-    damping: 30,
-    stiffness: 100,
-    mass: 0.8,
+    damping: 45,
+    stiffness: 450,
+    mass: 0.5,
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
@@ -158,82 +158,46 @@ export function SmoothCursor({
       lastMousePos.current = currentPos
     }
 
-    const smoothPointerMove = (e: PointerEvent) => {
-      if (!isTrackablePointer(e.pointerType)) {
-        return
-      }
 
-      setIsVisible(true)
-
-      const currentPos = { x: e.clientX, y: e.clientY }
+    const handlePointerMove = (e: PointerEvent) => {
+      if (!isTrackablePointer(e.pointerType)) return;
+      setIsVisible(true);
       
-      // We'll skip setting global CSS variables on documentElement here 
-      // because updating them on every mouse move causes massive style 
-      // recalculation and scrolling lag.
-      // document.documentElement.style.setProperty('--mouse-x', currentPos.x.toFixed(2))
-
-      updateVelocity(currentPos)
-
+      const currentPos = { x: e.clientX, y: e.clientY };
+      updateVelocity(currentPos);
 
       const speed = Math.sqrt(
         Math.pow(velocity.current.x, 2) + Math.pow(velocity.current.y, 2)
-      )
+      );
 
-      cursorX.set(currentPos.x)
-      cursorY.set(currentPos.y)
+      cursorX.set(currentPos.x);
+      cursorY.set(currentPos.y);
 
       if (speed > 0.1) {
-        const currentAngle =
-          Math.atan2(velocity.current.y, velocity.current.x) * (180 / Math.PI) +
-          90
+        const currentAngle = Math.atan2(velocity.current.y, velocity.current.x) * (180 / Math.PI) + 90;
+        let angleDiff = currentAngle - previousAngle.current;
+        if (angleDiff > 180) angleDiff -= 360;
+        if (angleDiff < -180) angleDiff += 360;
+        accumulatedRotation.current += angleDiff;
+        rotation.set(accumulatedRotation.current);
+        previousAngle.current = currentAngle;
 
-        let angleDiff = currentAngle - previousAngle.current
-        if (angleDiff > 180) angleDiff -= 360
-        if (angleDiff < -180) angleDiff += 360
-        accumulatedRotation.current += angleDiff
-        rotation.set(accumulatedRotation.current)
-        previousAngle.current = currentAngle
+        scale.set(0.9);
 
-        scale.set(0.95)
-
-        if (timeout !== null) {
-          clearTimeout(timeout)
-        }
-
-        timeout = setTimeout(() => {
-          scale.set(1)
-        }, 150)
+        if (timeout !== null) clearTimeout(timeout);
+        timeout = setTimeout(() => scale.set(1), 150);
       }
-    }
+    };
 
-    let rafId = 0
-    const throttledPointerMove = (e: PointerEvent) => {
-      if (!isTrackablePointer(e.pointerType)) {
-        return
-      }
-
-      if (rafId) return
-
-      rafId = requestAnimationFrame(() => {
-        smoothPointerMove(e)
-        rafId = 0
-      })
-    }
-
-    document.body.style.cursor = "none"
-    window.addEventListener("pointermove", throttledPointerMove, {
-      passive: true,
-    })
+    document.body.style.cursor = "none";
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
 
     return () => {
-      window.removeEventListener("pointermove", throttledPointerMove)
-      document.body.style.cursor = "auto"
-      if (rafId) cancelAnimationFrame(rafId)
-      if (timeout !== null) {
-        clearTimeout(timeout)
-      }
-    }
-  }, [cursorX, cursorY, rotation, scale, isEnabled])
+      window.removeEventListener("pointermove", handlePointerMove);
+      document.body.style.cursor = "auto";
+      if (timeout !== null) clearTimeout(timeout);
+    };
+  }, [cursorX, cursorY, rotation, scale, isEnabled]);
 
   if (!isEnabled) {
     return null

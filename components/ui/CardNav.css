@@ -1,12 +1,11 @@
 .card-nav-container {
-  position: absolute;
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
+  position: relative;
+  width: 95%;
   max-width: 800px;
+  margin: 0 auto;
   z-index: 99;
   box-sizing: border-box;
+  transition: all 0.5s ease;
 }
 
 .card-nav {

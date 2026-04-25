@@ -2,10 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FilmReels, HorizontalFilmReel } from '@/components/ui/FilmReels';
+import { getActiveOffers, Offer } from '@/lib/offers';
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
+  const [offers, setOffers] = useState<Offer[]>([]);
+  const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
 
   const [particles, setParticles] = useState<{x:number, y:number, top:number, left:number, duration:number, delay:number}[]>([]);
 
@@ -20,86 +24,136 @@ export default function Hero() {
       duration: 10 + i * 2,
       delay: i * 0.5
     })));
+
+    async function loadOffers() {
+      const data = await getActiveOffers();
+      if (data.length > 0) {
+        setOffers(data);
+      } else {
+        // Fallback placeholder if Firebase is empty
+        setOffers([{ id: 'default', text: 'Offers are Coming Soon! Stay in Touch.', active: true, createdAt: new Date() }]);
+      }
+    }
+    loadOffers();
   }, []);
 
+  useEffect(() => {
+    if (offers.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentOfferIndex((prev) => (prev + 1) % offers.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [offers]);
+
   return (
-    <section className="relative min-h-[600px] flex items-center overflow-hidden bg-[#faf8ff] px-4 sm:px-8 lg:px-24 pt-28 sm:pt-32 pb-16 md:py-24">
-      {/* Background Animated Blobs */}
-      <div className="absolute top-[-5%] right-[-5%] md:top-[-10%] md:right-[-10%] w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-primary/10 rounded-full blur-[80px] md:blur-[120px] animate-pulse" />
-      <div className="absolute bottom-[-10%] left-[-5%] md:bottom-[-20%] md:left-[-10%] w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-orange-500/10 rounded-full blur-[100px] md:blur-[150px] animate-pulse delay-1000" />
+    <section className="relative min-h-screen md:h-screen flex items-center justify-center overflow-hidden bg-black px-4 sm:px-8 lg:px-24 pt-[100px] md:pt-0">
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0">
+        <video
+          src="/Videos/Video_for_HERO-Page.mp4"
+          poster="/image/Courses/zica-1.png" 
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover opacity-60"
+        />
+        {/* Black Glassmorphism Overlay */}
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60 z-20" />
+      </div>
+      <FilmReels />
       
-      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center relative z-10">
-        {/* Left Content */}
-        <div className="space-y-6 md:space-y-8 text-center lg:text-left order-1 min-w-0">
-          <div className="space-y-4">
-            <div className="flex flex-col items-center lg:items-start gap-1 ml-1">
-              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-[0.2em]">Backed by</span>
-              <div className="relative w-32 md:w-40 h-10 md:h-12">
-                <Image
-                  src="/image/zee learn.png"
-                  alt="Zee Learn Logo"
-                  fill
-                  className="object-contain object-center lg:object-left"
-                />
+      <div className="container mx-auto relative z-30 flex flex-col items-center md:items-start justify-center py-10 md:py-0">
+        <div className="max-w-4xl w-full px-4 sm:px-0 text-center md:text-left">
+          {/* Main Content Area */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-6 md:space-y-8 min-w-0"
+          >
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+              className="space-y-4 flex flex-col items-center md:items-start"
+            >
+              <div className="flex flex-col items-center md:items-start gap-1">
+                <span className="text-[10px] font-extrabold text-white/60 uppercase tracking-[0.2em]">Backed by</span>
+                <div className="relative w-32 md:w-40 h-10 md:h-12">
+                  <Image
+                    src="/image/zee learn.png"
+                    alt="Zee Learn Logo"
+                    fill
+                    className="object-contain object-center md:object-left"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-bold text-xs md:text-sm tracking-wide">
-              <span
-                className="material-symbols-outlined text-sm"
-                style={{ fontVariationSettings: "'FILL' 1", fontSize: '16px' }}
-              >
-                campaign
-              </span>
-              ADMISSIONS OPEN 2026-27
-            </div>
-          </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 text-white rounded-full font-bold text-xs md:text-sm tracking-wide backdrop-blur-md border border-white/10">
+                <span
+                  className="material-symbols-outlined text-sm"
+                  style={{ fontVariationSettings: "'FILL' 1", fontSize: '16px' }}
+                >
+                  campaign
+                </span>
+                ADMISSIONS OPEN 2026-27
+              </div>
+            </motion.div>
 
-          <h1 className="font-headline text-[clamp(2.5rem,8vw,5.5rem)] font-extrabold leading-[1.04] tracking-[-0.02em] text-[#141a3b] max-w-[16ch] mx-auto lg:mx-0 text-balance">
-            Where Every{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#9d4300] to-[#f1711c] italic">Frame</span> Tells a Story.
-          </h1>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="font-headline text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold leading-[1.1] md:leading-[1.04] tracking-[-0.02em] text-white md:max-w-[12ch] text-balance"
+            >
+              Where Every{' '}
+              <span className="relative inline-block px-2 italic">
+                <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#ff7b1c] to-[#f1711c]">Frame</span>
+              </span> Tells a Story.
+            </motion.h1>
 
-          <p className="text-base md:text-lg text-slate-800 leading-relaxed max-w-xl font-medium mx-auto lg:mx-0">
-            Master the art of visual storytelling at India&apos;s premier animation
-            institute. From 2D classics to 3D blockbusters, we give your
-            creativity the kinetic energy it needs to defy boundaries.
-          </p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              className="text-base md:text-lg text-white/80 leading-relaxed max-w-xl font-medium"
+            >
+              Master the art of visual storytelling at India&apos;s premier animation
+              institute. From 2D classics to 3D blockbusters, we give your
+              creativity the kinetic energy it needs to defy boundaries.
+            </motion.p>
 
 
-          <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-            <button className="kinetic-gradient text-on-primary px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-base md:text-lg shadow-xl hover:shadow-primary/40 transition-all active:scale-95 duration-200">
-              Know More About Courses
-            </button>
-          </div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              className="flex flex-col items-center md:items-start gap-8 w-full"
+            >
+              <button className="kinetic-gradient text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-base md:text-lg shadow-xl hover:shadow-orange-500/40 transition-all active:scale-95 duration-200">
+                Know More About Courses
+              </button>
 
-        </div>
+              {/* Mobile Horizontal Reel */}
+              <div className="w-full md:hidden">
+                <HorizontalFilmReel />
+              </div>
+            </motion.div>
 
-        {/* Right Image/Video */}
-        <div className="relative order-2 w-full max-w-2xl mx-auto lg:max-w-none min-w-0">
-          <div className="absolute -inset-4 bg-primary/20 rounded-xl blur-3xl transition-all duration-500" />
-          <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-[4/3] shadow-2xl border-4 border-white/10 bg-slate-200">
-            <video
-              src="/Videos/Video_for_HERO-Page.mp4"
-              poster="/image/Courses/zica-1.png" 
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover scale-[1.3] lg:scale-100"
-            />
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Floating Particles/Dots */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
         {mounted && particles.map((p, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ 
-              opacity: [0.1, 0.3, 0.1], 
+              opacity: [0.1, 0.4, 0.1], 
               scale: [1, 1.5, 1],
               x: [0, p.x, 0],
               y: [0, p.y, 0]
@@ -110,7 +164,7 @@ export default function Hero() {
               ease: "easeInOut",
               delay: p.delay 
             }}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full"
+            className="absolute w-2 h-2 bg-white/20 rounded-full"
             style={{ 
               top: `${p.top}%`, 
               left: `${p.left}%` 
@@ -119,13 +173,10 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Abstract Background Shape & Decorative Icons */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 -skew-x-12 translate-x-1/2 -z-10" />
-      
       <motion.div 
         animate={{ y: [0, -30, 0], rotate: [0, 15, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[15%] right-[15%] text-primary/10 select-none pointer-events-none"
+        className="absolute top-[15%] right-[15%] text-white/5 select-none pointer-events-none z-10 hidden sm:block"
       >
         <span className="material-symbols-outlined text-8xl">draw</span>
       </motion.div>
@@ -133,26 +184,29 @@ export default function Hero() {
       <motion.div 
         animate={{ y: [0, 30, 0], rotate: [0, -15, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute bottom-[15%] left-[8%] text-orange-500/10 select-none pointer-events-none"
+        className="absolute bottom-[15%] left-[8%] text-orange-500/5 select-none pointer-events-none z-10 hidden sm:block"
       >
         <span className="material-symbols-outlined text-8xl">movie</span>
       </motion.div>
 
-      <motion.div 
-        animate={{ x: [0, 20, 0], y: [0, -20, 0], rotate: [0, -20, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute top-[40%] left-[2%] text-primary/10 select-none pointer-events-none"
-      >
-        <span className="material-symbols-outlined text-7xl">sports_esports</span>
-      </motion.div>
-
-      <motion.div 
-        animate={{ x: [0, -25, 0], y: [0, 25, 0], rotate: [0, 25, 0] }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        className="absolute bottom-[40%] right-[5%] text-orange-500/10 select-none pointer-events-none"
-      >
-        <span className="material-symbols-outlined text-7xl">palette</span>
-      </motion.div>
+      {/* Offers Bottom Ticker */}
+      <div className="absolute bottom-0 left-0 w-full z-40 bg-orange-600/90 backdrop-blur-md py-1.5 md:py-2 overflow-hidden border-t border-orange-400/30">
+        <motion.div 
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="flex whitespace-nowrap items-center gap-6 md:gap-10 w-max"
+        >
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="flex items-center gap-6 md:gap-10">
+              <span className="text-white font-black text-[10px] md:text-sm uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3">
+                <span className="material-symbols-outlined text-[12px] md:text-sm animate-pulse">stars</span>
+                {offers[currentOfferIndex]?.text || 'Offers are Coming Soon! Stay in Touch.'}
+              </span>
+              <span className="text-white/30 font-black text-sm uppercase tracking-[0.2em]">•••</span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import LazyImage from '@/components/ui/LazyImage';
 
 const programs = [
   {
@@ -28,48 +30,51 @@ export default function Programs() {
   return (
     <section
       id="programs"
-      className="py-16 md:py-24 bg-inverse-surface text-white rounded-2xl md:rounded-3xl mx-2 sm:mx-4 lg:mx-8 px-4 sm:px-8 lg:px-24"
+      className="py-12 md:py-24 bg-slate-950 text-white rounded-[2rem] md:rounded-[3rem] mx-2 sm:mx-4 lg:mx-8 px-4 sm:px-6 lg:px-24"
     >
       <div className="container mx-auto">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="font-headline text-4xl font-extrabold mb-4">
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
+          <span className="text-orange-500 font-black text-[10px] uppercase tracking-[0.3em] block mb-2">Our Programs</span>
+          <h2 className="font-headline text-2xl sm:text-4xl font-black mb-4 leading-tight">
             Unleash Your{' '}
-            <span className="text-primary-container">Potential</span>
+            <span className="text-orange-500">Potential</span>
           </h2>
-          <p className="text-slate-400 font-body">
+          <p className="text-slate-400 font-bold text-sm sm:text-base px-4">
             Specialized degree and certificate programs designed to take you
             from hobbyist to professional artist.
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {programs.map((program) => (
             <div
               key={program.title}
-              className="group relative bg-slate-800/50 rounded-xl overflow-hidden transition-all duration-300"
+              className="group relative bg-slate-900/40 border border-slate-800/50 rounded-3xl overflow-hidden transition-all duration-500 hover:bg-slate-900/60 hover:border-orange-500/20"
             >
-              <div className="relative aspect-[4/3] p-px">
-                <div className="relative w-full h-full overflow-hidden rounded-[0.9rem] bg-slate-900/50 flex items-center justify-center">
-                  <Image
+              <div className="relative aspect-[16/10] sm:aspect-[4/3] p-3">
+                <div className="relative w-full h-full overflow-hidden rounded-2xl bg-slate-800/50 flex items-center justify-center">
+                  <LazyImage
                     src={program.img}
                     alt={program.alt}
                     fill
-                    className="object-contain transition-transform duration-500"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold mb-2 font-headline">{program.title}</h3>
-                <p className="text-slate-400 mb-6 font-body">{program.description}</p>
-                <a
-                  href="#"
-                  className="text-primary-container font-bold flex items-center gap-2 group-hover:gap-4 transition-all"
+              <div className="p-6 md:p-8">
+                <h3 className="text-xl md:text-2xl font-black mb-2 font-headline tracking-tight">{program.title}</h3>
+                <p className="text-slate-400 mb-6 font-bold text-xs sm:text-sm leading-relaxed">{program.description}</p>
+                <Link
+                  href="/courses"
+                  className="text-orange-500 font-black text-[11px] uppercase tracking-widest flex items-center gap-2 group/btn transition-all"
                 >
                   View Module
-                  <span className="material-symbols-outlined">trending_flat</span>
-                </a>
+                  <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">trending_flat</span>
+                </Link>
               </div>
             </div>
           ))}

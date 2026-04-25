@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Navbar from "@/components/portal/Navbar";
 import { Course } from '@/lib/courses';
+import LazyImage from '@/components/ui/LazyImage';
 
 const Footer = dynamic(() => import("@/components/portal/Footer"), { ssr: false });
 
@@ -22,6 +23,7 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
 
   return (
     <main ref={containerRef} className="min-h-screen bg-[#050505] text-white selection:bg-primary/20 cursor-none relative">
+      <Navbar />
 
       {/* Announcement Ticker (Sticky) */}
       {course.breakingNews && (
@@ -55,12 +57,13 @@ export default function CourseDetailsClient({ course }: { course: Course }) {
       <div className="fixed inset-0 z-0 pointer-events-none">
         {course.backgroundImage ? (
           <motion.div style={{ opacity: bgOpacity, scale: bgScale }} className="relative w-full h-full">
-            <Image 
+            <LazyImage 
               src={course.backgroundImage} 
               alt="Background" 
               fill 
               className="object-cover"
               priority
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20 z-10" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent z-10" />
