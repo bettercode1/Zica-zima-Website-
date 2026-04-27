@@ -391,9 +391,10 @@ export async function getAllBlogs(): Promise<BlogData[]> {
   try {
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
       const blogsSnapshot = await getDocs(collection(db, "blogs"));
-      const blogs = blogsSnapshot.docs.map(doc => doc.data() as BlogData);
-      // Sort by date descending (assuming date is a string that sorts well or has year)
-      return blogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      if (!blogsSnapshot.empty) {
+        const blogs = blogsSnapshot.docs.map(doc => doc.data() as BlogData);
+        return blogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      }
     }
     return Object.values(LOCAL_BLOGS);
   } catch (error) {

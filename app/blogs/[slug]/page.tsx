@@ -18,16 +18,20 @@ export const dynamicParams = false;
 export async function generateStaticParams() {
   try {
     const blogs = await getAllBlogs();
+    
+    // If no blogs are found, we MUST return at least one valid path 
+    // to satisfy the 'output: export' requirement for dynamic routes.
     if (!blogs || blogs.length === 0) {
-      console.warn("No blogs found during generateStaticParams. Build might be empty.");
-      return [];
+      console.warn("No blogs found. Returning sample path to prevent build failure.");
+      return [{ slug: 'notebooklm-digital-marketing-ai' }]; 
     }
+    
     return blogs.map((blog) => ({
       slug: blog.slug,
     }));
   } catch (error) {
     console.error("Error in generateStaticParams for blogs:", error);
-    return [];
+    return [{ slug: 'notebooklm-digital-marketing-ai' }];
   }
 }
 
