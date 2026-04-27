@@ -61,7 +61,7 @@ const FilmStrip = ({ direction = 'up' }: { direction?: 'up' | 'down' }) => {
   return (
     <div className="relative w-28 md:w-64 h-full shadow-[0_0_100px_rgba(0,0,0,0.5)] [perspective:1000px] [transform-style:preserve-3d]">
       {/* Overall Film Grain Overlay */}
-      <div className="absolute inset-0 z-50 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      <div className="absolute inset-0 z-50 pointer-events-none opacity-[0.03] bg-[url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E')]"></div>
       
       {/* Side Vignette to give cylindrical look */}
       <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black to-transparent z-40 opacity-60"></div>
