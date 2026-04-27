@@ -13,11 +13,22 @@ interface Props {
 }
 
 // Required for static export
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
-  const blogs = await getAllBlogs();
-  return blogs.map((blog) => ({
-    slug: blog.slug,
-  }));
+  try {
+    const blogs = await getAllBlogs();
+    if (!blogs || blogs.length === 0) {
+      console.warn("No blogs found during generateStaticParams. Build might be empty.");
+      return [];
+    }
+    return blogs.map((blog) => ({
+      slug: blog.slug,
+    }));
+  } catch (error) {
+    console.error("Error in generateStaticParams for blogs:", error);
+    return [];
+  }
 }
 
 // Generate dynamic metadata

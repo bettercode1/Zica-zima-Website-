@@ -26,12 +26,6 @@ const nextConfig = {
       }
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: false,
-  },
   experimental: {
     optimizePackageImports: ['lucide-react', 'react-icons', '@tabler/icons-react'],
   },
