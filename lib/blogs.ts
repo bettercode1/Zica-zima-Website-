@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, orderBy, query, limit, startAfter, Timestamp } from "firebase/firestore";
 
 export interface BlogSection {
   type: 'text_block' | 'grid_list' | 'image' | 'comparison_table';
@@ -20,6 +20,7 @@ export interface BlogData {
   category: string;
   coverImage: string;
   date: string;
+  createdAt?: Timestamp; // For backend sorting
   readTime: string;
   sections: BlogSection[];
   faqs?: { question: string; answer: string }[];
@@ -366,87 +367,121 @@ export const LOCAL_BLOGS: Record<string, BlogData> = {
   }
 };
 
+// Helper to transform Firestore data safely
+function transformBlogData(data: any): BlogData {
+  const blog = { ...data } as BlogData;
+  
+  // 1. Convert Timestamp to String for display if needed
+  if (blog.date && typeof blog.date === 'object' && 'seconds' in blog.date) {
+    const ts = blog.date as any;
+    const dateObj = new Date(ts.seconds * 1000);
+    blog.date = dateObj.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+
+  // 2. Handle Base64 images (ensures they have the correct prefix if missing)
+  if (blog.coverImage && blog.coverImage.length > 100 && !blog.coverImage.startsWith('http') && !blog.coverImage.startsWith('data:')) {
+    blog.coverImage = `data:image/png;base64,${blog.coverImage}`;
+  }
+
+  return blog;
+}
+
 export async function getBlogBySlug(slug: string): Promise<BlogData | null> {
-  console.log("Fetching blog for slug:", slug);
   try {
-    // 1. Try to fetch from Firestore if configured
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
       const blogDoc = await getDoc(doc(db, "blogs", slug));
       if (blogDoc.exists()) {
-        return blogDoc.data() as BlogData;
+        return transformBlogData(blogDoc.data());
       }
     }
-    
-    // 2. Fallback to local data for now
     const blog = LOCAL_BLOGS[slug] || null;
-    console.log("Blog found in local data:", !!blog);
     return blog;
   } catch (error) {
-    console.error("Error fetching blog:", error);
     return LOCAL_BLOGS[slug] || null;
   }
 }
 
 export async function getAllBlogs(): Promise<BlogData[]> {
   try {
+    let allBlogs: BlogData[] = [];
+    
+    // 1. Fetch from Firebase
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
       const blogsSnapshot = await getDocs(collection(db, "blogs"));
       if (!blogsSnapshot.empty) {
-        const blogs = blogsSnapshot.docs.map(doc => doc.data() as BlogData);
-        return blogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        allBlogs = blogsSnapshot.docs.map(doc => transformBlogData(doc.data()));
       }
     }
-    return Object.values(LOCAL_BLOGS);
-  } catch (error) {
-    console.error("Error fetching all blogs:", error);
-    return Object.values(LOCAL_BLOGS);
-  }
-}
+    
+    // 2. Add Static Blogs
+    const staticBlogs = Object.values(LOCAL_BLOGS).map(b => transformBlogData(b));
+    allBlogs = [...allBlogs, ...staticBlogs];
 
-export async function getBlogsPaginated(limitCount: number = 15, lastVisible?: any): Promise<{ blogs: BlogData[], lastDoc?: any }> {
-  try {
-    if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
-      const { query, orderBy, limit, startAfter } = await import("firebase/firestore");
-      let q = query(collection(db, "blogs"), orderBy("date", "desc"), limit(limitCount));
-      
-      if (lastVisible) {
-        q = query(collection(db, "blogs"), orderBy("date", "desc"), startAfter(lastVisible), limit(limitCount));
-      }
-      
-      const blogsSnapshot = await getDocs(q);
-      const blogs = blogsSnapshot.docs.map(doc => doc.data() as BlogData);
-      const last = blogsSnapshot.docs[blogsSnapshot.docs.length - 1];
-      
-      return { blogs, lastDoc: last };
-    }
-    
-    // Local fallback pagination
-    const allBlogs = Object.values(LOCAL_BLOGS);
-    const sortedBlogs = allBlogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    
-    // Since local data is small, we just slice it
-    const startIdx = lastVisible ? parseInt(lastVisible) : 0;
-    const paginatedBlogs = sortedBlogs.slice(startIdx, startIdx + limitCount);
-    const nextIdx = startIdx + limitCount < sortedBlogs.length ? (startIdx + limitCount).toString() : undefined;
-    
-    return { blogs: paginatedBlogs, lastDoc: nextIdx };
+    // 3. Sort by Date
+    return allBlogs.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
   } catch (error) {
-    console.error("Error in paginated fetch:", error);
-    return { blogs: Object.values(LOCAL_BLOGS).slice(0, limitCount), lastDoc: undefined };
+    return Object.values(LOCAL_BLOGS).map(b => transformBlogData(b));
   }
 }
 
 export async function getTotalBlogsCount(): Promise<number> {
+  let firebaseCount = 0;
   try {
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
       const { getCountFromServer } = await import("firebase/firestore");
       const coll = collection(db, "blogs");
       const snapshot = await getCountFromServer(coll);
-      return snapshot.data().count;
+      firebaseCount = snapshot.data().count;
     }
-    return Object.keys(LOCAL_BLOGS).length;
+  } catch (e) {}
+  
+  const staticCount = Object.keys(LOCAL_BLOGS).length;
+  return firebaseCount + staticCount;
+}
+
+export async function getBlogsPaginated(limitCount: number = 15, lastVisible?: any): Promise<{ blogs: BlogData[], lastDoc?: any }> {
+  try {
+    let allBlogs: BlogData[] = [];
+    
+    // 1. Fetch from Firebase
+    if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
+      const blogsSnapshot = await getDocs(collection(db, "blogs"));
+      if (!blogsSnapshot.empty) {
+        allBlogs = blogsSnapshot.docs.map(doc => transformBlogData(doc.data()));
+      }
+    }
+    
+    // 2. Add Static Blogs
+    const staticBlogs = Object.values(LOCAL_BLOGS).map(b => transformBlogData(b));
+    allBlogs = [...allBlogs, ...staticBlogs];
+
+    // 3. Sort by Date
+    allBlogs.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
+
+    // 4. Manual Pagination for the combined list
+    const startIdx = lastVisible ? parseInt(lastVisible) : 0;
+    const paginatedBlogs = allBlogs.slice(startIdx, startIdx + limitCount);
+    const nextIdx = (startIdx + limitCount < allBlogs.length) ? (startIdx + limitCount).toString() : undefined;
+
+    return { 
+      blogs: paginatedBlogs, 
+      lastDoc: nextIdx 
+    };
   } catch (error) {
-    return Object.keys(LOCAL_BLOGS).length;
+    const staticBlogs = Object.values(LOCAL_BLOGS).slice(0, limitCount);
+    return { blogs: staticBlogs, lastDoc: undefined };
   }
 }
 

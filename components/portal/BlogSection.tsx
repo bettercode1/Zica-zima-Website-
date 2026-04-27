@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./BlogSection.module.css";
 import { getAllBlogs, BlogData } from "@/lib/blogs";
 
@@ -10,10 +11,11 @@ const BlogCard = ({ title, desc, link, bgImage, date }: { title: string, desc: s
     <div className={`${styles.card} group bg-slate-900 p-px`}>
       <div className="absolute inset-px overflow-hidden rounded-[0.9rem]">
         {bgImage && (
-          <img 
+          <Image 
             src={bgImage} 
             alt={title} 
-            className="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500"
+            fill
+            className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-500"
           />
         )}
       </div>
@@ -70,42 +72,44 @@ export default function BlogSection() {
               <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mb-4"></div>
               <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Loading Insights...</p>
             </div>
-          ) : blogs.length > 0 ? (
-            blogs.map((blog) => (
-              <BlogCard 
-                key={blog.slug}
-                title={blog.title}
-                desc={blog.meta.description.slice(0, 100) + "..."}
-                link={`/blogs/${blog.slug}`}
-                bgImage={blog.coverImage}
-                date={blog.date}
-              />
-            ))
           ) : (
-            <p className="col-span-full text-slate-500">No blogs found.</p>
-          )}
-
-          {/* Hardcoded placeholders for design consistency if only one blog exists */}
-          {!loading && blogs.length === 1 && (
             <>
-              <BlogCard 
-                title="Animation Trends"
-                desc="Explore the latest trends in 3D animation and what studios are looking for in new talent."
-                link="#"
-                bgImage="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80"
-              />
-              <BlogCard 
-                title="Design Masterclass"
-                desc="Learn the core principles of UI/UX design that every aspiring designer needs to know."
-                link="#"
-                bgImage="https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&w=800&q=80"
-              />
-              <BlogCard 
-                title="Careers in UI/UX"
-                desc="A deep dive into why UI/UX design is one of the most highly sought-after creative careers today."
-                link="#"
-                bgImage="https://images.unsplash.com/photo-1541462608141-ad1557d44c02?auto=format&fit=crop&w=800&q=80"
-              />
+              {blogs.slice(0, 4).map((blog) => (
+                <BlogCard 
+                  key={blog.slug}
+                  title={blog.title}
+                  desc={blog.meta.description.slice(0, 100) + "..."}
+                  link={`/blogs/${blog.slug}`}
+                  bgImage={blog.coverImage}
+                  date={blog.date}
+                />
+              ))}
+              
+              {/* Hardcoded placeholders - Only showing enough to fill a total of 4 cards */}
+              {blogs.length < 1 && (
+                <BlogCard 
+                  title="Animation Trends"
+                  desc="Explore the latest trends in 3D animation and what studios are looking for in new talent."
+                  link="#"
+                  bgImage="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80"
+                />
+              )}
+              {blogs.length < 2 && (
+                <BlogCard 
+                  title="Design Masterclass"
+                  desc="Learn the core principles of UI/UX design that every aspiring designer needs to know."
+                  link="#"
+                  bgImage="https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&w=800&q=80"
+                />
+              )}
+              {blogs.length < 3 && (
+                <BlogCard 
+                  title="Careers in UI/UX"
+                  desc="A deep dive into why UI/UX design is one of the most highly sought-after creative careers today."
+                  link="#"
+                  bgImage="https://images.unsplash.com/photo-1541462608141-ad1557d44c02?auto=format&fit=crop&w=800&q=80"
+                />
+              )}
             </>
           )}
         </div>

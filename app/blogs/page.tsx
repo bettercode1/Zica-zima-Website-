@@ -62,36 +62,44 @@ const BlogCard = ({ blog, index }: { blog: BlogData, index: number }) => {
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<BlogData[]>([]);
-  const [lastDoc, setLastDoc] = useState<any>(null);
+  const [lastDocs, setLastDocs] = useState<any[]>([null]); // Store last doc of each page
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    async function init() {
-      setLoading(true);
-      const [data, count] = await Promise.all([
-        getBlogsPaginated(BLOG_LIMIT),
-        getTotalBlogsCount()
-      ]);
-      setBlogs(data.blogs);
-      setLastDoc(data.lastDoc);
+    async function fetchTotal() {
+      const count = await getTotalBlogsCount();
       setTotalCount(count);
-      setLoading(false);
     }
-    init();
+    fetchTotal();
   }, []);
 
-  const loadMore = async () => {
-    if (!lastDoc || loadingMore) return;
-    setLoadingMore(true);
-    const data = await getBlogsPaginated(BLOG_LIMIT, lastDoc);
-    setBlogs(prev => [...prev, ...data.blogs]);
-    setLastDoc(data.lastDoc);
-    setLoadingMore(false);
-  };
+  useEffect(() => {
+    async function fetchPage() {
+      setLoading(true);
+      // Fetch using the lastDoc of the previous page
+      const data = await getBlogsPaginated(BLOG_LIMIT, lastDocs[currentPage - 1]);
+      setBlogs(data.blogs);
+      
+      // Store the lastDoc of the CURRENT page for the NEXT page
+      if (data.lastDoc && lastDocs.length <= currentPage) {
+        setLastDocs(prev => [...prev, data.lastDoc]);
+      }
+      
+      setLoading(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    fetchPage();
+  }, [currentPage]);
 
-  const hasMore = blogs.length < totalCount;
+  const totalPages = Math.ceil(totalCount / BLOG_LIMIT);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <main className="bg-slate-50 min-h-screen font-sans">
@@ -143,22 +151,38 @@ export default function BlogsPage() {
                 </AnimatePresence>
               </div>
 
-              {hasMore && (
-                <div className="mt-20 flex justify-center">
+              {totalPages > 1 && (
+                <div className="mt-20 flex justify-center items-center gap-4">
                   <button
-                    onClick={loadMore}
-                    disabled={loadingMore}
-                    className="group relative bg-slate-900 text-white px-12 py-5 rounded-full font-black text-sm uppercase tracking-widest overflow-hidden transition-all hover:pr-14 disabled:opacity-50"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:text-orange-600 hover:border-orange-600 disabled:opacity-30 disabled:pointer-events-none transition-all"
                   >
-                    <span className="relative z-10">
-                      {loadingMore ? "Fetching More..." : "Load More Stories"}
-                    </span>
-                    {!loadingMore && (
-                      <span className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all material-symbols-outlined">
-                        expand_more
-                      </span>
-                    )}
-                    <div className="absolute inset-0 bg-orange-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <span className="material-symbols-outlined">chevron_left</span>
+                  </button>
+                  
+                  <div className="flex items-center gap-2">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`w-12 h-12 rounded-full text-sm font-black transition-all ${
+                          currentPage === page 
+                          ? 'bg-orange-600 text-white shadow-lg' 
+                          : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+  
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:text-orange-600 hover:border-orange-600 disabled:opacity-30 disabled:pointer-events-none transition-all"
+                  >
+                    <span className="material-symbols-outlined">chevron_right</span>
                   </button>
                 </div>
               )}
