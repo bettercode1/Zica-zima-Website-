@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FilmReels, HorizontalFilmReel } from '@/components/ui/FilmReels';
-import { getActiveOffers, Offer } from '@/lib/offers';
+import { getPromotionalOffers, PromotionalOffer } from '@/lib/offers';
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
-  const [offers, setOffers] = useState<Offer[]>([]);
+  const [offers, setOffers] = useState<PromotionalOffer[]>([]);
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
 
   const [particles, setParticles] = useState<{x:number, y:number, top:number, left:number, duration:number, delay:number}[]>([]);
@@ -26,12 +26,13 @@ export default function Hero() {
     })));
 
     async function loadOffers() {
-      const data = await getActiveOffers();
-      if (data.length > 0) {
+      const data = await getPromotionalOffers();
+      
+      if (data && data.length > 0) {
         setOffers(data);
       } else {
         // Fallback placeholder if Firebase is empty
-        setOffers([{ id: 'default', text: 'Offers are Coming Soon! Stay in Touch.', active: true, createdAt: new Date() }]);
+        setOffers([{ id: 'default', text: 'Offers are Coming Soon! Stay in Touch.', active: true, priority: 0, createdAt: new Date() }]);
       }
     }
     loadOffers();
@@ -193,16 +194,31 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-full z-40 bg-orange-600/90 backdrop-blur-md py-1.5 md:py-2 overflow-hidden border-b border-orange-400/30">
         <motion.div 
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="flex whitespace-nowrap items-center gap-6 md:gap-10 w-max"
         >
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="flex items-center gap-6 md:gap-10">
-              <span className="text-white font-black text-[10px] md:text-sm uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3">
-                <span className="material-symbols-outlined text-[12px] md:text-sm animate-pulse">stars</span>
-                {offers[currentOfferIndex]?.text || 'Offers are Coming Soon! Stay in Touch.'}
-              </span>
-              <span className="text-white/30 font-black text-sm uppercase tracking-[0.2em]">•••</span>
+          {/* We repeat the group of offers to create a seamless loop */}
+          {[...Array(4)].map((_, groupIndex) => (
+            <div key={groupIndex} className="flex items-center gap-6 md:gap-10">
+              {offers.length > 0 ? (
+                offers.map((offer, i) => (
+                  <div key={`${groupIndex}-${i}`} className="flex items-center gap-6 md:gap-10">
+                    <span className="text-white font-black text-[10px] md:text-sm uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3">
+                      <span className="material-symbols-outlined text-[12px] md:text-sm animate-pulse">stars</span>
+                      {offer.text}
+                    </span>
+                    <span className="text-white/30 font-black text-sm uppercase tracking-[0.2em]">•••</span>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center gap-6 md:gap-10">
+                  <span className="text-white font-black text-[10px] md:text-sm uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3">
+                    <span className="material-symbols-outlined text-[12px] md:text-sm animate-pulse">stars</span>
+                    Loading Offers...
+                  </span>
+                  <span className="text-white/30 font-black text-sm uppercase tracking-[0.2em]">•••</span>
+                </div>
+              )}
             </div>
           ))}
         </motion.div>
