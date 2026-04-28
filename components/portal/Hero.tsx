@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FilmReels, HorizontalFilmReel } from '@/components/ui/FilmReels';
 import { getPromotionalOffers, PromotionalOffer } from '@/lib/offers';
@@ -47,7 +48,7 @@ export default function Hero() {
   }, [offers]);
 
   return (
-    <section className="relative min-h-screen md:h-screen flex items-center justify-center overflow-hidden bg-black px-4 sm:px-8 lg:px-24 pt-[100px] md:pt-0">
+    <section className="relative min-h-[85vh] md:h-[90vh] flex items-center justify-center overflow-hidden bg-black px-4 sm:px-8 lg:px-24 pt-[100px] md:pt-0">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
         <video
@@ -66,7 +67,7 @@ export default function Hero() {
       </div>
       <FilmReels />
       
-      <div className="container mx-auto relative z-30 flex flex-col items-center md:items-start justify-center py-10 md:py-0">
+      <div className="container mx-auto relative z-30 flex flex-col items-center md:items-start justify-center py-10 md:py-0 mt-12 md:mt-16">
         <div className="max-w-4xl w-full px-4 sm:px-0 text-center md:text-left">
           {/* Main Content Area */}
           <motion.div 
@@ -75,33 +76,7 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="space-y-6 md:space-y-8 min-w-0"
           >
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-              className="space-y-4 flex flex-col items-center md:items-start"
-            >
-              <div className="flex flex-col items-center md:items-start gap-1">
-                <span className="text-[10px] font-extrabold text-white/60 uppercase tracking-[0.2em]">Backed by</span>
-                <div className="relative w-32 md:w-40 h-10 md:h-12">
-                  <Image
-                    src="/image/zee learn.png"
-                    alt="Zee Learn Logo"
-                    fill
-                    className="object-contain object-center md:object-left"
-                  />
-                </div>
-              </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 text-white rounded-full font-bold text-xs md:text-sm tracking-wide backdrop-blur-md border border-white/10">
-                <span
-                  className="material-symbols-outlined text-sm"
-                  style={{ fontVariationSettings: "'FILL' 1", fontSize: '16px' }}
-                >
-                  campaign
-                </span>
-                ADMISSIONS OPEN 2026-27
-              </div>
-            </motion.div>
+
 
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -111,7 +86,7 @@ export default function Hero() {
             >
               Where Every{' '}
               <span className="relative inline-block px-2 italic">
-                <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#ff7b1c] to-[#f1711c]">Frame</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#ff7b1c] to-[#f1711c] pr-4">Frame</span>
               </span> Tells a Story.
             </motion.h1>
 
@@ -119,7 +94,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              className="text-base md:text-lg text-white/80 leading-relaxed max-w-xl font-medium"
+              className="text-base md:text-lg text-white/80 leading-relaxed max-w-xl md:max-w-xs lg:max-w-xl font-medium"
             >
               Master the art of visual storytelling at India&apos;s premier animation
               institute. From 2D classics to 3D blockbusters, we give your
@@ -133,9 +108,29 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
               className="flex flex-col items-center md:items-start gap-8 w-full"
             >
-              <button className="kinetic-gradient text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-base md:text-lg shadow-xl hover:shadow-orange-500/40 transition-all active:scale-95 duration-200">
-                Know More About Courses
-              </button>
+              <Link href="/courses">
+                <button className="kinetic-gradient text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-base md:text-lg shadow-xl hover:shadow-orange-500/40 transition-all active:scale-95 duration-200">
+                  Know More About Courses
+                </button>
+              </Link>
+
+              {/* Our Affiliations Section */}
+              <div className="mt-8 flex flex-col items-center md:items-start gap-4">
+                <h3 className="text-xs font-black tracking-[0.2em] text-white">
+                  OUR <span className="text-[#38bdf8]">AFFILIATIONS</span>
+                </h3>
+                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start md:max-w-xs lg:max-w-none">
+                  <div className="bg-white px-6 py-3 rounded-[20px] flex items-center justify-center h-16 w-32 shadow-md">
+                    <Image src="/image/affilations/mkcl.svg" alt="MKCL" width={90} height={35} className="object-contain max-h-10" />
+                  </div>
+                  <div className="bg-white px-6 py-3 rounded-[20px] flex items-center justify-center h-16 w-44 shadow-md">
+                    <Image src="/image/affilations/Medhavi.png" alt="Medhavi Skills University" width={140} height={35} className="object-contain max-h-10" />
+                  </div>
+                  <div className="bg-white px-6 py-3 rounded-[20px] flex items-center justify-center h-16 w-32 shadow-md">
+                    <Image src="/image/affilations/Skill India.png" alt="Skill India" width={90} height={35} className="object-contain max-h-10" />
+                  </div>
+                </div>
+              </div>
 
               {/* Mobile Horizontal Reel */}
               <div className="w-full md:hidden">

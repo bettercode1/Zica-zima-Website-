@@ -4,6 +4,9 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { IconArrowUpRight } from '@tabler/icons-react';
 import Image from 'next/image';
+import { SocialIcon } from 'react-social-icons';
+import Link from 'next/link';
+import { PhoneCallIcon } from '@/components/ui/phone-call-icon';
 import './CardNav.css';
 
 interface NavLink {
@@ -50,38 +53,35 @@ const CardNav = ({
 
   const calculateHeight = () => {
     const navEl = navRef.current;
-    if (!navEl) return 260;
+    if (!navEl) return 400;
 
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    if (isMobile) {
-      const contentEl = navEl.querySelector('.card-nav-content') as HTMLElement;
-      if (contentEl) {
-        const wasVisible = contentEl.style.visibility;
-        const wasPointerEvents = contentEl.style.pointerEvents;
-        const wasPosition = contentEl.style.position;
-        const wasHeight = contentEl.style.height;
+    const contentEl = navEl.querySelector('.card-nav-content') as HTMLElement;
+    if (contentEl) {
+      const wasVisible = contentEl.style.visibility;
+      const wasPointerEvents = contentEl.style.pointerEvents;
+      const wasPosition = contentEl.style.position;
+      const wasHeight = contentEl.style.height;
 
-        contentEl.style.visibility = 'visible';
-        contentEl.style.pointerEvents = 'auto';
-        contentEl.style.position = 'static';
-        contentEl.style.height = 'auto';
+      contentEl.style.visibility = 'visible';
+      contentEl.style.pointerEvents = 'auto';
+      contentEl.style.position = 'static';
+      contentEl.style.height = 'auto';
 
-        // Trigger reflow
-        void contentEl.offsetHeight;
+      // Trigger reflow
+      void contentEl.offsetHeight;
 
-        const topBar = 60;
-        const padding = 16;
-        const contentHeight = contentEl.scrollHeight;
+      const topBar = 60;
+      const padding = 0;
+      const contentHeight = contentEl.scrollHeight;
 
-        contentEl.style.visibility = wasVisible;
-        contentEl.style.pointerEvents = wasPointerEvents;
-        contentEl.style.position = wasPosition;
-        contentEl.style.height = wasHeight;
+      contentEl.style.visibility = wasVisible;
+      contentEl.style.pointerEvents = wasPointerEvents;
+      contentEl.style.position = wasPosition;
+      contentEl.style.height = wasHeight;
 
-        return topBar + contentHeight + padding;
-      }
+      return topBar + contentHeight + padding;
     }
-    return 260;
+    return 400;
   };
 
   const createTimeline = () => {
@@ -177,8 +177,8 @@ const CardNav = ({
             <div className="hamburger-line" />
           </div>
 
-          <div className="logo-container">
-            <div className="relative w-32 h-10">
+          <div className="logo-container flex items-center gap-2">
+            <div className="relative w-24 h-8 sm:w-32 sm:h-10 flex-shrink-0">
               <Image 
                 src={logo} 
                 alt={logoAlt} 
@@ -186,15 +186,28 @@ const CardNav = ({
                 className="object-contain" 
               />
             </div>
+            <div className="flex flex-col justify-center relative w-16 h-6 sm:w-24 sm:h-8 flex-shrink-0">
+              <span className="text-[6px] sm:text-[8px] font-extrabold text-slate-400 uppercase tracking-[0.2em] mb-0 leading-none">Backed by</span>
+              <div className="relative w-full h-full -mt-0.5">
+                <Image 
+                  src="/image/zee learn.png"
+                  alt="Zee Learn Logo"
+                  fill
+                  className="object-contain object-left"
+                  priority
+                />
+              </div>
+            </div>
           </div>
 
-          <button
-            type="button"
-            className="card-nav-cta-button"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
-          >
-            Enquiry Now
-          </button>
+          <Link href="/#admissions" className="order-2 sm:order-none">
+            <button
+              className="flex items-center gap-2 kinetic-gradient text-on-primary px-4 py-1.5 sm:px-6 sm:py-2 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200 group text-xs sm:text-sm"
+            >
+              Enquiry Now
+              <PhoneCallIcon size={16} className="text-white ml-1" />
+            </button>
+          </Link>
         </div>
 
         <div className="card-nav-content" aria-hidden={!isExpanded}>
@@ -216,6 +229,38 @@ const CardNav = ({
               </div>
             </div>
           ))}
+          
+          {/* Social Icons & Contact Info for Mobile only */}
+          <div 
+            className="nav-card flex flex-col gap-2 p-4" 
+            style={{ backgroundColor: '#0f172a', color: '#f8fafc' }}
+            ref={setCardRef(3)}
+          >
+            <div className="nav-card-label" style={{ color: '#f8fafc', marginBottom: '8px' }}>Contact & Socials</div>
+            <div className="flex flex-col gap-1 text-sm">
+              <span className="text-slate-400 font-medium">Call Us:</span>
+              <a href="tel:+919028757041" className="hover:text-orange-500 transition-colors font-bold text-base">+91 90287 57041</a>
+              <a href="tel:+919028757042" className="hover:text-orange-500 transition-colors font-bold text-base">+91 90287 57042</a>
+            </div>
+            <div className="flex items-center gap-4 mt-2">
+              {[
+                { id: 'wa', url: "https://wa.me/919028757041?text=Need%20to%20Know%20More%20about%20Courses" },
+                { id: 'li', url: "https://www.linkedin.com/company/zee-institue-of-creative-media-arts-pimpri-chinchwad/" },
+                { id: 'ig', url: "https://www.instagram.com/zicazima_pcmc/" },
+                { id: 'fb', url: "https://www.facebook.com/zicazimapcmcpune/" },
+                { id: 'yt', url: "https://www.youtube.com/@ZICAZIMAInstitutePCMCPune" }
+              ].map((social) => (
+                <div key={social.id} className="transition-transform duration-200 hover:scale-110">
+                  <SocialIcon 
+                    url={social.url} 
+                    style={{ height: 28, width: 28 }} 
+                    bgColor="rgba(255, 255, 255, 0.1)"
+                    fgColor="#ffffff"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </nav>
     </div>

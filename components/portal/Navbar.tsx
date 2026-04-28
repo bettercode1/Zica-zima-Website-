@@ -6,13 +6,17 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import CardNav from '@/components/ui/CardNav';
+import { PhoneCallIcon } from '@/components/ui/phone-call-icon';
+import { SocialIcon } from 'react-social-icons';
 
 export default function Navbar() {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [hoveredBrand, setHoveredBrand] = useState<'zica' | 'zima' | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const pathname = usePathname();
 
@@ -43,8 +47,10 @@ export default function Navbar() {
       textColor: "#c2410c",
       links: [
         { label: "Blogs", href: "/blogs", ariaLabel: "Read our blogs" },
-        { label: "Contact Us", href: "#admissions", ariaLabel: "Contact Us" },
-        { label: "Enquiry", href: "#admissions", ariaLabel: "Enquiry" }
+        { label: "Gallary", href: "/gallery", ariaLabel: "Gallary" },
+        { label: "Value Addition", href: "https://klic.mkcl.org/klic-courses", ariaLabel: "Value Addition" },
+        { label: "Contact Us", href: "/#admissions", ariaLabel: "Contact Us" },
+        { label: "Enquiry", href: "/#admissions", ariaLabel: "Enquiry" }
       ]
     }
   ];
@@ -90,30 +96,93 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Small Top Bar for Social Icons & Contact */}
+      <div className="bg-slate-950 w-full border-b border-slate-900 relative z-50">
+        <div className="max-w-[1580px] mx-auto px-4 sm:px-8 py-1.5 flex flex-col sm:flex-row justify-between items-center gap-2 relative">
+          {/* Contact Info */}
+          <div className="order-2 sm:order-1 flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-3 text-[11px] sm:text-xs font-medium text-slate-300">
+            <span className="text-slate-400">Contact Us:</span>
+            <a href="tel:+919028757041" className="hover:text-orange-600 transition-colors font-semibold">+91 90287 57041</a>
+            <span className="text-slate-700">|</span>
+            <a href="tel:+919028757042" className="hover:text-orange-600 transition-colors font-semibold">+91 90287 57042</a>
+          </div>
+
+          {/* Admissions Open Announcement */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:block">
+            <div className="bg-white/10 backdrop-blur-sm px-4 py-1 rounded-full flex items-center gap-2 text-[10px] font-extrabold text-white tracking-wider animate-pulse border border-white/10">
+              <span className="text-xs">📢</span>
+              <span>ADMISSIONS OPEN 2026-27</span>
+            </div>
+          </div>
+
+          {/* Social Icons including WhatsApp */}
+          <div className="order-1 sm:order-3 flex items-center gap-3">
+            {[
+              { id: 'wa', url: "https://wa.me/919028757041?text=Need%20to%20Know%20More%20about%20Courses" },
+              { id: 'li', url: "https://www.linkedin.com/company/zee-institue-of-creative-media-arts-pimpri-chinchwad/" },
+              { id: 'ig', url: "https://www.instagram.com/zicazima_pcmc/" },
+              { id: 'fb', url: "https://www.facebook.com/zicazimapcmcpune/" },
+              { id: 'yt', url: "https://www.youtube.com/@ZICAZIMAInstitutePCMCPune" }
+            ].map((social) => (
+              <div 
+                key={social.id}
+                onMouseEnter={() => setHoveredSocial(social.id)}
+                onMouseLeave={() => setHoveredSocial(null)}
+                className="transition-transform duration-200 hover:scale-110 flex items-center justify-center"
+              >
+                <SocialIcon 
+                  url={social.url} 
+                  style={{ height: 20, width: 20 }} 
+                  bgColor={hoveredSocial === social.id ? '#ea580c' : 'rgba(255, 255, 255, 0.1)'}
+                  fgColor={hoveredSocial === social.id ? '#ffffff' : '#94a3b8'}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Desktop Navbar */}
-      <nav className={`hidden md:block sticky top-0 w-full z-50 transition-all duration-500 font-headline tracking-tight ${
+      <nav className={`hidden xl:block sticky top-0 w-full z-50 transition-all duration-500 font-headline tracking-tight ${
         isScrolled 
-          ? 'bg-white/90 backdrop-blur-xl py-2 shadow-xl shadow-slate-900/5' 
-          : 'bg-white/70 backdrop-blur-md py-4 border-b border-white/10'
+          ? 'bg-white/95 backdrop-blur-xl py-2 shadow-xl shadow-slate-900/5' 
+          : 'bg-white/80 backdrop-blur-md py-4 border-b border-white/10'
       }`}>
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-12">
-          {/* Logo */}
-          <div className="flex-shrink-0">
+
+        <div className="max-w-[1580px] mx-auto px-4 sm:px-8 flex justify-between items-center">
+          {/* Logos */}
+          <div className="flex-shrink-0 flex items-center gap-0 -ml-2 lg:-ml-8">
             <Link href="/" className={`block relative transition-all duration-500 ${
-              isScrolled ? 'h-12 w-32 md:h-16 md:w-44' : 'h-14 w-36 md:h-20 md:w-52 md:scale-110'
+              isScrolled ? 'h-[40px] w-[130px] md:h-[50px] md:w-[160px]' : 'h-[50px] w-[160px] md:h-[64px] md:w-[200px]'
             }`}>
               <Image 
                 src="/image/ZICA ZIMA PCMC LOGO.png" 
                 alt="ZICA ZIMA PCMC" 
                 fill
-                className="object-contain"
+                className="object-contain object-left"
                 priority
               />
             </Link>
+
+            {/* Zee Learn Logo */}
+            <div className={`hidden lg:flex flex-col justify-center relative transition-all duration-500 -ml-2 lg:-ml-4 ${
+              isScrolled ? 'h-[40px] w-[100px]' : 'h-[50px] w-[140px]'
+            }`}>
+              <span className="text-[8px] font-extrabold text-slate-400 uppercase tracking-[0.2em] mb-0">Backed by</span>
+              <div className="relative w-full h-full -ml-1">
+                <Image 
+                  src="/image/zee learn.png"
+                  alt="Zee Learn Logo"
+                  fill
+                  className="object-contain object-left"
+                  priority
+                />
+              </div>
+            </div>
           </div>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden xl:flex items-center gap-6">
             <Link
               href="/"
               onClick={() => setActiveSection('home')}
@@ -163,7 +232,7 @@ export default function Navbar() {
               </button>
 
               {/* About Mega Dropdown Menu */}
-              <div className={`absolute top-full left-0 w-[350px] bg-white/95 backdrop-blur-xl rounded-[2.5rem] shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-6 transition-all duration-500 origin-top-left overflow-hidden ${isAboutOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}>
+              <div className={`absolute top-full left-0 w-[350px] bg-white/95 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-6 transition-all duration-500 origin-top-left overflow-hidden ${isAboutOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}>
                   {/* Navigation Links - Centered and Spanned */}
                   <div className="space-y-4">
                     <div className="border-b border-slate-100 pb-3 text-center">
@@ -175,8 +244,8 @@ export default function Navbar() {
                         { label: "Our Team", desc: "The creative minds behind our success.", href: "#team", icon: "groups" },
                         { label: "Our Director", desc: "Visionary leadership guiding our future.", href: "/director", icon: "person" }
                       ].map((item) => (
-                        <Link key={item.label} href={item.href} className="group flex items-start gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-all duration-300">
-                          <div className="w-12 h-12 rounded-xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-600 transition-colors">
+                        <Link key={item.label} href={item.href} className="group flex items-start gap-4 p-4 rounded-sm hover:bg-slate-50 transition-all duration-300">
+                          <div className="w-12 h-12 rounded bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-600 transition-colors">
                             <span className="material-symbols-outlined text-2xl">{item.icon}</span>
                           </div>
                           <div className="flex-1">
@@ -219,111 +288,55 @@ export default function Navbar() {
               </button>
 
 
-              {/* Mega Dropdown Menu */}
+              {/* Courses Dropdown Menu */}
               <div 
-                className={`absolute top-full left-1/2 -translate-x-1/2 w-[95vw] max-w-[1000px] bg-white/98 backdrop-blur-xl rounded-[3rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.2)] border border-white/50 p-2 transition-all duration-500 origin-top overflow-hidden ${isCoursesOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}
+                className={`absolute top-full left-0 w-[350px] bg-white/95 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-6 transition-all duration-500 origin-top-left ${isCoursesOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}
                 onMouseLeave={() => setHoveredBrand(null)}
               >
-                <div className="relative z-10 flex h-[500px]">
-                  {/* Left Panel: Brand Selection */}
-                  <div className="w-[300px] bg-slate-50/80 p-8 flex flex-col gap-4 border-r border-slate-100/50">
-                    <div className="mb-4">
-                      <h3 className="text-slate-900 font-black text-xs uppercase tracking-[0.2em] mb-1">Select Brand</h3>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-tight">Choose your specialized path</p>
-                    </div>
-
-                    {/* ZICA Option */}
-                    <div 
-                      className={`group relative p-6 rounded-3xl transition-all duration-500 cursor-pointer border ${
-                        hoveredBrand === 'zica' 
-                          ? 'bg-white shadow-xl shadow-orange-500/10 border-orange-100' 
-                          : 'bg-transparent border-transparent hover:bg-white/50'
-                      }`}
-                      onMouseEnter={() => setHoveredBrand('zica')}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-                          hoveredBrand === 'zica' ? 'bg-orange-600 scale-110 shadow-lg shadow-orange-600/20' : 'bg-white shadow-md group-hover:scale-105'
-                        }`}>
-                          <div className="relative w-8 h-8">
-                            <Image 
-                              src="/image/zica_logo.png" 
-                              alt="ZICA" 
-                              fill 
-                              className="object-contain transition-all duration-500" 
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <div className={`font-black text-sm tracking-tight transition-colors duration-300 ${hoveredBrand === 'zica' ? 'text-orange-600' : 'text-slate-900'}`}>ZICA</div>
-                          <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Digital Arts</div>
-                        </div>
-                      </div>
-                      <div className={`absolute right-4 top-1/2 -translate-y-1/2 transition-all duration-500 ${hoveredBrand === 'zica' ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'}`}>
-                        <span className="material-symbols-outlined text-orange-600 text-lg">arrow_forward_ios</span>
-                      </div>
-                    </div>
-
-                    {/* ZIMA Option */}
-                    <div 
-                      className={`group relative p-6 rounded-3xl transition-all duration-500 cursor-pointer border ${
-                        hoveredBrand === 'zima' 
-                          ? 'bg-white shadow-xl shadow-blue-500/10 border-blue-100' 
-                          : 'bg-transparent border-transparent hover:bg-white/50'
-                      }`}
-                      onMouseEnter={() => setHoveredBrand('zima')}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-                          hoveredBrand === 'zima' ? 'bg-blue-700 scale-110 shadow-lg shadow-blue-700/20' : 'bg-white shadow-md group-hover:scale-105'
-                        }`}>
-                          <div className="relative w-8 h-8">
-                            <Image 
-                              src="/image/zima_logo.png" 
-                              alt="ZIMA" 
-                              fill 
-                              className="object-contain transition-all duration-500" 
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <div className={`font-black text-sm tracking-tight transition-colors duration-300 ${hoveredBrand === 'zima' ? 'text-blue-700' : 'text-slate-900'}`}>ZIMA</div>
-                          <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Film & Media</div>
-                        </div>
-                      </div>
-                      <div className={`absolute right-4 top-1/2 -translate-y-1/2 transition-all duration-500 ${hoveredBrand === 'zima' ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'}`}>
-                        <span className="material-symbols-outlined text-blue-700 text-lg">arrow_forward_ios</span>
-                      </div>
-                    </div>
+                <div className="space-y-4 relative">
+                  <div className="border-b border-slate-100 pb-3 text-center">
+                    <h3 className="text-slate-900 font-black text-xs uppercase tracking-[0.2em]">Select Brand</h3>
                   </div>
 
-                  {/* Right Panel: Dynamic Content */}
-                  <div className="flex-1 relative overflow-hidden bg-white">
-                    {/* Empty State */}
-                    {!hoveredBrand && (
-                      <div className="h-full flex flex-col items-center justify-center text-center p-10 animate-fade-in">
-                        <div className="w-24 h-24 rounded-full bg-slate-50 flex items-center justify-center mb-6">
-                          <span className="material-symbols-outlined text-4xl text-slate-200 animate-pulse">mouse</span>
+                  {/* ZICA Option */}
+                  <div 
+                    className={`group/item relative p-4 rounded-sm transition-all duration-300 cursor-pointer border ${
+                      hoveredBrand === 'zica' 
+                        ? 'bg-orange-50 border-orange-100' 
+                        : 'bg-transparent border-transparent hover:bg-slate-50'
+                    }`}
+                    onMouseEnter={() => setHoveredBrand('zica')}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded flex items-center justify-center transition-all duration-300 ${
+                        hoveredBrand === 'zica' ? 'bg-orange-600 scale-110 shadow-lg shadow-orange-600/20' : 'bg-white shadow-sm'
+                      }`}>
+                        <div className="relative w-8 h-8">
+                          <Image 
+                            src="/image/zica_logo.png" 
+                            alt="ZICA" 
+                            fill 
+                            className="object-contain" 
+                          />
                         </div>
-                        <h4 className="text-slate-900 font-black text-xl mb-2">Explore Our Creative Ecosystem</h4>
-                        <p className="text-slate-500 text-sm max-w-[400px] font-medium">Hover over ZICA or ZIMA to discover industry-leading courses tailored for your career goals.</p>
                       </div>
-                    )}
+                      <div className="flex-1">
+                        <div className={`font-black text-sm tracking-tight transition-colors duration-300 ${hoveredBrand === 'zica' ? 'text-orange-600' : 'text-slate-900'}`}>ZICA</div>
+                        <div className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Digital Arts</div>
+                      </div>
+                      <span className={`material-symbols-outlined text-sm transition-all duration-300 ${hoveredBrand === 'zica' ? 'text-orange-600 translate-x-1' : 'text-slate-400'}`}>arrow_forward_ios</span>
+                    </div>
 
-                    {/* ZICA Courses */}
-                    <div className={`absolute inset-0 p-10 transition-all duration-500 ${hoveredBrand === 'zica' ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
-                      <div className="flex items-center justify-between mb-8">
+                    {/* ZICA Flyout Menu */}
+                    <div className={`absolute top-0 left-full ml-2 w-[500px] bg-white/98 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-8 transition-all duration-300 origin-left ${hoveredBrand === 'zica' ? 'opacity-100 scale-100 translate-x-0 visible' : 'opacity-0 scale-95 -translate-x-4 invisible'}`}>
+                      <div className="flex items-center justify-between mb-6">
                         <div>
-                          <h3 className="text-3xl font-black text-slate-900 tracking-tighter">Zee Institute of Creative Arts</h3>
-                          <p className="text-orange-600 font-black text-[10px] uppercase tracking-[0.3em]">India's First Full-Fledged Digital Arts Institute</p>
+                          <h3 className="text-2xl font-black text-slate-900 tracking-tighter">Zee Institute of Creative Arts</h3>
+                          <p className="text-orange-600 font-black text-[9px] uppercase tracking-[0.3em] mt-1">India's First Full-Fledged Digital Arts Institute</p>
                         </div>
-                        <Link href="/courses?brand=zica" className="flex items-center gap-2 text-xs font-black text-orange-600 group">
-                          Explore ZICA
-                          <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </Link>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+                      <div className="grid grid-cols-2 gap-x-6 gap-y-2">
                         {[
                           "B.Voc Degree in 3D VFX", "2D Animation", "Visual Effects (VFX)", "Graphic Design", 
                           "UI/UX Design", "Web Design", "Digital Marketing", "Game Art & Design",
@@ -332,30 +345,58 @@ export default function Navbar() {
                           <Link 
                             key={item} 
                             href={`/courses?brand=zica&search=${item.split(' ')[0]}`} 
-                            className="group flex items-center justify-between py-3 px-5 rounded-2xl hover:bg-orange-50/50 transition-all duration-300 border border-transparent hover:border-orange-100"
-                            style={{ animationDelay: `${idx * 50}ms` }}
+                            className="group flex items-center justify-between py-2 px-3 rounded-sm hover:bg-orange-50/50 transition-all duration-300"
                           >
-                            <span className="text-[14px] text-slate-600 font-bold group-hover:text-slate-900 transition-colors">{item}</span>
-                            <span className="material-symbols-outlined text-orange-400 text-sm opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">chevron_right</span>
+                            <span className="text-[13px] text-slate-600 font-bold group-hover:text-slate-900">{item}</span>
                           </Link>
                         ))}
                       </div>
+                      <Link href="/courses?brand=zica" className="mt-6 inline-flex items-center gap-2 text-xs font-black text-orange-600 group/link">
+                        Explore All ZICA Courses
+                        <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* ZIMA Option */}
+                  <div 
+                    className={`group/item relative p-4 rounded-sm transition-all duration-300 cursor-pointer border ${
+                      hoveredBrand === 'zima' 
+                        ? 'bg-blue-50 border-blue-100' 
+                        : 'bg-transparent border-transparent hover:bg-slate-50'
+                    }`}
+                    onMouseEnter={() => setHoveredBrand('zima')}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded flex items-center justify-center transition-all duration-300 ${
+                        hoveredBrand === 'zima' ? 'bg-blue-700 scale-110 shadow-lg shadow-blue-700/20' : 'bg-white shadow-sm'
+                      }`}>
+                        <div className="relative w-8 h-8">
+                          <Image 
+                            src="/image/zima_logo.png" 
+                            alt="ZIMA" 
+                            fill 
+                            className="object-contain" 
+                          />
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <div className={`font-black text-sm tracking-tight transition-colors duration-300 ${hoveredBrand === 'zima' ? 'text-blue-700' : 'text-slate-900'}`}>ZIMA</div>
+                        <div className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Film & Media</div>
+                      </div>
+                      <span className={`material-symbols-outlined text-sm transition-all duration-300 ${hoveredBrand === 'zima' ? 'text-blue-700 translate-x-1' : 'text-slate-400'}`}>arrow_forward_ios</span>
                     </div>
 
-                    {/* ZIMA Courses */}
-                    <div className={`absolute inset-0 p-10 transition-all duration-500 ${hoveredBrand === 'zima' ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
-                      <div className="flex items-center justify-between mb-8">
+                    {/* ZIMA Flyout Menu */}
+                    <div className={`absolute top-0 left-full ml-2 w-[500px] bg-white/98 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-8 transition-all duration-300 origin-left ${hoveredBrand === 'zima' ? 'opacity-100 scale-100 translate-x-0 visible' : 'opacity-0 scale-95 -translate-x-4 invisible'}`}>
+                      <div className="flex items-center justify-between mb-6">
                         <div>
-                          <h3 className="text-3xl font-black text-slate-900 tracking-tighter">Zee Institute of Media Arts</h3>
-                          <p className="text-blue-700 font-black text-[10px] uppercase tracking-[0.3em]">Premier Film & Television Institute</p>
+                          <h3 className="text-2xl font-black text-slate-900 tracking-tighter">Zee Institute of Media Arts</h3>
+                          <p className="text-blue-700 font-black text-[9px] uppercase tracking-[0.3em] mt-1">Premier Film & Television Institute</p>
                         </div>
-                        <Link href="/courses?brand=zima" className="flex items-center gap-2 text-xs font-black text-blue-700 group">
-                          Explore ZIMA
-                          <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </Link>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+                      <div className="grid grid-cols-2 gap-x-6 gap-y-2">
                         {[
                           "Film Making", "Screen Writing", "Direction", "Cinematography", 
                           "Film & TV Editing", "Sound Recording", "Music Production", "Film Acting",
@@ -364,16 +405,19 @@ export default function Navbar() {
                           <Link 
                             key={item} 
                             href={`/courses?brand=zima&search=${item.split(' ')[0]}`} 
-                            className="group flex items-center justify-between py-3 px-5 rounded-2xl hover:bg-blue-50/50 transition-all duration-300 border border-transparent hover:border-blue-100"
-                            style={{ animationDelay: `${idx * 50}ms` }}
+                            className="group flex items-center justify-between py-2 px-3 rounded-sm hover:bg-blue-50/50 transition-all duration-300"
                           >
-                            <span className="text-[14px] text-slate-600 font-bold group-hover:text-slate-900 transition-colors">{item}</span>
-                            <span className="material-symbols-outlined text-blue-400 text-sm opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">chevron_right</span>
+                            <span className="text-[13px] text-slate-600 font-bold group-hover:text-slate-900">{item}</span>
                           </Link>
                         ))}
                       </div>
+                      <Link href="/courses?brand=zima" className="mt-6 inline-flex items-center gap-2 text-xs font-black text-blue-700 group/link">
+                        Explore All ZIMA Courses
+                        <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                      </Link>
                     </div>
                   </div>
+
                 </div>
               </div>
 
@@ -400,7 +444,49 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="#admissions"
+              href="/gallery"
+              onClick={() => setActiveSection('gallery')}
+              className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
+                activeSection === 'gallery' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
+              }`}
+            >
+              Gallary
+              {activeSection === 'gallery' && (
+                <motion.span 
+                  layoutId="active-nav-underline"
+                  className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-600"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              {activeSection !== 'gallery' && (
+                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-blue-600`} />
+              )}
+            </Link>
+
+            <Link
+              href="https://klic.mkcl.org/klic-courses"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setActiveSection('value-addition')}
+              className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
+                activeSection === 'value-addition' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
+              }`}
+            >
+              Value Addition
+              {activeSection === 'value-addition' && (
+                <motion.span 
+                  layoutId="active-nav-underline"
+                  className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-600"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              {activeSection !== 'value-addition' && (
+                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-blue-600`} />
+              )}
+            </Link>
+
+            <Link
+              href="/#admissions"
               onClick={() => setActiveSection('admissions')}
               className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
                 activeSection === 'admissions' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
@@ -422,9 +508,11 @@ export default function Navbar() {
 
           {/* CTA */}
           <div className="flex items-center gap-4">
-            <Link href="#admissions">
-              <button className="hidden sm:block kinetic-gradient text-on-primary px-7 py-3 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200">
+            {/* Social Icons moved to the top bar */}
+            <Link href="/#admissions">
+              <button className="hidden sm:flex items-center gap-2 kinetic-gradient text-on-primary px-6 py-2 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200 group">
                 Enquiry Now
+                <PhoneCallIcon size={18} className="text-white ml-1" />
               </button>
             </Link>
           </div>
@@ -432,9 +520,7 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile CardNav - Only visible on small screens */}
-      <div className={`md:hidden sticky top-0 w-full z-50 transition-all duration-500 ${
-        isScrolled ? 'py-2' : 'py-3'
-      }`}>
+      <div className="xl:hidden sticky top-0 w-full z-50">
         <CardNav
           logo="/image/ZICA ZIMA PCMC LOGO.png"
           logoAlt="ZICA ZIMA PCMC"
