@@ -18,20 +18,14 @@ const LazyImage: React.FC<LazyImageProps> = ({
   const [error, setError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // Robust check for cached images and safety timeout
+  // Next.js handles onLoad reliably in recent versions, even for cached images.
+  // We can rely entirely on the native onLoad prop to trigger the fade-in,
+  // preventing artificial delays or "lagging" from a timeout.
   useEffect(() => {
     if (imgRef.current?.complete) {
       setIsLoaded(true);
-      return;
     }
-
-    // Safety timeout to ensure image eventually shows up even if onLoad fails
-    const timer = setTimeout(() => {
-      if (!isLoaded) setIsLoaded(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [isLoaded]);
+  }, []);
 
   // If it's a priority image, we should ideally show it faster
   const displayLoaded = props.priority || isLoaded;

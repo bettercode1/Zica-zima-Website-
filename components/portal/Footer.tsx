@@ -17,7 +17,7 @@ export default function Footer() {
     },
     {
       name: 'Skill India',
-      src: '/image/affilations/Skill India.png',
+      src: '/image/affilations/skill_india.svg',
       width: 140,
       height: 56,
     },
@@ -30,20 +30,18 @@ export default function Footer() {
           <h3 className="text-center lg:text-left text-white/90 font-bold tracking-wide uppercase text-xs md:text-sm mb-5">
             Our Affiliations
           </h3>
-          <div className="flex items-center justify-center lg:justify-start gap-6 md:gap-8 flex-wrap">
+          <div className="flex items-center justify-center lg:justify-start gap-8 md:gap-10 flex-wrap">
             {affiliations.map((affiliation) => (
-              <div
+              <Image
                 key={affiliation.name}
-                className="bg-white rounded-xl px-4 py-3 shadow-sm"
-              >
-                <Image
-                  src={affiliation.src}
-                  alt={`${affiliation.name} logo`}
-                  width={affiliation.width}
-                  height={affiliation.height}
-                  className="h-10 w-auto object-contain"
-                />
-              </div>
+                src={affiliation.src}
+                alt={`${affiliation.name} logo`}
+                width={affiliation.width * 1.5}
+                height={affiliation.height * 1.5}
+                className={`w-auto object-contain ${
+                  affiliation.name === 'Skill India' ? 'h-24 brightness-125' : 'h-16'
+                }`}
+              />
             ))}
           </div>
         </div>

@@ -43,7 +43,7 @@ export default function CourseShowcase() {
           <span className="text-orange-600 font-extrabold text-[10px] uppercase tracking-[0.2em] block mb-3">Courses</span>
           <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#141a3b] tracking-tight px-4">
             We provide career <br className="hidden sm:block" />
-            <span className="text-slate-300 italic">oriented creative courses.</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#9d4300] to-[#f1711c] italic">oriented creative courses.</span>
           </h2>
           
           {/* Tab Switcher */}
@@ -83,7 +83,7 @@ export default function CourseShowcase() {
 
         {/* Course Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             {courses.map((course, index) => (
               <motion.div
                 key={`${activeTab}-${course.title}`}
@@ -111,7 +111,7 @@ export default function CourseShowcase() {
                 )}
 
                 <div className="p-8 flex flex-col flex-grow">
-                  <h3 className="text-2xl font-extrabold text-slate-900 mb-4 font-headline leading-tight group-hover:text-primary transition-colors">
+                  <h3 className={`text-2xl font-extrabold text-black mb-4 font-headline leading-tight transition-colors ${activeTab === 'zica' ? 'group-hover:text-orange-600' : 'group-hover:text-[#3131b1]'}`}>
                     {course.title}
                   </h3>
                   <p className="text-slate-600 font-medium leading-relaxed mb-8 flex-grow">

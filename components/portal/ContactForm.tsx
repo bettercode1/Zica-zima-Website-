@@ -1,6 +1,58 @@
 'use client';
 
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+type Status = 'idle' | 'loading' | 'success' | 'error';
+type VerifyDetail = { firebaseSaved: boolean; emailSent: boolean; docId?: string } | null;
+
+function ThankYouModal({ onClose }: { onClose: () => void }) {
+  return (
+    <motion.div
+      className="thank-you-overlay fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+
+      <motion.div
+        className="bg-white border-2 border-orange-500 rounded-2xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl relative"
+        initial={{ scale: 0.85, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.85, opacity: 0 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+          aria-label="Close"
+        >
+          <span className="material-symbols-outlined text-2xl font-bold">close</span>
+        </button>
+
+        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500">
+          <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+        </div>
+
+        <h3 className="text-2xl font-black text-slate-900 mb-2">Thank You for Enquiry!</h3>
+        <p className="text-slate-600 font-medium text-sm sm:text-base mb-6">
+          We have received your request. Our admissions counselor will get in touch with you shortly.
+        </p>
+
+
+
+        <button
+          onClick={onClose}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-orange-500/30 transition-all hover:shadow-orange-500/40 active:scale-95 duration-200 cursor-pointer"
+        >
+          Got it
+        </button>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function ContactForm() {
   const [form, setForm] = useState({
@@ -11,14 +63,44 @@ export default function ContactForm() {
 
     message: '',
   });
+  const [status, setStatus] = useState<Status>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [verifyDetail, setVerifyDetail] = useState<VerifyDetail>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Thank you! We will contact you soon.');
+    setStatus('loading');
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/admissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setStatus('success');
+        setVerifyDetail({
+          firebaseSaved: data.firebaseSaved ?? false,
+          emailSent:     data.emailSent     ?? false,
+          docId: data.results?.firebase?.replace('saved:', '') ?? undefined,
+        });
+        setForm({ name: '', phone: '', email: '', course: '', message: '' });
+      } else {
+        const data = await res.json();
+        setErrorMsg(data.error || 'Something went wrong. Please try again.');
+        setStatus('error');
+      }
+    } catch {
+      setErrorMsg('Network error. Please check your connection and try again.');
+      setStatus('error');
+    }
   };
 
   return (
@@ -274,16 +356,51 @@ export default function ContactForm() {
                 />
               </div>
 
+              {/* Success state handles via Pop-up Modal now */}
+
+              {/* Error Message */}
+              {status === 'error' && (
+                <div className="w-full bg-red-50 border border-red-200 rounded-xl px-5 py-4 flex items-start gap-3">
+                  <span className="material-symbols-outlined text-red-500 text-xl mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>error</span>
+                  <div>
+                    <p className="font-bold text-red-800 text-sm">Could not send enquiry</p>
+                    <p className="text-red-700 text-xs mt-0.5">{errorMsg}</p>
+                  </div>
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full kinetic-gradient text-on-primary py-4 md:py-5 rounded-xl font-bold text-base md:text-lg shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-95 duration-200 mt-2"
+                disabled={status === 'loading' || status === 'success'}
+                className="w-full kinetic-gradient text-on-primary py-4 md:py-5 rounded-xl font-bold text-base md:text-lg shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-95 duration-200 mt-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100 flex items-center justify-center gap-2"
               >
-                Register Now
+                {status === 'loading' ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                    </svg>
+                    Sending...
+                  </>
+                ) : status === 'success' ? (
+                  <>
+                    <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    Enquiry Sent!
+                  </>
+                ) : (
+                  'Register Now'
+                )}
               </button>
             </form>
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {status === 'success' && (
+          <ThankYouModal onClose={() => setStatus('idle')} />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

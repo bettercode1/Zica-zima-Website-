@@ -243,7 +243,7 @@ function CoursesContent() {
                           <span className="text-orange-600 font-black text-[10px] uppercase tracking-[0.2em] block mb-3">
                             {course.duration}
                           </span>
-                          <h3 className="text-xl font-extrabold text-slate-900 mb-4 font-headline leading-tight group-hover:text-orange-500 transition-colors">
+                          <h3 className={`text-xl font-extrabold text-black mb-4 font-headline leading-tight transition-colors ${course.category === 'zica' ? 'group-hover:text-orange-500' : 'group-hover:text-blue-600'}`}>
                             {course.name}
                           </h3>
                           <p className="text-slate-600 text-sm font-medium leading-relaxed mb-8 flex-grow line-clamp-3">

@@ -35,7 +35,7 @@ export default function Recruiters() {
         <div className="flex flex-col items-center text-center">
           <span className="text-orange-600 font-bold text-sm uppercase tracking-widest block mb-2">Our Network</span>
           <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-[#141a3b]">
-            Our Top <span className="text-slate-300">Recruiters</span>
+            Our Top <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#9d4300] to-[#f1711c]">Recruiters</span>
           </h2>
           <div className="w-20 h-1 bg-orange-500 mt-4 rounded-full" />
         </div>
@@ -62,6 +62,8 @@ export default function Recruiters() {
                   src={logo}
                   alt={`Recruiter Logo ${index + 1}`}
                   fill
+                  sizes="(max-width: 768px) 100px, 160px"
+                  priority={index < 10} // Load first half eagerly to prevent animation stuttering
                   className="object-contain"
                 />
               </div>

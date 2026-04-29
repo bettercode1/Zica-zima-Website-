@@ -8,11 +8,13 @@ import { motion } from 'framer-motion';
 import CardNav from '@/components/ui/CardNav';
 import { PhoneCallIcon } from '@/components/ui/phone-call-icon';
 import { SocialIcon } from 'react-social-icons';
+import { zicaCourses, zimaCourses } from '@/lib/courses';
 
 export default function Navbar() {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [hoveredBrand, setHoveredBrand] = useState<'zica' | 'zima' | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isValueAdditionOpen, setIsValueAdditionOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,7 +50,8 @@ export default function Navbar() {
       links: [
         { label: "Blogs", href: "/blogs", ariaLabel: "Read our blogs" },
         { label: "Gallary", href: "/gallery", ariaLabel: "Gallary" },
-        { label: "Value Addition", href: "https://klic.mkcl.org/klic-courses", ariaLabel: "Value Addition" },
+        { label: "MKCL", href: "https://klic.mkcl.org/klic-courses", ariaLabel: "MKCL" },
+        { label: "AIGT", href: "https://aiglobtech.com/", ariaLabel: "AIGT" },
         { label: "Contact Us", href: "/#admissions", ariaLabel: "Contact Us" },
         { label: "Enquiry", href: "/#admissions", ariaLabel: "Enquiry" }
       ]
@@ -328,26 +331,22 @@ export default function Navbar() {
                     </div>
 
                     {/* ZICA Flyout Menu */}
-                    <div className={`absolute top-0 left-full ml-2 w-[500px] bg-white/98 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-8 transition-all duration-300 origin-left ${hoveredBrand === 'zica' ? 'opacity-100 scale-100 translate-x-0 visible' : 'opacity-0 scale-95 -translate-x-4 invisible'}`}>
+                    <div className={`absolute top-0 left-full ml-2 w-[600px] bg-white/98 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-8 transition-all duration-300 origin-left ${hoveredBrand === 'zica' ? 'opacity-100 scale-100 translate-x-0 visible' : 'opacity-0 scale-95 -translate-x-4 invisible'}`}>
                       <div className="flex items-center justify-between mb-6">
                         <div>
-                          <h3 className="text-2xl font-black text-slate-900 tracking-tighter">Zee Institute of Creative Arts</h3>
+                          <h3 className="text-2xl font-black text-black hover:text-orange-600 transition-colors duration-300 tracking-tighter">Zee Institute of Creative Arts</h3>
                           <p className="text-orange-600 font-black text-[9px] uppercase tracking-[0.3em] mt-1">India's First Full-Fledged Digital Arts Institute</p>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                        {[
-                          "B.Voc Degree in 3D VFX", "2D Animation", "Visual Effects (VFX)", "Graphic Design", 
-                          "UI/UX Design", "Web Design", "Digital Marketing", "Game Art & Design",
-                          "Architectural Design", "Photography", "Blender", "Houdini"
-                        ].map((item, idx) => (
+                        {zicaCourses.slice(0, 12).map((course) => (
                           <Link 
-                            key={item} 
-                            href={`/courses?brand=zica&search=${item.split(' ')[0]}`} 
+                            key={course.id} 
+                            href={`/courses/${course.id}`} 
                             className="group flex items-center justify-between py-2 px-3 rounded-sm hover:bg-orange-50/50 transition-all duration-300"
                           >
-                            <span className="text-[13px] text-slate-600 font-bold group-hover:text-slate-900">{item}</span>
+                            <span className="text-[13px] text-black font-bold group-hover:text-orange-600 transition-colors duration-300">{course.name}</span>
                           </Link>
                         ))}
                       </div>
@@ -388,26 +387,22 @@ export default function Navbar() {
                     </div>
 
                     {/* ZIMA Flyout Menu */}
-                    <div className={`absolute top-0 left-full ml-2 w-[500px] bg-white/98 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-8 transition-all duration-300 origin-left ${hoveredBrand === 'zima' ? 'opacity-100 scale-100 translate-x-0 visible' : 'opacity-0 scale-95 -translate-x-4 invisible'}`}>
+                    <div className={`absolute top-0 left-full ml-2 w-[600px] bg-white/98 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-8 transition-all duration-300 origin-left ${hoveredBrand === 'zima' ? 'opacity-100 scale-100 translate-x-0 visible' : 'opacity-0 scale-95 -translate-x-4 invisible'}`}>
                       <div className="flex items-center justify-between mb-6">
                         <div>
-                          <h3 className="text-2xl font-black text-slate-900 tracking-tighter">Zee Institute of Media Arts</h3>
+                          <h3 className="text-2xl font-black text-black hover:text-blue-700 transition-colors duration-300 tracking-tighter">Zee Institute of Media Arts</h3>
                           <p className="text-blue-700 font-black text-[9px] uppercase tracking-[0.3em] mt-1">Premier Film & Television Institute</p>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                        {[
-                          "Film Making", "Screen Writing", "Direction", "Cinematography", 
-                          "Film & TV Editing", "Sound Recording", "Music Production", "Film Acting",
-                          "Fashion Modelling", "Dancing", "Audio Production", "Sound Engineering"
-                        ].map((item, idx) => (
+                        {zimaCourses.slice(0, 12).map((course) => (
                           <Link 
-                            key={item} 
-                            href={`/courses?brand=zima&search=${item.split(' ')[0]}`} 
+                            key={course.id} 
+                            href={`/courses/${course.id}`} 
                             className="group flex items-center justify-between py-2 px-3 rounded-sm hover:bg-blue-50/50 transition-all duration-300"
                           >
-                            <span className="text-[13px] text-slate-600 font-bold group-hover:text-slate-900">{item}</span>
+                            <span className="text-[13px] text-black font-bold group-hover:text-blue-700 transition-colors duration-300">{course.name}</span>
                           </Link>
                         ))}
                       </div>
@@ -463,27 +458,43 @@ export default function Navbar() {
               )}
             </Link>
 
-            <Link
-              href="https://klic.mkcl.org/klic-courses"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setActiveSection('value-addition')}
-              className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
-                activeSection === 'value-addition' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
-              }`}
+            <div 
+              className="relative group"
+              onMouseEnter={() => setIsValueAdditionOpen(true)}
+              onMouseLeave={() => setIsValueAdditionOpen(false)}
             >
-              Value Addition
-              {activeSection === 'value-addition' && (
-                <motion.span 
-                  layoutId="active-nav-underline"
-                  className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-600"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              {activeSection !== 'value-addition' && (
+              <button 
+                className={`flex items-center gap-1 py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
+                  isValueAdditionOpen ? 'text-orange-600' : 'text-slate-900 group-hover:text-blue-600'
+                }`}
+              >
+                Value Addition
+                <span className={`material-symbols-outlined text-sm transition-transform duration-300 ${isValueAdditionOpen ? 'rotate-180' : ''}`}>
+                  keyboard_arrow_down
+                </span>
                 <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-blue-600`} />
-              )}
-            </Link>
+              </button>
+              {/* Dropdown Menu */}
+              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[160px] bg-white rounded-xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-slate-100 p-2 transition-all duration-300 origin-top ${isValueAdditionOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'} z-50`}>
+                <Link 
+                  href="https://klic.mkcl.org/klic-courses" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block px-4 py-3 text-[13px] font-black text-slate-800 hover:text-orange-600 hover:bg-slate-50 rounded-lg transition-all duration-200"
+                >
+                  MKCL
+                </Link>
+                <div className="border-b border-slate-100/60 my-1 mx-3" />
+                <Link 
+                  href="https://aiglobtech.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block px-4 py-3 text-[13px] font-black text-slate-800 hover:text-orange-600 hover:bg-slate-50 rounded-lg transition-all duration-200"
+                >
+                  AIGT
+                </Link>
+              </div>
+            </div>
 
             <Link
               href="/#admissions"

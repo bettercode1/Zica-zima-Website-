@@ -119,16 +119,10 @@ export default function Hero() {
                 <h3 className="text-xs font-black tracking-[0.2em] text-white">
                   OUR <span className="text-[#38bdf8]">AFFILIATIONS</span>
                 </h3>
-                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start md:max-w-xs lg:max-w-none">
-                  <div className="bg-white px-6 py-3 rounded-[20px] flex items-center justify-center h-16 w-32 shadow-md">
-                    <Image src="/image/affilations/mkcl.svg" alt="MKCL" width={90} height={35} className="object-contain max-h-10" />
-                  </div>
-                  <div className="bg-white px-6 py-3 rounded-[20px] flex items-center justify-center h-16 w-44 shadow-md">
-                    <Image src="/image/affilations/Medhavi.png" alt="Medhavi Skills University" width={140} height={35} className="object-contain max-h-10" />
-                  </div>
-                  <div className="bg-white px-6 py-3 rounded-[20px] flex items-center justify-center h-16 w-32 shadow-md">
-                    <Image src="/image/affilations/Skill India.png" alt="Skill India" width={90} height={35} className="object-contain max-h-10" />
-                  </div>
+                <div className="flex flex-wrap items-center gap-6 justify-center md:justify-start md:max-w-xs lg:max-w-none">
+                  <Image src="/image/affilations/mkcl.svg" alt="MKCL" width={160} height={80} className="object-contain h-20 w-auto" />
+                  <Image src="/image/affilations/Medhavi.png" alt="Medhavi Skills University" width={240} height={80} className="object-contain h-20 w-auto" />
+                  <Image src="/image/affilations/skill_india.svg" alt="Skill India" width={180} height={90} className="object-contain h-24 w-auto brightness-150 contrast-125" />
                 </div>
               </div>
 

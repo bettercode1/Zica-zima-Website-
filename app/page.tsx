@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import Navbar from "@/components/portal/Navbar";
 import Hero from "@/components/portal/Hero";
-import AboutSection from "@/components/portal/AboutSection";
+import IndustryPerspective from "@/components/portal/IndustryPerspective";
 import WhyUs from "@/components/portal/WhyUs";
 import Programs from "@/components/portal/Programs";
 import CourseShowcase from "@/components/portal/CourseShowcase";
@@ -19,7 +19,7 @@ export default function Page() {
     <main className="min-h-screen bg-surface-bright selection:bg-primary/20">
       <Navbar />
       <div id="home"><Hero /></div>
-      <div id="about"><AboutSection /><WhyUs /></div>
+      <div id="about"><IndustryPerspective /><WhyUs /></div>
       <div id="courses">
         <Programs />
         <CourseShowcase />
