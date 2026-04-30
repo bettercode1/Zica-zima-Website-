@@ -18,6 +18,8 @@ export interface Course {
       duration: string;
       topics: string[];
       software?: string[];
+      level?: string;
+      feeRange?: string;
     }[];
   };
   studentProfile?: string;
