@@ -59,7 +59,7 @@ export default function BlogSection() {
       <div className="w-full px-2 md:px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-extrabold text-on-surface mb-6 tracking-tight">
-            Latest from our <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#9d4300] to-[#f1711c]">Blog</span>
+            Our <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#9d4300] to-[#f1711c]">Backstage</span>
           </h2>
           <p className="text-lg text-on-surface-variant max-w-2xl mx-auto">
             Insights, updates, and stories from the world of animation, VFX, and design.
@@ -120,7 +120,7 @@ export default function BlogSection() {
             href="/blogs"
             className="group flex items-center gap-3 text-slate-900 font-extrabold text-lg transition-colors hover:text-orange-600"
           >
-            <span>Explore our Latest Blog</span>
+            <span>Explore Our Backstage</span>
             <div className="w-10 h-10 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all group-hover:border-orange-600 group-hover:bg-orange-600 group-hover:text-white">
               <span className="material-symbols-outlined">arrow_forward</span>
             </div>

@@ -3,16 +3,16 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const images = [
-  { src: '/image/Reel/WhatsApp Image 2026-04-18 at 1.10.23 PM.jpeg' },
-  { src: '/image/Reel/WhatsApp Image 2026-04-18 at 1.42.26 PM.jpeg' },
-  { src: '/image/Reel/WhatsApp Image 2026-04-25 at 12.34.14 PM.jpeg' },
-  { src: '/image/Reel/WhatsApp Image 2026-04-25 at 12.34.18 PM.jpeg', position: 'center 20%' }, 
-  { src: '/image/Reel/WhatsApp Image 2026-04-25 at 12.34.20 PM.jpeg' },
-  { src: '/image/Reel/WhatsApp Image 2026-04-25 at 12.35.01 PM.jpeg' },
-  { src: '/image/Reel/WhatsApp Image 2026-04-25 at 12.36.01 PM.jpeg' },
-  { src: '/image/Reel/WhatsApp Image 2026-04-25 at 12.36.03 PM.jpeg' },
-  { src: '/image/Reel/WhatsApp Image 2026-04-25 at 12.36.22 PM.jpeg' },
-  { src: '/image/Reel/WhatsApp Image 2026-04-25 at 12.36.30 PM.jpeg' },
+  { src: '/image/Reel/student-reel-01.jpg' },
+  { src: '/image/Reel/student-reel-02.jpg' },
+  { src: '/image/Reel/student-reel-03.jpg' },
+  { src: '/image/Reel/student-reel-04.jpg', position: 'center 20%' }, 
+  { src: '/image/Reel/student-reel-05.jpg' },
+  { src: '/image/Reel/student-reel-06.jpg' },
+  { src: '/image/Reel/student-reel-07.jpg' },
+  { src: '/image/Reel/student-reel-08.jpg' },
+  { src: '/image/Reel/student-reel-09.jpg' },
+  { src: '/image/Reel/student-reel-10.jpg' },
 ];
 
 const FilmFrame = ({ src, index, position = 'center' }: { src: string, index: number, position?: string }) => (

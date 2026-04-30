@@ -16,7 +16,10 @@ const zicaShowcase = zicaCourses
     description: c.description,
     icon: c.icon,
     color: c.color,
-    image: c.image
+    image: c.image,
+    duration: c.duration,
+    level: c.level,
+    feeRange: c.feeRange
   }));
 
 const zimaShowcase = zimaCourses
@@ -27,7 +30,10 @@ const zimaShowcase = zimaCourses
     description: c.description,
     icon: c.icon,
     color: c.color,
-    image: c.image
+    image: c.image,
+    duration: c.duration,
+    level: c.level,
+    feeRange: c.feeRange
   }));
 
 export default function CourseShowcase() {
@@ -111,9 +117,20 @@ export default function CourseShowcase() {
                 )}
 
                 <div className="p-8 flex flex-col flex-grow">
-                  <h3 className={`text-2xl font-extrabold text-black mb-4 font-headline leading-tight transition-colors ${activeTab === 'zica' ? 'group-hover:text-orange-600' : 'group-hover:text-[#3131b1]'}`}>
+                  <h3 className={`text-2xl font-extrabold text-black mb-3 font-headline leading-tight transition-colors ${activeTab === 'zica' ? 'group-hover:text-orange-600' : 'group-hover:text-[#3131b1]'}`}>
                     {course.title}
                   </h3>
+                  
+                  {/* Badges: Duration | Level */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {course.duration && course.level && (
+                      <span className="bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-slate-200 flex items-center gap-1 shadow-sm">
+                        <span className="material-symbols-outlined text-[12px]">schedule</span>
+                        {course.duration} | {course.level}
+                      </span>
+                    )}
+                  </div>
+                  
                   <p className="text-slate-600 font-medium leading-relaxed mb-8 flex-grow">
                     {course.description}
                   </p>

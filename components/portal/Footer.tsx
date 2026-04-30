@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { SocialIcon } from 'react-social-icons';
 
 export default function Footer() {
   const affiliations = [
@@ -80,11 +81,39 @@ export default function Footer() {
           )}
         </div>
 
-        {/* Copyright */}
+        {/* Contact and Copyright */}
         <div className="text-slate-400 font-medium text-center lg:text-right font-body">
-          © 2026 ZICA ZIMA PCMC Animation Institute.{' '}
-          <br className="hidden lg:block" />
-          Empowering creators worldwide.
+          <div className="mb-4">
+            <p className="text-white/90 font-bold mb-2">Contact Us:</p>
+            <p className="flex flex-wrap justify-center lg:justify-end gap-2 text-slate-300">
+              <a href="tel:+919028757041" className="hover:text-orange-400 transition-colors">+91 90287 57041</a>
+              <span className="text-slate-500">|</span>
+              <a href="tel:+919028757042" className="hover:text-orange-400 transition-colors">+91 90287 57042</a>
+            </p>
+          </div>
+          <div className="flex items-center justify-center lg:justify-end gap-4 mb-6">
+            {[
+              { id: 'wa', url: "https://wa.me/919028757041?text=Need%20to%20Know%20More%20about%20Courses" },
+              { id: 'li', url: "https://www.linkedin.com/company/zee-institue-of-creative-media-arts-pimpri-chinchwad/" },
+              { id: 'ig', url: "https://www.instagram.com/zicazima_pcmc/" },
+              { id: 'fb', url: "https://www.facebook.com/zicazimapcmcpune/" },
+              { id: 'yt', url: "https://www.youtube.com/@ZICAZIMAInstitutePCMCPune" }
+            ].map((social) => (
+              <div key={social.id} className="transition-transform duration-200 hover:scale-110">
+                <SocialIcon 
+                  url={social.url} 
+                  style={{ height: 28, width: 28 }} 
+                  bgColor="rgba(255, 255, 255, 0.1)"
+                  fgColor="#ffffff"
+                />
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 pt-4 border-t border-slate-700/60 lg:border-t-0 lg:pt-0">
+            © 2026 ZICA ZIMA PCMC Animation Institute.{' '}
+            <br className="hidden lg:block" />
+            Empowering creators worldwide.
+          </div>
         </div>
 
       </div>

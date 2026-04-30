@@ -240,12 +240,20 @@ function CoursesContent() {
 
                         {/* Course Info */}
                         <div className="p-8 flex flex-col flex-grow">
-                          <span className="text-orange-600 font-black text-[10px] uppercase tracking-[0.2em] block mb-3">
-                            {course.duration}
-                          </span>
-                          <h3 className={`text-xl font-extrabold text-black mb-4 font-headline leading-tight transition-colors ${course.category === 'zica' ? 'group-hover:text-orange-500' : 'group-hover:text-blue-600'}`}>
+                          <h3 className={`text-xl font-extrabold text-black mb-3 font-headline leading-tight transition-colors ${course.category === 'zica' ? 'group-hover:text-orange-500' : 'group-hover:text-blue-600'}`}>
                             {course.name}
                           </h3>
+                          
+                          {/* Badges: Duration | Level */}
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {course.duration && course.level && (
+                              <span className="bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-slate-200 flex items-center gap-1 shadow-sm">
+                                <span className="material-symbols-outlined text-[12px]">schedule</span>
+                                {course.duration} | {course.level}
+                              </span>
+                            )}
+                          </div>
+                          
                           <p className="text-slate-600 text-sm font-medium leading-relaxed mb-8 flex-grow line-clamp-3">
                             {course.description}
                           </p>

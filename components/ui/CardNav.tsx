@@ -178,14 +178,19 @@ const CardNav = ({
           </div>
 
           <div className="logo-container flex items-center gap-2">
-            <div className="relative w-24 h-8 sm:w-32 sm:h-10 flex-shrink-0">
+            <Link href="/" onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }} className="relative w-24 h-8 sm:w-32 sm:h-10 flex-shrink-0 cursor-pointer">
               <Image 
                 src={logo} 
                 alt={logoAlt} 
                 fill 
                 className="object-contain" 
               />
-            </div>
+            </Link>
             <div className="flex flex-col justify-center relative w-16 h-6 sm:w-24 sm:h-8 flex-shrink-0">
               <span className="text-[6px] sm:text-[8px] font-extrabold text-slate-400 uppercase tracking-[0.2em] mb-0 leading-none">Backed by</span>
               <div className="relative w-full h-full -mt-0.5">

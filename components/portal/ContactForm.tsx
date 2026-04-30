@@ -2,9 +2,27 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SocialIcon } from 'react-social-icons';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 type VerifyDetail = { firebaseSaved: boolean; emailSent: boolean; docId?: string } | null;
+
+const COURSE_CATEGORIES = {
+  ZICA: [
+    'B.Voc Degree in 3D Animation & VFX', '2D Animation', 'Visual Effects (VFX)', 'Graphic Design',
+    'UI/UX', 'Web Design', 'Digital Marketing', 'Game Art & Design', 'Architectural Design & Animation',
+    'Visual Promotion & AD Design', 'Photography', 'Blender', 'Houdini'
+  ],
+  ZIMA: [
+    'Film Making', 'Screen Writing', 'Direction', 'Cinematography', 'Vertical Cinematography',
+    'Film & TV Editing', 'Film & TV Production', 'Sound Recording', 'Sound Engineering',
+    'Audio Production', 'Music Production', 'Film Acting', 'Fashion Modelling Personal Grooming', 'Dancing'
+  ],
+  MODULAR: [
+    'ILLUSTRATOR', 'PHOTOSHOP', 'AFTER EFFECTS', 'PREMIER PRO', 'COREL DRAW', 'ZBRUSH', 'NOTION',
+    'FIGMA', 'MAYA', 'UNREAL ENGINE', 'BLENDER'
+  ]
+};
 
 function ThankYouModal({ onClose }: { onClose: () => void }) {
   return (
@@ -55,6 +73,7 @@ function ThankYouModal({ onClose }: { onClose: () => void }) {
 }
 
 export default function ContactForm() {
+  const [selectedBrand, setSelectedBrand] = useState<keyof typeof COURSE_CATEGORIES | ''>('');
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -167,55 +186,18 @@ export default function ContactForm() {
               <div className="text-sm font-bold opacity-60 mb-4 tracking-widest text-white/70 uppercase">Follow Our Creative Journey</div>
               <div className="flex gap-5">
                 {[
-                  { 
-                    id: 'li', 
-                    href: 'https://www.linkedin.com/company/zee-institue-of-creative-media-arts-pimpri-chinchwad/', 
-                    icon: (
-                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                      </svg>
-                    )
-                  },
-                  { 
-                    id: 'ig', 
-                    href: 'https://www.instagram.com/zicazima_pcmc/', 
-                    icon: (
-                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                      </svg>
-                    )
-                  },
-                  { 
-                    id: 'fb', 
-                    href: 'https://www.facebook.com/zicazimapcmcpune/', 
-                    icon: (
-                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
-                      </svg>
-                    )
-                  },
-                  { 
-                    id: 'yt', 
-                    href: 'https://www.youtube.com/@ZICAZIMAInstitutePCMCPune', 
-                    icon: (
-                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/>
-                      </svg>
-                    )
-                  }
+                  { id: 'li', url: 'https://www.linkedin.com/company/zee-institue-of-creative-media-arts-pimpri-chinchwad/' },
+                  { id: 'ig', url: 'https://www.instagram.com/zicazima_pcmc/' },
+                  { id: 'fb', url: 'https://www.facebook.com/zicazimapcmcpune/' },
+                  { id: 'yt', url: 'https://www.youtube.com/@ZICAZIMAInstitutePCMCPune' }
                 ].map((social) => (
-                  <a
-                    key={social.id}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all hover:scale-110 active:scale-95 group"
-                    title={social.id.toUpperCase()}
-                  >
-                    <span className="text-white opacity-80 group-hover:opacity-100 transition-opacity">
-                      {social.icon}
-                    </span>
-                  </a>
+                  <div key={social.id} className="hover:scale-110 active:scale-95 transition-transform duration-200 shadow-lg rounded-full">
+                    <SocialIcon 
+                      url={social.url} 
+                      target="_blank"
+                      style={{ height: 44, width: 44 }}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
@@ -279,67 +261,54 @@ export default function ContactForm() {
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-extrabold text-slate-500 uppercase block tracking-[0.2em] ml-1">
-                  Select Course
-                </label>
-                <div className="relative group">
-                  <select
-                    name="course"
-                    value={form.course}
-                    onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-5 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-white transition-all outline-none text-slate-900 font-bold appearance-none cursor-pointer shadow-sm"
-                    required
-                  >
-                    <option value="" disabled hidden>Choose your course</option>
-                    <optgroup label="ZICA COURSES">
-                      <option>B.Voc Degree in 3D Animation & VFX</option>
-                      <option>2D Animation</option>
-                      <option>Visual Effects (VFX)</option>
-                      <option>Graphic Design</option>
-                      <option>UI/UX</option>
-                      <option>Web Design</option>
-                      <option>Digital Marketing</option>
-                      <option>Game Art & Design</option>
-                      <option>Architectural Design & Animation</option>
-                      <option>Visual Promotion & AD Design</option>
-                      <option>Photography</option>
-                      <option>Blender</option>
-                      <option>Houdini</option>
-                    </optgroup>
-                    <optgroup label="ZIMA COURSES">
-                      <option>Film Making</option>
-                      <option>Screen Writing</option>
-                      <option>Direction</option>
-                      <option>Cinematography</option>
-                      <option>Vertical Cinematography</option>
-                      <option>Film & TV Editing</option>
-                      <option>Film & TV Production</option>
-                      <option>Sound Recording</option>
-                      <option>Sound Engineering</option>
-                      <option>Audio Production</option>
-                      <option>Music Production</option>
-                      <option>Film Acting</option>
-                      <option>Fashion Modelling Personal Grooming</option>
-                      <option>Dancing</option>
-                    </optgroup>
-                    <optgroup label="MODULAR COURSES">
-                      <option>ILLUSTRATOR</option>
-                      <option>PHOTOSHOP</option>
-                      <option>AFTER EFFECTS</option>
-                      <option>PREMIER PRO</option>
-                      <option>COREL DRAW</option>
-                      <option>ZBRUSH</option>
-                      <option>NOTION</option>
-                      <option>FIGMA</option>
-                      <option>MAYA</option>
-                      <option>UNREAL ENGINE</option>
-                      <option>BLENDER</option>
-                    </optgroup>
-                  </select>
-                  <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
-                    keyboard_arrow_down
-                  </span>
+              <div className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-extrabold text-slate-500 uppercase block tracking-[0.2em] ml-1">
+                    Select Brand
+                  </label>
+                  <div className="relative group">
+                    <select
+                      value={selectedBrand}
+                      onChange={(e) => {
+                        setSelectedBrand(e.target.value as keyof typeof COURSE_CATEGORIES);
+                        setForm(prev => ({ ...prev, course: '' }));
+                      }}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-5 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-white transition-all outline-none text-slate-900 font-bold appearance-none cursor-pointer shadow-sm"
+                      required
+                    >
+                      <option value="" disabled hidden>Choose category</option>
+                      <option value="ZICA">ZICA Courses</option>
+                      <option value="ZIMA">ZIMA Courses</option>
+                      <option value="MODULAR">Modular Courses</option>
+                    </select>
+                    <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+                      keyboard_arrow_down
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-extrabold text-slate-500 uppercase block tracking-[0.2em] ml-1">
+                    Select Course
+                  </label>
+                  <div className="relative group">
+                    <select
+                      name="course"
+                      value={form.course}
+                      onChange={handleChange}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-5 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-white transition-all outline-none text-slate-900 font-bold appearance-none cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                      required
+                      disabled={!selectedBrand}
+                    >
+                      <option value="" disabled hidden>Choose your course</option>
+                      {selectedBrand && COURSE_CATEGORIES[selectedBrand].map(course => (
+                        <option key={course} value={course}>{course}</option>
+                      ))}
+                    </select>
+                    <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+                      keyboard_arrow_down
+                    </span>
+                  </div>
                 </div>
               </div>
 

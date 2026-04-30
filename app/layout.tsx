@@ -19,6 +19,20 @@ import SmoothScroll from "@/components/ui/SmoothScroll"
 export const metadata: Metadata = {
   title: 'ZICA ZIMA PCMC | Animation & Film Making Institute',
   description: 'Premier Animation, VFX, and Film Making Institute in PCMC. Backed by Zee Learn.',
+  keywords: [
+    'anime characters', 'vfx full form', 'vfx', 'anime character names', 'animation courses',
+    '3d animation', 'Animation institute in PCMC', '3D animation institute in Chinchwad',
+    'Graphic design courses in Chinchwad', 'VFX courses in Chinchwad', '2D animation classes in Chinchwad',
+    'Film making course in PCMC', 'UI UX design course in Chinchwad', 'graphic design',
+    'graphics and design', 'graphic design graphic design', 'design graphic design',
+    'design in graphic design', 'graphics in design', 'graphic design graphic',
+    'design of graphics', '3d in animation', 'animation 3d animation',
+    'graphic designer graphic designer', '3d and animation', 'graphic design programs',
+    'graphic artist programs', 'graphic design courses', 'graphic design class',
+    'graphic and design course', 'class graphic design', 'motion graphics',
+    'and motion graphics', 'graphic design what', 'graphic designer does what',
+    'creative designing', 'job in animation', 'graphic designing near me'
+  ],
 }
 
 export default function RootLayout({

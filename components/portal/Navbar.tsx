@@ -24,7 +24,7 @@ export default function Navbar() {
 
   const navItems = [
     {
-      label: "About",
+      label: "The Origin",
       bgColor: "#f8fafc",
       textColor: "#0f172a",
       links: [
@@ -34,7 +34,7 @@ export default function Navbar() {
       ]
     },
     {
-      label: "Courses",
+      label: "Level Up",
       bgColor: "#eff6ff",
       textColor: "#1d4ed8",
       links: [
@@ -48,12 +48,11 @@ export default function Navbar() {
       bgColor: "#fff7ed",
       textColor: "#c2410c",
       links: [
-        { label: "Blogs", href: "/blogs", ariaLabel: "Read our blogs" },
-        { label: "Gallary", href: "/gallery", ariaLabel: "Gallary" },
-        { label: "MKCL", href: "https://klic.mkcl.org/klic-courses", ariaLabel: "MKCL" },
-        { label: "AIGT", href: "https://aiglobtech.com/", ariaLabel: "AIGT" },
-        { label: "Contact Us", href: "/#admissions", ariaLabel: "Contact Us" },
-        { label: "Enquiry", href: "/#admissions", ariaLabel: "Enquiry" }
+        { label: "What's Live", href: "/blogs", ariaLabel: "Read our blogs" },
+        { label: "The Drop", href: "/gallery", ariaLabel: "Gallary" },
+        { label: "MKCL (Govt. Certification)", href: "https://klic.mkcl.org/klic-courses", ariaLabel: "MKCL Govt. Certification" },
+        { label: "AIGT (Technical Courses)", href: "https://aiglobtech.com/", ariaLabel: "AIGT Technical Courses" },
+        { label: "Get In", href: "/#admissions", ariaLabel: "Enquiry" }
       ]
     }
   ];
@@ -155,7 +154,12 @@ export default function Navbar() {
         <div className="max-w-[1580px] mx-auto px-4 sm:px-8 flex justify-between items-center">
           {/* Logos */}
           <div className="flex-shrink-0 flex items-center gap-0 -ml-2 lg:-ml-8">
-            <Link href="/" className={`block relative transition-all duration-500 ${
+            <Link href="/" onClick={(e) => {
+              if (pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }} className={`block relative transition-all duration-500 ${
               isScrolled ? 'h-[40px] w-[130px] md:h-[50px] md:w-[160px]' : 'h-[50px] w-[160px] md:h-[64px] md:w-[200px]'
             }`}>
               <Image 
@@ -188,12 +192,18 @@ export default function Navbar() {
           <div className="hidden xl:flex items-center gap-6">
             <Link
               href="/"
-              onClick={() => setActiveSection('home')}
+              onClick={(e) => {
+                setActiveSection('home');
+                if (pathname === '/') {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
               className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
                 activeSection === 'home' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
               }`}
             >
-              Home
+              Base Camp
               {activeSection === 'home' && (
                 <motion.span 
                   layoutId="active-nav-underline"
@@ -218,7 +228,7 @@ export default function Navbar() {
                   activeSection === 'about' ? 'text-orange-600' : 'text-slate-900 group-hover:text-blue-600'
                 }`}
               >
-                About
+                The Origin
                 <span className={`material-symbols-outlined text-sm transition-transform duration-300 ${isAboutOpen ? 'rotate-180' : ''}`}>
                   keyboard_arrow_down
                 </span>
@@ -274,7 +284,7 @@ export default function Navbar() {
                   activeSection === 'courses' ? 'text-orange-600' : 'text-slate-900 group-hover:text-blue-600'
                 }`}
               >
-                Courses
+                Level Up
                 <span className={`material-symbols-outlined text-sm transition-transform duration-300 ${isCoursesOpen ? 'rotate-180' : ''}`}>
                   keyboard_arrow_down
                 </span>
@@ -297,8 +307,9 @@ export default function Navbar() {
                 onMouseLeave={() => setHoveredBrand(null)}
               >
                 <div className="space-y-4 relative">
-                  <div className="border-b border-slate-100 pb-3 text-center">
-                    <h3 className="text-slate-900 font-black text-xs uppercase tracking-[0.2em]">Select Brand</h3>
+                  <div className="border-b border-slate-100 pb-4 mb-2 text-center">
+                    <div className="inline-block px-3 py-1 bg-gradient-to-r from-orange-500 to-blue-600 text-white rounded-full text-[9px] font-black uppercase tracking-[0.2em] mb-2 shadow-sm">Explore Our Programs</div>
+                    <p className="text-slate-500 text-[10px] mt-1 font-medium px-2">Choose your path in digital arts or film & media</p>
                   </div>
 
                   {/* ZICA Option */}
@@ -425,7 +436,7 @@ export default function Navbar() {
                 activeSection === 'blogs' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
               }`}
             >
-              Blogs
+              What's Live
               {activeSection === 'blogs' && (
                 <motion.span 
                   layoutId="active-nav-underline"
@@ -445,7 +456,7 @@ export default function Navbar() {
                 activeSection === 'gallery' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
               }`}
             >
-              Gallary
+              The Drop
               {activeSection === 'gallery' && (
                 <motion.span 
                   layoutId="active-nav-underline"
@@ -475,55 +486,41 @@ export default function Navbar() {
                 <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-blue-600`} />
               </button>
               {/* Dropdown Menu */}
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[160px] bg-white rounded-xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-slate-100 p-2 transition-all duration-300 origin-top ${isValueAdditionOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'} z-50`}>
+              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[220px] bg-white rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-slate-100 p-2 transition-all duration-300 origin-top ${isValueAdditionOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'} z-50`}>
                 <Link 
                   href="https://klic.mkcl.org/klic-courses" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block px-4 py-3 text-[13px] font-black text-slate-800 hover:text-orange-600 hover:bg-slate-50 rounded-lg transition-all duration-200"
+                  className="block px-4 py-3 hover:bg-slate-50 rounded-sm transition-all duration-200 group/link"
                 >
-                  MKCL
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-black text-slate-800 group-hover/link:text-orange-600 transition-colors">MKCL</span>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Govt. Certification</span>
+                  </div>
                 </Link>
                 <div className="border-b border-slate-100/60 my-1 mx-3" />
                 <Link 
                   href="https://aiglobtech.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block px-4 py-3 text-[13px] font-black text-slate-800 hover:text-orange-600 hover:bg-slate-50 rounded-lg transition-all duration-200"
+                  className="block px-4 py-3 hover:bg-slate-50 rounded-sm transition-all duration-200 group/link"
                 >
-                  AIGT
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-black text-slate-800 group-hover/link:text-orange-600 transition-colors">AIGT</span>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Technical Courses</span>
+                  </div>
                 </Link>
               </div>
             </div>
-
-            <Link
-              href="/#admissions"
-              onClick={() => setActiveSection('admissions')}
-              className={`relative py-2 text-sm font-bold tracking-wider uppercase transition-all duration-300 group ${
-                activeSection === 'admissions' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
-              }`}
-            >
-              Contact Us
-              {activeSection === 'admissions' && (
-                <motion.span 
-                  layoutId="active-nav-underline"
-                  className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-600"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              {activeSection !== 'admissions' && (
-                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-blue-600`} />
-              )}
-            </Link>
           </div>
 
           {/* CTA */}
           <div className="flex items-center gap-4">
             {/* Social Icons moved to the top bar */}
             <Link href="/#admissions">
-              <button className="hidden sm:flex items-center gap-2 kinetic-gradient text-on-primary px-6 py-2 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200 group">
-                Enquiry Now
-                <PhoneCallIcon size={18} className="text-white ml-1" />
+              <button className="hidden sm:flex items-center gap-3 kinetic-gradient text-on-primary px-8 py-3 rounded-full font-extrabold text-lg shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200 group">
+                Get In
+                <PhoneCallIcon size={22} className="text-white ml-1" />
               </button>
             </Link>
           </div>
