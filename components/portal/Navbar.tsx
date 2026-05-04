@@ -30,7 +30,8 @@ export default function Navbar() {
       links: [
         { label: "About Us", href: "/about", ariaLabel: "About Us" },
         { label: "Our Team", href: "#team", ariaLabel: "Our Team" },
-        { label: "Our Director", href: "/director", ariaLabel: "Our Director" }
+        { label: "Our Director", href: "/director", ariaLabel: "Our Director" },
+        { label: "Star Alumni", href: "/alumni", ariaLabel: "Star Alumni" }
       ]
     },
     {
@@ -255,7 +256,8 @@ export default function Navbar() {
                       {[
                         { label: "About Us", desc: "Our journey and mission in creative education.", href: "/about", icon: "info" },
                         { label: "Our Team", desc: "The creative minds behind our success.", href: "#team", icon: "groups" },
-                        { label: "Our Director", desc: "Visionary leadership guiding our future.", href: "/director", icon: "person" }
+                        { label: "Our Director", desc: "Visionary leadership guiding our future.", href: "/director", icon: "person" },
+                        { label: "Star Alumni", desc: "Our pride and success stories.", href: "/alumni", icon: "star" }
                       ].map((item) => (
                         <Link key={item.label} href={item.href} className="group flex items-start gap-4 p-4 rounded-sm hover:bg-slate-50 transition-all duration-300">
                           <div className="w-12 h-12 rounded bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-600 transition-colors">

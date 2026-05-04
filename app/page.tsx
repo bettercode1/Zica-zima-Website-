@@ -6,6 +6,7 @@ import WhyUs from "@/components/portal/WhyUs";
 import Programs from "@/components/portal/Programs";
 import CourseShowcase from "@/components/portal/CourseShowcase";
 import Testimonials from "@/components/portal/Testimonials";
+import StarAlumni from "@/components/portal/StarAlumni";
 import Recruiters from "@/components/portal/Recruiters";
 import BlogSection from "@/components/portal/BlogSection";
 import Footer from "@/components/portal/Footer";
@@ -24,6 +25,7 @@ export default function Page() {
         <Programs />
         <CourseShowcase />
         <Testimonials />
+        <StarAlumni />
         <Recruiters />
       </div>
       <BlogSection />
