@@ -120,9 +120,9 @@ export default function Hero() {
                   OUR <span className="text-[#38bdf8]">AFFILIATIONS</span>
                 </h3>
                 <div className="flex flex-wrap items-center gap-6 justify-center md:justify-start md:max-w-xs lg:max-w-none">
-                  <Image src="/image/affilations/mkcl.svg" alt="MKCL" width={160} height={80} className="object-contain h-20 w-auto" />
-                  <Image src="/image/affilations/Medhavi.png" alt="Medhavi Skills University" width={240} height={80} className="object-contain h-20 w-auto" />
-                  <Image src="/image/affilations/skill_india.svg" alt="Skill India" width={180} height={90} className="object-contain h-24 w-auto brightness-150 contrast-125" />
+                  <Image src="/image/affilations/mkcl.svg" alt="MKCL" width={160} height={80} className="object-contain" style={{ width: 'auto', height: '5rem' }} />
+                  <Image src="/image/affilations/Medhavi.png" alt="Medhavi Skills University" width={240} height={80} className="object-contain" style={{ width: 'auto', height: '5rem' }} />
+                  <Image src="/image/affilations/skill_india.svg" alt="Skill India" width={180} height={90} className="object-contain brightness-150 contrast-125" style={{ width: 'auto', height: '6rem' }} />
                 </div>
               </div>
 

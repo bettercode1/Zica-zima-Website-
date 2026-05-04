@@ -188,6 +188,7 @@ const CardNav = ({
                 src={logo} 
                 alt={logoAlt} 
                 fill 
+                sizes="(max-width: 640px) 128px, 200px"
                 className="object-contain" 
               />
             </Link>
@@ -198,6 +199,7 @@ const CardNav = ({
                   src="/image/zee learn.png"
                   alt="Zee Learn Logo"
                   fill
+                  sizes="(max-width: 640px) 96px, 140px"
                   className="object-contain object-left"
                   priority
                 />

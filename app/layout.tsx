@@ -31,7 +31,21 @@ export const metadata: Metadata = {
     'graphic artist programs', 'graphic design courses', 'graphic design class',
     'graphic and design course', 'class graphic design', 'motion graphics',
     'and motion graphics', 'graphic design what', 'graphic designer does what',
-    'creative designing', 'job in animation', 'graphic designing near me'
+    'creative designing', 'job in animation', 'graphic designing near me',
+    'ZICA Pune', 'ZIMA Pune', 'ZICA Pimpri Chinchwad', 'animation institute Pune', 
+    'VFX institute Pune', 'film making courses', 'cinematography courses', 'game design courses', 
+    '3D animation training', 'Maya training', 'Houdini courses', 'Unreal Engine training', 
+    'authorized Unreal Engine center', '100% placement assistance', 'interior design courses', 
+    'fashion design courses', 'sound engineering courses', 'film editing courses', 'acting courses', 
+    'MKCL certified', 'Zee Learn', 'Medhavi Skills University', 'Skill India', 'animation career', 
+    'VFX jobs', 'game designer jobs', 'animation course fees Pune', 'best animation institute Maharashtra', 
+    'digital arts PCMC', 'character animation', 'rigging courses', 'compositing training', 
+    'visual storytelling', 'concept art', 'storyboarding', 'CGI courses', 'animation rendering', 
+    'professional animation training', 'animation course admission 2026', 'career counseling animation', 
+    'VFX career India', 'film making career', 'visual effects training', 'animation portfolio development', 
+    'demo reel creation', 'game art design', 'PCDP 3D animation', 'PDP courses', 'diploma animation', 
+    'animation certification', 'pre-production courses', 'post-production training', 'motion capture', 
+    'virtual production'
   ],
 }
 

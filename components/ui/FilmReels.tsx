@@ -46,6 +46,7 @@ const FilmFrame = ({ src, index, position = 'center' }: { src: string, index: nu
         src={src} 
         alt="Reel image" 
         fill 
+        sizes="(max-width: 768px) 80px, 192px"
         style={{ objectPosition: position }}
         className="object-cover transition-all duration-700" 
       />
@@ -122,6 +123,7 @@ export const HorizontalFilmReel = () => {
                 src={img.src} 
                 alt="Reel image" 
                 fill 
+                sizes="128px"
                 style={{ objectPosition: img.position || 'center' }}
                 className="object-cover" 
               />

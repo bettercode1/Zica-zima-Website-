@@ -39,9 +39,10 @@ export default function Footer() {
                 alt={`${affiliation.name} logo`}
                 width={affiliation.width * 1.5}
                 height={affiliation.height * 1.5}
-                className={`w-auto object-contain ${
-                  affiliation.name === 'Skill India' ? 'h-24 brightness-125' : 'h-16'
+                className={`object-contain ${
+                  affiliation.name === 'Skill India' ? 'brightness-125' : ''
                 }`}
+                style={{ width: 'auto', height: affiliation.name === 'Skill India' ? '6rem' : '4rem' }}
               />
             ))}
           </div>
@@ -56,6 +57,7 @@ export default function Footer() {
               src="/image/ZICA ZIMA PCMC LOGO.png" 
               alt="ZICA ZIMA PCMC Logo" 
               fill
+              sizes="(max-width: 768px) 192px, 224px"
               className="object-contain"
             />
           </Link>
