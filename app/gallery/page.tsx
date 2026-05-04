@@ -12,20 +12,34 @@ type Tab = typeof tabs[number];
 
 // High-quality mock data for the gallery using the student reels and curated unsplash placeholders
 const galleryItems = [
-  { id: 1, category: 'Student works', src: '/image/Reel/student-reel-01.jpg', title: '3D Character Design' },
-  { id: 2, category: 'Student works', src: '/image/Reel/student-reel-02.jpg', title: 'VFX Compositing' },
-  { id: 5, category: 'Events', src: '/image/Reel/student-reel-07.jpg', title: 'Annual Design Fest' },
-  { id: 3, category: 'Student works', src: '/image/Reel/student-reel-03.jpg', title: 'Game Environment' },
-  { id: 7, category: 'Campus', src: '/image/Reel/student-reel-08.jpg', title: 'Creative Labs' },
-  { id: 4, category: 'Student works', src: '/image/Reel/student-reel-04.jpg', title: 'Brand Identity' },
-  { id: 9, category: 'Alumni', src: '/image/Reel/student-reel-09.jpg', title: 'Success Stories' },
-  { id: 8, category: 'Campus', src: '/image/Reel/student-reel-10.jpg', title: 'Student Lounge' },
-  { id: 11, category: 'Student works', src: '/image/Reel/student-reel-05.jpg', title: 'Motion Graphics' },
-  { id: 6, category: 'Events', src: '/image/Reel/student-reel-01.jpg', title: 'Industry Workshop' },
-  { id: 10, category: 'Alumni', src: '/image/Reel/student-reel-02.jpg', title: 'Alumni Meetup' },
-  { id: 12, category: 'Student works', src: '/image/Reel/student-reel-06.jpg', title: 'UI/UX Case Study' },
-  { id: 13, category: 'Events', src: '/image/Reel/student-reel-03.jpg', title: 'Convocation' },
-  { id: 14, category: 'Campus', src: '/image/Reel/student-reel-04.jpg', title: 'Recording Studio' },
+  // Student Works from public/image/studentwork
+  { id: 1, category: 'Student works', src: '/image/studentwork/00.png', title: 'Character Art' },
+  { id: 2, category: 'Student works', src: '/image/studentwork/005.jpg', title: '3D Visualization' },
+  { id: 3, category: 'Student works', src: '/image/studentwork/011.jpg', title: 'Digital Painting' },
+  { id: 4, category: 'Student works', src: '/image/studentwork/02.jpg', title: 'Concept Art' },
+  { id: 5, category: 'Student works', src: '/image/studentwork/03.jpg', title: 'VFX Scene' },
+  { id: 6, category: 'Student works', src: '/image/studentwork/04.jpg', title: 'Motion Graphics' },
+  { id: 7, category: 'Student works', src: '/image/studentwork/1.jpg', title: 'Character Design' },
+  { id: 8, category: 'Student works', src: '/image/studentwork/2.jpg', title: 'Environmental Design' },
+  { id: 9, category: 'Student works', src: '/image/studentwork/Cafe posterr.jpg', title: 'Advertising Design' },
+  { id: 10, category: 'Student works', src: '/image/studentwork/IMG_20241218_095827.jpg', title: 'Sketch Work' },
+  { id: 11, category: 'Student works', src: '/image/studentwork/Print advertisment222.jpg', title: 'Commercial Design' },
+  { id: 12, category: 'Student works', src: '/image/studentwork/Social Media posts 1-1.jpg', title: 'Social Media Campaign' },
+  { id: 13, category: 'Student works', src: '/image/studentwork/Social Media posts 1-4.jpg', title: 'Social Media Strategy' },
+  { id: 14, category: 'Student works', src: '/image/studentwork/WhatsApp Image 2026-02-11 at 12.49.12 PM (1).jpeg', title: 'Photography & Composition' },
+  { id: 15, category: 'Student works', src: '/image/studentwork/WhatsApp Image 2026-02-11 at 12.53.04 PM.jpeg', title: 'Creative Composition' },
+  { id: 16, category: 'Student works', src: '/image/studentwork/final render_scifi.jpg', title: 'Sci-Fi Render' },
+  { id: 17, category: 'Student works', src: '/image/studentwork/glasss.png', title: 'Product Visualization' },
+  
+  // Other Categories
+  { id: 18, category: 'Events', src: '/image/Reel/student-reel-07.jpg', title: 'Annual Design Fest' },
+  { id: 19, category: 'Campus', src: '/image/Reel/student-reel-08.jpg', title: 'Creative Labs' },
+  { id: 20, category: 'Alumni', src: '/image/Reel/student-reel-09.jpg', title: 'Success Stories' },
+  { id: 21, category: 'Campus', src: '/image/Reel/student-reel-10.jpg', title: 'Student Lounge' },
+  { id: 22, category: 'Events', src: '/image/Reel/student-reel-01.jpg', title: 'Industry Workshop' },
+  { id: 23, category: 'Alumni', src: '/image/Reel/student-reel-02.jpg', title: 'Alumni Meetup' },
+  { id: 24, category: 'Events', src: '/image/Reel/student-reel-03.jpg', title: 'Convocation' },
+  { id: 25, category: 'Campus', src: '/image/Reel/student-reel-04.jpg', title: 'Recording Studio' },
 ];
 
 export default function GalleryPage() {
@@ -91,28 +105,26 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        {/* Animated Masonry-style Grid */}
+        {/* Animated Standard Grid */}
         <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item, index) => (
               <motion.div
                 key={item.id}
                 layout
-                initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
-                transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
-                className={`group relative rounded-[2rem] overflow-hidden shadow-xl bg-slate-200 cursor-pointer ${
-                  // Make some items taller for a masonry effect look
-                  index % 5 === 0 || index % 7 === 0 ? 'aspect-[3/4]' : 'aspect-square'
-                }`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3, delay: (index % 10) * 0.05 }}
+                className="group relative rounded-[2rem] overflow-hidden shadow-xl bg-slate-200 cursor-pointer aspect-square"
               >
                 <Image
                   src={item.src}
                   alt={item.title}
                   fill
-                  className="object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                  quality={70}
                 />
                 
                 {/* Gen-Z Edgy Overlay Effect */}

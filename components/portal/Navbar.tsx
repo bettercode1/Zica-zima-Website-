@@ -166,6 +166,7 @@ export default function Navbar() {
                 src="/image/ZICA ZIMA PCMC LOGO.png" 
                 alt="ZICA ZIMA PCMC" 
                 fill
+                sizes="(max-width: 768px) 160px, 200px"
                 className="object-contain object-left"
                 priority
               />
@@ -181,6 +182,7 @@ export default function Navbar() {
                   src="/image/zee learn.png"
                   alt="Zee Learn Logo"
                   fill
+                  sizes="(max-width: 768px) 100px, 140px"
                   className="object-contain object-left"
                   priority
                 />
@@ -330,6 +332,7 @@ export default function Navbar() {
                             src="/image/zica_logo.png" 
                             alt="ZICA" 
                             fill 
+                            sizes="32px"
                             className="object-contain" 
                           />
                         </div>
@@ -386,6 +389,7 @@ export default function Navbar() {
                             src="/image/zima_logo.png" 
                             alt="ZIMA" 
                             fill 
+                            sizes="32px"
                             className="object-contain" 
                           />
                         </div>
