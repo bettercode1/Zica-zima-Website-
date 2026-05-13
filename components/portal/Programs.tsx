@@ -34,26 +34,26 @@ export default function Programs() {
     >
       <div className="container mx-auto">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
-          <span className="text-orange-500 font-black text-[10px] uppercase tracking-[0.3em] block mb-2">Our Programs</span>
-          <h2 className="font-headline text-2xl sm:text-4xl font-black mb-4 leading-tight">
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
+          <span className="text-orange-500 font-black text-[9px] md:text-[11px] uppercase tracking-[0.4em] block mb-2 md:mb-4">Our Programs</span>
+          <h2 className="font-headline text-2xl xs:text-3xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 leading-tight tracking-tight">
             Unleash Your{' '}
             <span className="text-orange-500">Potential</span>
           </h2>
-          <p className="text-slate-400 font-bold text-sm sm:text-base px-4">
+          <p className="text-slate-400 font-bold text-xs xs:text-sm md:text-lg px-4 md:px-0 leading-relaxed opacity-80">
             Specialized degree and certificate programs designed to take you
             from hobbyist to professional artist.
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
           {programs.map((program) => (
             <div
               key={program.title}
               className="group relative bg-slate-900/40 border border-slate-800/50 rounded-3xl overflow-hidden transition-all duration-500 hover:bg-slate-900/60 hover:border-orange-500/20"
             >
-              <div className="relative aspect-[16/10] sm:aspect-[4/3] p-3">
+              <div className="relative aspect-[16/10] sm:aspect-[4/3] p-3 md:p-4">
                 <div className="relative w-full h-full overflow-hidden rounded-2xl bg-slate-800/50 flex items-center justify-center">
                   <LazyImage
                     src={program.img}
@@ -65,9 +65,9 @@ export default function Programs() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
-              <div className="p-6 md:p-8">
-                <h3 className="text-xl md:text-2xl font-black mb-2 font-headline tracking-tight">{program.title}</h3>
-                <p className="text-slate-400 mb-6 font-bold text-xs sm:text-sm leading-relaxed">{program.description}</p>
+              <div className="p-6 md:p-8 lg:p-10">
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-black mb-2 md:mb-3 font-headline tracking-tight">{program.title}</h3>
+                <p className="text-slate-400 mb-6 md:mb-8 font-bold text-[11px] xs:text-xs md:text-sm lg:text-base leading-relaxed">{program.description}</p>
                 <Link
                   href="/courses"
                   className="text-orange-500 font-black text-[11px] uppercase tracking-widest flex items-center gap-2 group/btn transition-all"

@@ -5,6 +5,7 @@ import Navbar from '@/components/portal/Navbar';
 import Footer from '@/components/portal/Footer';
 import BlogContentRenderer from '@/components/portal/BlogContentRenderer';
 import { getBlogBySlug, getAllBlogs } from '@/lib/blogs';
+import { logger } from '@/lib/logger';
 import { notFound } from 'next/navigation';
 import type { Metadata } from "next";
 
@@ -22,7 +23,7 @@ export async function generateStaticParams() {
     // If no blogs are found, we MUST return at least one valid path 
     // to satisfy the 'output: export' requirement for dynamic routes.
     if (!blogs || blogs.length === 0) {
-      console.warn("No blogs found. Returning sample path to prevent build failure.");
+      logger.warn("No blogs found. Returning sample path to prevent build failure.");
       return [{ slug: 'notebooklm-digital-marketing-ai' }]; 
     }
     
@@ -30,7 +31,7 @@ export async function generateStaticParams() {
       slug: blog.slug,
     }));
   } catch (error) {
-    console.error("Error in generateStaticParams for blogs:", error);
+    logger.error("Error in generateStaticParams for blogs:", error);
     return [{ slug: 'notebooklm-digital-marketing-ai' }];
   }
 }

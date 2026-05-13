@@ -177,29 +177,29 @@ const CardNav = ({
             <div className="hamburger-line" />
           </div>
 
-          <div className="logo-container flex items-center gap-2">
+          <div className="logo-container flex items-center gap-1 sm:gap-4">
             <Link href="/" onClick={(e) => {
               if (window.location.pathname === '/') {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }
-            }} className="relative w-24 h-8 sm:w-32 sm:h-10 flex-shrink-0 cursor-pointer">
+            }} className="relative w-[100px] h-8 xs:w-32 xs:h-10 sm:w-48 sm:h-14 lg:w-56 lg:h-16 flex-shrink-0 cursor-pointer">
               <Image 
                 src={logo} 
                 alt={logoAlt} 
                 fill 
-                sizes="(max-width: 640px) 128px, 200px"
+                sizes="(max-width: 640px) 150px, 350px"
                 className="object-contain" 
               />
             </Link>
-            <div className="flex flex-col justify-center relative w-16 h-6 sm:w-24 sm:h-8 flex-shrink-0">
-              <span className="text-[6px] sm:text-[8px] font-extrabold text-slate-400 uppercase tracking-[0.2em] mb-0 leading-none">Backed by</span>
+              <div className="flex flex-col justify-center relative w-12 h-5 xs:w-20 xs:h-8 sm:w-32 sm:h-10 lg:w-40 lg:h-12 flex-shrink-0">
+              <span className="text-[5px] xs:text-[6px] sm:text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0 leading-none">Backed by</span>
               <div className="relative w-full h-full -mt-0.5">
                 <Image 
                   src="/image/zee learn.png"
                   alt="Zee Learn Logo"
                   fill
-                  sizes="(max-width: 640px) 96px, 140px"
+                  sizes="(max-width: 475px) 80px, 200px"
                   className="object-contain object-left"
                   priority
                 />
@@ -207,12 +207,13 @@ const CardNav = ({
             </div>
           </div>
 
-          <Link href="/#admissions" className="order-2 sm:order-none">
+          <Link href="/#admissions" className="order-2 sm:order-none ml-auto mr-1">
             <button
-              className="flex items-center gap-2 kinetic-gradient text-on-primary px-4 py-1.5 sm:px-6 sm:py-2 rounded-full font-bold shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95 duration-200 group text-xs sm:text-sm"
+              className="flex items-center gap-1 kinetic-gradient text-on-primary px-2.5 py-1.5 xs:px-4 xs:py-2 rounded-full font-bold shadow-lg transition-all active:scale-95 duration-200 group text-[10px] xs:text-xs sm:text-sm"
             >
-              Enquiry Now
-              <PhoneCallIcon size={16} className="text-white ml-1" />
+              <span className="hidden xs:inline">Enquiry Now</span>
+              <span className="inline xs:hidden">Enquiry</span>
+              <PhoneCallIcon size={12} className="text-white ml-0.5 sm:size-4" />
             </button>
           </Link>
         </div>

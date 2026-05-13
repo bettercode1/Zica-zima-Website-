@@ -31,13 +31,13 @@ export default function Recruiters() {
 
   return (
     <section className="py-16 md:py-32 bg-slate-50 overflow-hidden border-y border-slate-100 relative">
-      <div className="container mx-auto px-4 sm:px-8 mb-8 md:mb-12 relative z-10">
+      <div className="container mx-auto px-4 sm:px-8 mb-6 md:mb-12 relative z-10">
         <div className="flex flex-col items-center text-center">
-          <span className="text-orange-600 font-bold text-sm uppercase tracking-widest block mb-2">Our Network</span>
-          <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-[#141a3b]">
+          <span className="text-orange-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.3em] block mb-2">Our Network</span>
+          <h2 className="font-headline text-2xl xs:text-3xl md:text-5xl font-black text-[#141a3b] leading-tight">
             Our Top <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#9d4300] to-[#f1711c]">Recruiters</span>
           </h2>
-          <div className="w-20 h-1 bg-orange-500 mt-4 rounded-full" />
+          <div className="w-16 h-1 bg-orange-500 mt-4 rounded-full" />
         </div>
       </div>
 

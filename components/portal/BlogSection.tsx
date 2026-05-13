@@ -57,11 +57,11 @@ export default function BlogSection() {
       <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-tertiary-container/5 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
       
       <div className="w-full px-2 md:px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-on-surface mb-6 tracking-tight">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-on-surface mb-4 sm:mb-6 tracking-tight leading-tight">
             Our <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#9d4300] to-[#f1711c]">Backstage</span>
           </h2>
-          <p className="text-lg text-on-surface-variant max-w-2xl mx-auto">
+          <p className="text-sm sm:text-lg text-on-surface-variant max-w-2xl mx-auto px-4">
             Insights, updates, and stories from the world of animation, VFX, and design.
           </p>
         </div>

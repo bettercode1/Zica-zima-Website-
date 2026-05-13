@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image, { ImageProps } from 'next/image';
+import { logger } from '@/lib/logger';
 
 interface LazyImageProps extends ImageProps {
   containerClassName?: string;
@@ -51,7 +52,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
             if (props.onLoad) (props.onLoad as any)(e);
           }}
           onError={(e) => {
-            console.error(`Image load error: ${src}`);
+            logger.error(`Image load error: ${src}`);
             setError(true);
             if (props.onError) (props.onError as any)(e);
           }}

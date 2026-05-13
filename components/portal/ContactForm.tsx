@@ -129,12 +129,12 @@ export default function ContactForm() {
           {/* Left Panel */}
           <div className="lg:w-1/2 kinetic-gradient p-8 sm:p-12 lg:p-20 text-white flex flex-col justify-between">
             <div>
-              <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 leading-tight text-center lg:text-left">
-                Ready to <br />
-                Start Your <br />
+              <h2 className="font-headline text-2xl sm:text-4xl lg:text-5xl font-extrabold mb-4 sm:mb-6 leading-tight text-center lg:text-left">
+                Ready to <br className="hidden sm:block" />
+                Start Your <br className="hidden sm:block" />
                 Journey?
               </h2>
-              <p className="text-white/80 text-lg mb-12 font-body">
+              <p className="text-white/80 text-base sm:text-lg mb-8 sm:mb-12 font-body text-center lg:text-left">
                 Book a free career counseling session or campus tour today. Our
                 experts will help you choose the right path.
               </p>

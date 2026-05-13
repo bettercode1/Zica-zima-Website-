@@ -28,8 +28,8 @@ export default function DirectorPage() {
           >
             <span className="text-orange-600 font-black text-xs uppercase tracking-[0.4em] block mb-4">Visionary Leadership</span>
             <h1 className="font-headline text-5xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none">
-              DIRECTOR <br className="hidden md:block" /> 
-              <span className="text-orange-500">ZICAZIMA PCMC</span>
+              THE <br className="hidden md:block" /> 
+              <span className="text-orange-500">CAPTAIN</span>
             </h1>
           </motion.div>
 

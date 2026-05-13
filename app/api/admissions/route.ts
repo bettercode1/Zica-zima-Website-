@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { logger } from '@/lib/logger';
 
 /* ── Firebase client init ── */
 const firebaseConfig = {
@@ -45,7 +46,7 @@ export async function POST(req: NextRequest) {
       submittedAt: serverTimestamp(),
     });
 
-    console.log(`✅ [Admissions] Firestore saved → enquiries/${docRef.id}`);
+    logger.box('ADMISSIONS', `Firestore saved → enquiries/${docRef.id}`);
 
     return NextResponse.json({
       success: true,
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
     }, { status: 200 });
 
   } catch (err) {
-    console.error('❌ [Admissions] Error:', err);
+    logger.error('[Admissions] Error:', err);
     return NextResponse.json(
       { error: 'Failed to save enquiry. Please try again.' },
       { status: 500 }

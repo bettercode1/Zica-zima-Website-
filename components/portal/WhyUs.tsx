@@ -70,13 +70,13 @@ export default function WhyUs() {
             transition={{ duration: 0.8 }}
             className="lg:w-1/3 lg:sticky top-32 text-center lg:text-left"
           >
-            <span className="text-orange-500 font-black text-xs uppercase tracking-[0.3em] block mb-4">Why Choose Us</span>
-            <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-6 leading-tight text-slate-900">
+            <span className="text-orange-500 font-black text-[10px] md:text-xs uppercase tracking-[0.4em] block mb-3 md:mb-4">Why Choose Us</span>
+            <h2 className="font-headline text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4 md:mb-6 leading-[1.15] md:leading-tight text-slate-900">
               Designed for the <br className="hidden lg:block"/>
               <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#ff7b1c] to-[#f1711c]">Next Gen</span> <br className="hidden lg:block"/>
               of Creators.
             </h2>
-            <p className="text-slate-600 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium text-sm sm:text-base">
+            <p className="text-slate-600 mb-6 md:mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium text-xs xs:text-sm sm:text-base md:text-lg opacity-90">
               We don&apos;t just teach software; we build careers through a
               curriculum that mirrors the fast-paced animation industry.
             </p>

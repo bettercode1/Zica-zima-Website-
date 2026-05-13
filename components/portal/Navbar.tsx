@@ -28,10 +28,10 @@ export default function Navbar() {
       bgColor: "#f8fafc",
       textColor: "#0f172a",
       links: [
-        { label: "About Us", href: "/about", ariaLabel: "About Us" },
-        { label: "Our Team", href: "#team", ariaLabel: "Our Team" },
-        { label: "Our Director", href: "/director", ariaLabel: "Our Director" },
-        { label: "Star Alumni", href: "/alumni", ariaLabel: "Star Alumni" }
+        { label: "Our Vibe", href: "/about", ariaLabel: "Our Vibe" },
+        { label: "The Crew", href: "#team", ariaLabel: "The Crew" },
+        { label: "The Captain", href: "/director", ariaLabel: "The Captain" },
+        { label: "The Legends", href: "/alumni", ariaLabel: "The Legends" }
       ]
     },
     {
@@ -90,6 +90,24 @@ export default function Navbar() {
     handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Sync active section with pathname for separate pages
+  useEffect(() => {
+    if (pathname === '/') {
+      // Home page is handled by scroll listener, but reset to home initially if at top
+      if (typeof window !== 'undefined' && window.scrollY < 100) {
+        setActiveSection('home');
+      }
+    } else if (pathname.startsWith('/blogs')) {
+      setActiveSection('blogs');
+    } else if (pathname.startsWith('/gallery')) {
+      setActiveSection('gallery');
+    } else if (pathname.startsWith('/about') || pathname.startsWith('/director') || pathname.startsWith('/alumni')) {
+      setActiveSection('about');
+    } else if (pathname.startsWith('/courses')) {
+      setActiveSection('courses');
+    }
+  }, [pathname]);
 
   // Close menu when clicking a link
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -256,10 +274,10 @@ export default function Navbar() {
                     </div>
                     <div className="flex flex-col gap-1">
                       {[
-                        { label: "About Us", desc: "Our journey and mission in creative education.", href: "/about", icon: "info" },
-                        { label: "Our Team", desc: "The creative minds behind our success.", href: "#team", icon: "groups" },
-                        { label: "Our Director", desc: "Visionary leadership guiding our future.", href: "/director", icon: "person" },
-                        { label: "Star Alumni", desc: "Our pride and success stories.", href: "/alumni", icon: "star" }
+                        { label: "Our Vibe", desc: "Our journey and mission in creative education.", href: "/about", icon: "info" },
+                        { label: "The Crew", desc: "The creative minds behind our success.", href: "#team", icon: "groups" },
+                        { label: "The Captain", desc: "Visionary leadership guiding our future.", href: "/director", icon: "person" },
+                        { label: "The Legends", desc: "Our pride and success stories.", href: "/alumni", icon: "star" }
                       ].map((item) => (
                         <Link key={item.label} href={item.href} className="group flex items-start gap-4 p-4 rounded-sm hover:bg-slate-50 transition-all duration-300">
                           <div className="w-12 h-12 rounded bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-600 transition-colors">

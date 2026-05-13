@@ -45,10 +45,10 @@ export default function CourseShowcase() {
     <section className="py-16 md:py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-8 relative z-10">
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-12 md:mb-16">
-          <span className="text-orange-600 font-extrabold text-[10px] uppercase tracking-[0.2em] block mb-3">Courses</span>
-          <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#141a3b] tracking-tight px-4">
-            We provide career <br className="hidden sm:block" />
+        <div className="flex flex-col items-center text-center mb-10 md:mb-16">
+          <span className="text-orange-600 font-extrabold text-[9px] xs:text-[10px] uppercase tracking-[0.25em] block mb-3">Professional Courses</span>
+          <h2 className="font-headline text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#141a3b] tracking-tight px-4 leading-[1.2] md:leading-tight">
+            We provide career <br className="hidden xs:block" />
             <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#9d4300] to-[#f1711c] italic">oriented creative courses.</span>
           </h2>
           

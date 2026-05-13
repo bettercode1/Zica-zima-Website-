@@ -243,7 +243,7 @@ export default function StarAlumni() {
     <section
       className="relative py-16 sm:py-20 md:py-28 overflow-hidden"
       style={{ background: 'linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 35%, #0f1a2e 65%, #0d0d1a 100%)' }}
-      aria-label="Star Alumni section"
+      aria-label="The Legends section"
     >
       {/* Diagonal grid overlay */}
       <div
@@ -304,9 +304,9 @@ export default function StarAlumni() {
             transition={{ delay: 0.1 }}
             className="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight"
           >
-            Star{' '}
+            The{' '}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-400 italic pr-2">
-              Alumni
+              Legends
             </span>
           </motion.h2>
 
@@ -343,7 +343,7 @@ export default function StarAlumni() {
             className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 font-bold rounded-full text-white text-sm sm:text-base hover:scale-105 transition-transform shadow-xl"
             style={{ background: 'linear-gradient(135deg, #f1711c, #facc15 60%, #f97316)' }}
           >
-            View All Star Alumni
+            View All The Legends
             <span className="material-symbols-outlined">arrow_forward</span>
           </Link>
         </motion.div>

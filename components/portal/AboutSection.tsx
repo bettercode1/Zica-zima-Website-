@@ -53,7 +53,7 @@ export default function AboutSection() {
             className="w-full lg:w-1/2 space-y-6 text-center lg:text-left order-1 lg:order-2"
           >
             <div className="space-y-2 md:space-y-4">
-              <span className="text-orange-600 font-black text-[10px] sm:text-xs uppercase tracking-[0.3em] block mb-2">About us</span>
+              <span className="text-orange-600 font-black text-[10px] sm:text-xs uppercase tracking-[0.3em] block mb-2">Our Vibe</span>
               <h3 className="font-headline text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight">
                 Transforming Imagination <br className="hidden sm:block" />
                 <span className="text-orange-500">Into Reality</span>

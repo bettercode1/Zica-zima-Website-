@@ -284,19 +284,21 @@ export default function IndustryPerspective() {
           margin-bottom: 0.75rem;
         }
         .ip-title {
-          font-size: clamp(1.8rem, 4vw, 2.8rem);
+          font-size: clamp(1.6rem, 5vw, 2.8rem);
           font-weight: 900;
           color: #0f172a;
           line-height: 1.15;
           margin: 0 0 1rem;
+          letter-spacing: -0.02em;
         }
         .ip-accent { color: #f97316; }
         .ip-subtitle {
-          font-size: 1rem;
+          font-size: clamp(0.85rem, 2.5vw, 1.1rem);
           color: #64748b;
-          max-width: 560px;
+          max-width: 600px;
           margin: 0 auto;
           line-height: 1.7;
+          font-weight: 500;
         }
 
         /* ── Sub-label ── */

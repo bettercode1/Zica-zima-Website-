@@ -1,5 +1,6 @@
 import { db } from "./firebase";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { logger } from "./logger";
 
 // Original Offer Interface (Untouched)
 export interface Offer {
@@ -39,7 +40,7 @@ export async function getActiveOffers(): Promise<Offer[]> {
     
     return offers;
   } catch (error) {
-    console.error("Error fetching offers:", error);
+    logger.error("Error fetching offers:", error);
     return [];
   }
 }
@@ -88,7 +89,7 @@ export async function getPromotionalOffers(): Promise<PromotionalOffer[]> {
     const sorted = offers.sort((a, b) => (b.priority || 0) - (a.priority || 0));
     return sorted;
   } catch (error) {
-    console.error("Error fetching promotional offers:", error);
+    logger.error("Error fetching promotional offers:", error);
     return [];
   }
 }

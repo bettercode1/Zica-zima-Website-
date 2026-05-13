@@ -67,7 +67,7 @@ export default function Hero() {
       </div>
       <FilmReels />
       
-      <div className="container mx-auto relative z-30 flex flex-col items-center md:items-start justify-center py-10 md:py-0 mt-12 md:mt-16">
+      <div className="container mx-auto relative z-30 flex flex-col items-center md:items-start justify-center py-10 md:py-0 mt-6 md:mt-10">
         <div className="max-w-4xl w-full px-4 sm:px-0 text-center md:text-left">
           {/* Main Content Area */}
           <motion.div 
@@ -82,10 +82,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="font-headline text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold leading-[1.1] md:leading-[1.04] tracking-[-0.02em] text-white md:max-w-[12ch] text-balance"
+              className="font-headline text-[clamp(2.2rem,8vw,5.5rem)] font-black leading-[1.1] md:leading-[1.02] tracking-tight text-white md:max-w-[12ch] text-balance"
             >
               Where Every{' '}
-              <span className="relative inline-block px-2 italic">
+              <span className="relative inline-block italic">
                 <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#ff7b1c] to-[#f1711c] pr-4">Frame</span>
               </span> Tells a Story.
             </motion.h1>
@@ -94,7 +94,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              className="text-base md:text-lg text-white/80 leading-relaxed max-w-xl md:max-w-xs lg:max-w-xl font-medium"
+              className="text-sm xs:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-xl md:max-w-xs lg:max-w-2xl font-medium"
             >
               Master the art of visual storytelling at India&apos;s premier animation
               institute. From 2D classics to 3D blockbusters, we give your
@@ -113,18 +113,6 @@ export default function Hero() {
                   Know More About Courses
                 </button>
               </Link>
-
-              {/* Our Affiliations Section */}
-              <div className="mt-8 flex flex-col items-center md:items-start gap-4">
-                <h3 className="text-xs font-black tracking-[0.2em] text-white">
-                  OUR <span className="text-[#38bdf8]">AFFILIATIONS</span>
-                </h3>
-                <div className="flex flex-wrap items-center gap-6 justify-center md:justify-start md:max-w-xs lg:max-w-none">
-                  <Image src="/image/affilations/mkcl.svg" alt="MKCL" width={160} height={80} className="object-contain" style={{ width: 'auto', height: '5rem' }} />
-                  <Image src="/image/affilations/Medhavi.png" alt="Medhavi Skills University" width={240} height={80} className="object-contain" style={{ width: 'auto', height: '5rem' }} />
-                  <Image src="/image/affilations/skill_india.svg" alt="Skill India" width={180} height={90} className="object-contain brightness-150 contrast-125" style={{ width: 'auto', height: '6rem' }} />
-                </div>
-              </div>
 
               {/* Mobile Horizontal Reel */}
               <div className="w-full md:hidden">
