@@ -40,73 +40,123 @@ export default function Affiliations() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-wrap items-center justify-center gap-6 md:gap-16"
+          className="flex flex-col items-center gap-8 md:gap-14"
         >
-          {/* Logo Card 1: MKCL */}
-          <motion.div 
-            whileHover={{ y: -10 }}
-            className="group relative flex flex-col items-center"
-          >
-            <div className="relative w-36 h-20 xs:w-40 xs:h-24 md:w-56 md:h-32 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-4 md:p-6 flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(249,115,22,0.1)] group-hover:border-orange-200/50">
+          {/* Top Row: ZEE Media - SPPU - Medhavi */}
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-16">
+            {/* Logo Card 1: ZEE Media */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="group relative flex flex-col items-center"
+            >
+              <div className="relative w-48 h-20 xs:w-56 xs:h-24 md:w-80 md:h-32 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-1.5 md:p-2 flex items-center justify-center overflow-hidden transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(124,58,237,0.12)] group-hover:border-violet-200/60">
               <div className="relative w-full h-full">
                 <Image 
-                  src="/image/affilations/mkcl.svg" 
-                  alt="MKCL" 
+                  src="/image/affilations/ZEE_Media.png" 
+                  alt="Zee Media Corporation Limited" 
                   fill 
-                  className="object-contain transition-transform duration-500 group-hover:scale-110" 
-                  sizes="(max-width: 768px) 160px, 224px"
-                />
-              </div>
-            </div>
-            <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
-              <span className="text-[9px] md:text-[10px] font-black text-orange-600 uppercase tracking-widest">Knowledge Partner</span>
-              <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">MKCL Certified</span>
-            </div>
-          </motion.div>
-
-          {/* Logo Card 2: Medhavi */}
-          <motion.div 
-            whileHover={{ y: -10 }}
-            className="group relative flex flex-col items-center"
-          >
-            <div className="relative w-48 h-20 xs:w-56 xs:h-24 md:w-80 md:h-32 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-4 md:p-6 flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(56,189,248,0.1)] group-hover:border-sky-200/50">
-              <div className="relative w-full h-full">
-                <Image 
-                  src="/image/affilations/Medhavi.png" 
-                  alt="Medhavi Skills University" 
-                  fill 
-                  className="object-contain transition-transform duration-500 group-hover:scale-110" 
+                  className="object-contain scale-[1.25] md:scale-[1.3] transition-transform duration-500 group-hover:scale-[1.4]" 
                   sizes="(max-width: 768px) 224px, 320px"
                 />
               </div>
             </div>
-            <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
-              <span className="text-[9px] md:text-[10px] font-black text-sky-600 uppercase tracking-widest">University Partner</span>
-              <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">Academic Excellence</span>
-            </div>
-          </motion.div>
-
-          {/* Logo Card 3: Skill India */}
-          <motion.div 
-            whileHover={{ y: -10 }}
-            className="group relative flex flex-col items-center"
-          >
-            <div className="relative w-36 h-20 xs:w-40 xs:h-24 md:w-56 md:h-32 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-4 md:p-6 flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(249,115,22,0.1)] group-hover:border-orange-200/50">
-              <div className="relative w-full h-full">
-                <Image 
-                  src="/image/affilations/skill_india.svg" 
-                  alt="Skill India" 
-                  fill 
-                  className="object-contain brightness-90 contrast-125 transition-transform duration-500 group-hover:scale-110" 
-                  sizes="(max-width: 768px) 160px, 224px"
-                />
+              <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
+                <span className="text-[9px] md:text-[10px] font-black text-violet-700 uppercase tracking-widest">Media Partner</span>
+                <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">Zee Media Corporation Limited</span>
               </div>
-            </div>
-            <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
-              <span className="text-[9px] md:text-[10px] font-black text-orange-600 uppercase tracking-widest">Government Affiliation</span>
-              <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">Skill Development</span>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            {/* Logo Card 2: Savitribai Phule Pune University */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="group relative flex flex-col items-center"
+            >
+              <div className="relative w-44 h-24 xs:w-48 xs:h-28 md:w-64 md:h-36 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-0 flex items-center justify-center overflow-hidden transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(234,179,8,0.12)] group-hover:border-amber-200/60">
+                <div className="relative w-full h-full">
+                  <Image 
+                    src="/image/affilations/Savitribai_Phule_Pune_University_Logo.png" 
+                    alt="Savitribai Phule Pune University" 
+                    fill 
+                    className="object-contain scale-[1.2] md:scale-[1.3] transition-transform duration-500 group-hover:scale-[1.4]" 
+                    sizes="(max-width: 768px) 192px, 256px"
+                  />
+                </div>
+              </div>
+              <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
+                <span className="text-[9px] md:text-[10px] font-black text-amber-600 uppercase tracking-widest">University Partner</span>
+                <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">Savitribai Phule Pune University</span>
+              </div>
+            </motion.div>
+
+            {/* Logo Card 3: Medhavi */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="group relative flex flex-col items-center"
+            >
+              <div className="relative w-48 h-20 xs:w-56 xs:h-24 md:w-80 md:h-32 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-4 md:p-6 flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(56,189,248,0.1)] group-hover:border-sky-200/50">
+                <div className="relative w-full h-full">
+                  <Image 
+                    src="/image/affilations/Medhavi.png" 
+                    alt="Medhavi Skills University" 
+                    fill 
+                    className="object-contain transition-transform duration-500 group-hover:scale-110" 
+                    sizes="(max-width: 768px) 224px, 320px"
+                  />
+                </div>
+              </div>
+              <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
+                <span className="text-[9px] md:text-[10px] font-black text-sky-600 uppercase tracking-widest">University Partner</span>
+                <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">Academic Excellence</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Bottom Row: MKCL - Skill India */}
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-16">
+            {/* Logo Card 4: MKCL */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="group relative flex flex-col items-center"
+            >
+              <div className="relative w-44 h-24 xs:w-48 xs:h-28 md:w-64 md:h-36 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-2 md:p-3 flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(249,115,22,0.1)] group-hover:border-orange-200/50">
+                <div className="relative w-full h-full">
+                  <Image 
+                    src="/image/affilations/mkcl.svg" 
+                    alt="MKCL" 
+                    fill 
+                    className="object-contain transition-transform duration-500 group-hover:scale-110" 
+                    sizes="(max-width: 768px) 192px, 256px"
+                  />
+                </div>
+              </div>
+              <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
+                <span className="text-[9px] md:text-[10px] font-black text-orange-600 uppercase tracking-widest">Knowledge Partner</span>
+                <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">MKCL Certified</span>
+              </div>
+            </motion.div>
+
+            {/* Logo Card 5: Skill India */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="group relative flex flex-col items-center"
+            >
+              <div className="relative w-44 h-24 xs:w-48 xs:h-28 md:w-64 md:h-36 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-2 md:p-3 flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(249,115,22,0.1)] group-hover:border-orange-200/50">
+                <div className="relative w-full h-full">
+                  <Image 
+                    src="/image/affilations/skill_india.svg" 
+                    alt="Skill India" 
+                    fill 
+                    className="object-contain brightness-90 contrast-125 transition-transform duration-500 group-hover:scale-110" 
+                    sizes="(max-width: 768px) 192px, 256px"
+                  />
+                </div>
+              </div>
+              <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
+                <span className="text-[9px] md:text-[10px] font-black text-orange-600 uppercase tracking-widest">Government Affiliation</span>
+                <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">Skill Development</span>
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>

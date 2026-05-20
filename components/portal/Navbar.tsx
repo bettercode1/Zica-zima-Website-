@@ -52,6 +52,7 @@ export default function Navbar() {
         { label: "What's Live", href: "/blogs", ariaLabel: "Read our blogs" },
         { label: "The Drop", href: "/gallery", ariaLabel: "Gallary" },
         { label: "MKCL (Govt. Certification)", href: "https://klic.mkcl.org/klic-courses", ariaLabel: "MKCL Govt. Certification" },
+        { label: "Bettercode (Technical Partner)", href: "https://bettercode.co.in/", ariaLabel: "Bettercode Technologies Pvt. Ltd. - Technical Partner" },
         { label: "AIGT (Technical Courses)", href: "https://aiglobtech.com/", ariaLabel: "AIGT Technical Courses" },
         { label: "Get In", href: "/#admissions", ariaLabel: "Enquiry" }
       ]
@@ -520,6 +521,19 @@ export default function Navbar() {
                   <div className="flex flex-col">
                     <span className="text-[13px] font-black text-slate-800 group-hover/link:text-orange-600 transition-colors">MKCL</span>
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Govt. Certification</span>
+                  </div>
+                </Link>
+                <div className="border-b border-slate-100/60 my-1 mx-3" />
+                <Link 
+                  href="https://bettercode.co.in/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block px-4 py-3 hover:bg-slate-50 rounded-sm transition-all duration-200 group/link"
+                  aria-label="Bettercode Technologies Pvt. Ltd. - Technical Partner"
+                >
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-black text-slate-800 group-hover/link:text-orange-600 transition-colors">Bettercode</span>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Technical Partner</span>
                   </div>
                 </Link>
                 <div className="border-b border-slate-100/60 my-1 mx-3" />
