@@ -77,7 +77,7 @@ export default function Affiliations() {
                     src="/image/affilations/Savitribai_Phule_Pune_University_Logo.png" 
                     alt="Savitribai Phule Pune University" 
                     fill 
-                    className="object-contain scale-[1.2] md:scale-[1.3] transition-transform duration-500 group-hover:scale-[1.4]" 
+                    className="object-contain scale-[0.95] md:scale-[1.05] transition-transform duration-500 group-hover:scale-[1.15]" 
                     sizes="(max-width: 768px) 192px, 256px"
                   />
                 </div>
@@ -111,9 +111,31 @@ export default function Affiliations() {
             </motion.div>
           </div>
 
-          {/* Bottom Row: MKCL - Skill India */}
+          {/* Bottom Row: Gedu - MKCL - Skill India */}
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-16">
-            {/* Logo Card 4: MKCL */}
+            {/* Logo Card 4: Gedu (Global Education) */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="group relative flex flex-col items-center"
+            >
+              <div className="relative w-48 h-20 xs:w-56 xs:h-24 md:w-80 md:h-32 bg-slate-50/50 backdrop-blur-sm border border-slate-100 rounded-2xl md:rounded-3xl p-3 md:p-4 flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(141,198,63,0.18)] group-hover:border-lime-200/60">
+                <div className="relative w-full h-full">
+                  <Image 
+                    src="/image/affilations/Gedu_Logo_Extended_RGB.svg" 
+                    alt="Gedu Global Education" 
+                    fill 
+                    className="object-contain transition-transform duration-500 group-hover:scale-110" 
+                    sizes="(max-width: 768px) 224px, 320px"
+                  />
+                </div>
+              </div>
+              <div className="mt-3 md:mt-4 flex flex-col items-center md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 md:transform md:translate-y-2 md:group-hover:translate-y-0">
+                <span className="text-[9px] md:text-[10px] font-black text-lime-700 uppercase tracking-widest">Education Partner</span>
+                <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase">Global Education</span>
+              </div>
+            </motion.div>
+
+            {/* Logo Card 5: MKCL */}
             <motion.div 
               whileHover={{ y: -10 }}
               className="group relative flex flex-col items-center"
@@ -135,7 +157,7 @@ export default function Affiliations() {
               </div>
             </motion.div>
 
-            {/* Logo Card 5: Skill India */}
+            {/* Logo Card 6: Skill India */}
             <motion.div 
               whileHover={{ y: -10 }}
               className="group relative flex flex-col items-center"

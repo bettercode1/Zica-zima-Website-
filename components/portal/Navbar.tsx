@@ -12,7 +12,7 @@ import { zicaCourses, zimaCourses } from '@/lib/courses';
 
 export default function Navbar() {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
-  const [hoveredBrand, setHoveredBrand] = useState<'zica' | 'zima' | null>(null);
+  const [hoveredBrand, setHoveredBrand] = useState<'zica' | 'zima' | 'degree' | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isValueAdditionOpen, setIsValueAdditionOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
@@ -41,6 +41,8 @@ export default function Navbar() {
       links: [
         { label: "ZICA Courses", href: "/courses?brand=zica", ariaLabel: "ZICA Courses" },
         { label: "ZIMA Courses", href: "/courses?brand=zima", ariaLabel: "ZIMA Courses" },
+        { label: "B.Voc Graphics & Multimedia", href: "/courses?brand=degree&course=bvoc-graphics-multimedia", ariaLabel: "B.Voc in Graphics & Multimedia" },
+        { label: "B.Voc Animation & Graphic Design", href: "/courses?brand=degree&course=bvoc-animation-graphic-design", ariaLabel: "B.Voc in Animation & Graphic Design" },
         { label: "All Modules", href: "/courses", ariaLabel: "All Modules" }
       ]
     },
@@ -267,30 +269,26 @@ export default function Navbar() {
               </button>
 
               {/* About Mega Dropdown Menu */}
-              <div className={`absolute top-full left-0 w-[350px] bg-white/95 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-6 transition-all duration-500 origin-top-left overflow-hidden ${isAboutOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}>
-                  {/* Navigation Links - Centered and Spanned */}
-                  <div className="space-y-4">
-                    <div className="border-b border-slate-100 pb-3 text-center">
-                      <h3 className="text-slate-900 font-black text-xs uppercase tracking-[0.2em]">Our Identity</h3>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      {[
-                        { label: "Our Vibe", desc: "Our journey and mission in creative education.", href: "/about", icon: "info" },
-                        { label: "The Crew", desc: "The creative minds behind our success.", href: "#team", icon: "groups" },
-                        { label: "The Captain", desc: "Visionary leadership guiding our future.", href: "/director", icon: "person" },
-                        { label: "The Legends", desc: "Our pride and success stories.", href: "/alumni", icon: "star" }
-                      ].map((item) => (
-                        <Link key={item.label} href={item.href} className="group flex items-start gap-4 p-4 rounded-sm hover:bg-slate-50 transition-all duration-300">
-                          <div className="w-12 h-12 rounded bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-600 transition-colors">
-                            <span className="material-symbols-outlined text-2xl">{item.icon}</span>
-                          </div>
-                          <div className="flex-1">
-                            <div className="font-black text-slate-950 transition-colors text-[15px] leading-tight mb-1">{item.label}</div>
-                            <div className="text-[11px] text-slate-800 font-bold leading-tight uppercase tracking-widest opacity-80">{item.desc}</div>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
+              <div className={`absolute top-full left-0 w-[360px] bg-white/95 backdrop-blur-xl rounded-xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.18)] border border-white/40 p-3 transition-all duration-500 origin-top-left overflow-hidden ${isAboutOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}>
+                  <div className="flex flex-col gap-1">
+                    {[
+                      { label: "Our Vibe", desc: "Our journey and mission in creative education.", href: "/about", icon: "auto_awesome", gradient: "from-orange-500 via-orange-500 to-amber-500", glow: "group-hover/link:shadow-orange-500/40" },
+                      { label: "The Crew", desc: "The creative minds behind our success.", href: "#team", icon: "diversity_3", gradient: "from-sky-500 via-sky-500 to-blue-600", glow: "group-hover/link:shadow-sky-500/40" },
+                      { label: "The Captain", desc: "Visionary leadership guiding our future.", href: "/director", icon: "rocket_launch", gradient: "from-indigo-500 via-violet-500 to-purple-600", glow: "group-hover/link:shadow-indigo-500/40" },
+                      { label: "The Legends", desc: "Our pride and success stories.", href: "/alumni", icon: "emoji_events", gradient: "from-amber-400 via-amber-500 to-yellow-500", glow: "group-hover/link:shadow-amber-500/40" }
+                    ].map((item) => (
+                      <Link key={item.label} href={item.href} className="group/link relative flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50/80 transition-all duration-300">
+                        <div className={`relative shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white shadow-[0_8px_20px_-6px_rgba(15,23,42,0.25)] ${item.glow} group-hover/link:scale-110 group-hover/link:shadow-lg transition-all duration-300`}>
+                          <span className="absolute inset-0 rounded-xl bg-white/10 opacity-0 group-hover/link:opacity-100 transition-opacity duration-300" />
+                          <span className="material-symbols-outlined text-[26px] relative drop-shadow-sm" style={{ fontVariationSettings: "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24" }}>{item.icon}</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-black text-slate-950 group-hover/link:text-orange-600 transition-colors text-[15px] leading-tight mb-1">{item.label}</div>
+                          <div className="text-[11px] text-slate-700 font-bold leading-snug uppercase tracking-widest opacity-80">{item.desc}</div>
+                        </div>
+                        <span className="material-symbols-outlined text-base text-slate-300 self-center opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 group-hover/link:text-orange-500 transition-all duration-300">arrow_forward</span>
+                      </Link>
+                    ))}
                   </div>
               </div>
             </div>
@@ -329,12 +327,7 @@ export default function Navbar() {
                 className={`absolute top-full left-0 w-[350px] bg-white/95 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-6 transition-all duration-500 origin-top-left ${isCoursesOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'}`}
                 onMouseLeave={() => setHoveredBrand(null)}
               >
-                <div className="space-y-4 relative">
-                  <div className="border-b border-slate-100 pb-4 mb-2 text-center">
-                    <div className="inline-block px-3 py-1 bg-gradient-to-r from-orange-500 to-blue-600 text-white rounded-full text-[9px] font-black uppercase tracking-[0.2em] mb-2 shadow-sm">Explore Our Programs</div>
-                    <p className="text-slate-500 text-[10px] mt-1 font-medium px-2">Choose your path in digital arts or film & media</p>
-                  </div>
-
+                <div className="space-y-3 relative">
                   {/* ZICA Option */}
                   <div 
                     className={`group/item relative p-4 rounded-sm transition-all duration-300 cursor-pointer border ${
@@ -444,6 +437,61 @@ export default function Navbar() {
                       </div>
                       <Link href="/courses?brand=zima" className="mt-6 inline-flex items-center gap-2 text-xs font-black text-blue-700 group/link">
                         Explore All ZIMA Courses
+                        <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Degree Courses Option */}
+                  <div 
+                    className={`group/item relative p-4 rounded-sm transition-all duration-300 cursor-pointer border ${
+                      hoveredBrand === 'degree' 
+                        ? 'bg-emerald-50 border-emerald-100' 
+                        : 'bg-transparent border-transparent hover:bg-slate-50'
+                    }`}
+                    onMouseEnter={() => setHoveredBrand('degree')}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded flex items-center justify-center transition-all duration-300 ${
+                        hoveredBrand === 'degree' ? 'bg-emerald-600 scale-110 shadow-lg shadow-emerald-600/20' : 'bg-white shadow-sm border border-slate-200'
+                      }`}>
+                        <span className={`material-symbols-outlined text-[26px] transition-colors duration-300 ${
+                          hoveredBrand === 'degree' ? 'text-white' : 'text-emerald-600'
+                        }`} style={{ fontVariationSettings: "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24" }}>school</span>
+                      </div>
+                      <div className="flex-1">
+                        <div className={`font-black text-sm tracking-tight transition-colors duration-300 ${hoveredBrand === 'degree' ? 'text-emerald-700' : 'text-slate-900'}`}>Degree Courses</div>
+                        <div className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">B.Voc Programs</div>
+                      </div>
+                      <span className={`material-symbols-outlined text-sm transition-all duration-300 ${hoveredBrand === 'degree' ? 'text-emerald-700 translate-x-1' : 'text-slate-400'}`}>arrow_forward_ios</span>
+                    </div>
+
+                    {/* Degree Courses Flyout Menu */}
+                    <div className={`absolute top-0 left-full ml-2 w-[520px] bg-white/98 backdrop-blur-xl rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-white/40 p-8 transition-all duration-300 origin-left ${hoveredBrand === 'degree' ? 'opacity-100 scale-100 translate-x-0 visible' : 'opacity-0 scale-95 -translate-x-4 invisible'}`}>
+                      <div className="flex items-center justify-between mb-6">
+                        <div>
+                          <h3 className="text-2xl font-black text-black hover:text-emerald-700 transition-colors duration-300 tracking-tighter">Degree Courses</h3>
+                          <p className="text-emerald-700 font-black text-[9px] uppercase tracking-[0.3em] mt-1">UGC Recognised B.Voc Programs</p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col gap-1">
+                        {[
+                          { name: "B.Voc in Graphics & Multimedia", href: "/courses?brand=degree&course=bvoc-graphics-multimedia" },
+                          { name: "B.Voc in Animation & Graphic Design", href: "/courses?brand=degree&course=bvoc-animation-graphic-design" },
+                        ].map((course) => (
+                          <Link 
+                            key={course.name} 
+                            href={course.href} 
+                            className="group flex items-center justify-between py-2.5 px-3 rounded-sm hover:bg-emerald-50/60 transition-all duration-300"
+                          >
+                            <span className="text-[13px] text-black font-bold group-hover:text-emerald-700 transition-colors duration-300">{course.name}</span>
+                            <span className="material-symbols-outlined text-base text-slate-300 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-emerald-600 transition-all duration-300">arrow_forward</span>
+                          </Link>
+                        ))}
+                      </div>
+                      <Link href="/courses?brand=degree" className="mt-6 inline-flex items-center gap-2 text-xs font-black text-emerald-700 group/link">
+                        Explore All Degree Courses
                         <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                       </Link>
                     </div>

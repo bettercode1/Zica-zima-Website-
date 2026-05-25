@@ -90,9 +90,18 @@ export default function Footer() {
               </div>
               <div className="space-y-3">
                 <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">Visit Studio</p>
-                <p className="text-slate-400 text-xs xs:text-sm font-medium leading-relaxed max-w-[200px]">
-                  ZICA ZIMA PCMC, Pune, Maharashtra, India.
-                </p>
+                <a
+                  href="https://maps.app.goo.gl/xbdHwj1onKYMvKUaA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open ZICA ZIMA PCMC location in Google Maps"
+                  className="inline-flex items-start gap-1.5 text-slate-400 hover:text-orange-300 text-xs xs:text-sm font-medium leading-relaxed max-w-[220px] transition-colors group/map"
+                >
+                  <span>
+                    ZICA ZIMA PCMC, Pune, Maharashtra, India.
+                    <span className="material-symbols-outlined text-[14px] align-middle ml-1 -mt-0.5 opacity-0 group-hover/map:opacity-100 transition-opacity">open_in_new</span>
+                  </span>
+                </a>
               </div>
             </div>
           </div>

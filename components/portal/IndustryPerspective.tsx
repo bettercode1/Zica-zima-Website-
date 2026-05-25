@@ -179,9 +179,11 @@ export default function IndustryPerspective() {
       {/* ── Videos Grid ── */}
       <div className="ip-sub-header">
         <span className="ip-sub-label">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
-            <path d="M8 5v14l11-7z" />
-          </svg>
+          <span className="ip-sub-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
           Featured Videos
         </span>
       </div>
@@ -196,10 +198,14 @@ export default function IndustryPerspective() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             onClick={() => setActiveVideo(video)}
+            role="button"
+            tabIndex={0}
+            aria-label={`Play video: ${video.title}`}
           >
             <div className="ip-card-thumb">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={video.thumb} alt={video.title} className="ip-thumb-img" />
+              <div className="ip-thumb-gradient" aria-hidden="true" />
               <div className="ip-thumb-overlay">
                 <PlayIcon />
               </div>
@@ -207,6 +213,13 @@ export default function IndustryPerspective() {
             <div className="ip-card-body">
               <span className="ip-card-label">{video.label}</span>
               <p className="ip-card-title">{video.title}</p>
+              <span className="ip-card-cta" aria-hidden="true">
+                Watch now
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="12" height="12">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
             </div>
           </motion.div>
         ))}
@@ -215,9 +228,11 @@ export default function IndustryPerspective() {
       {/* ── Press & Media Images ── */}
       <div className="ip-sub-header" style={{ marginTop: '3rem' }}>
         <span className="ip-sub-label">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
-            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-          </svg>
+          <span className="ip-sub-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+            </svg>
+          </span>
           Press &amp; Media
         </span>
       </div>
@@ -232,8 +247,11 @@ export default function IndustryPerspective() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             onClick={() => setActiveImage(image)}
+            role="button"
+            tabIndex={0}
+            aria-label={`View article: ${image.caption}`}
           >
-            <div className="ip-card-thumb">
+            <div className="ip-card-thumb ip-card-thumb-press">
               <Image
                 src={image.src}
                 alt={image.alt}
@@ -241,15 +259,23 @@ export default function IndustryPerspective() {
                 className="ip-thumb-img object-cover"
                 sizes="(max-width:768px) 100vw, 25vw"
               />
-              <div className="ip-img-expand-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" width="22" height="22">
+              <div className="ip-thumb-gradient" aria-hidden="true" />
+              <span className="ip-img-expand-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                   <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
                 </svg>
-              </div>
+              </span>
             </div>
             <div className="ip-card-body">
               <span className="ip-card-label">Press</span>
               <p className="ip-card-title">{image.caption}</p>
+              <span className="ip-card-cta" aria-hidden="true">
+                Read article
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="12" height="12">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
             </div>
           </motion.div>
         ))}
@@ -302,66 +328,132 @@ export default function IndustryPerspective() {
         }
 
         /* ── Sub-label ── */
-        .ip-sub-header { margin-bottom: 1.25rem; }
+        .ip-sub-header { margin-bottom: 1.5rem; }
         .ip-sub-label {
           display: inline-flex;
           align-items: center;
-          gap: 0.4rem;
-          font-size: 0.72rem;
+          gap: 0.55rem;
+          font-size: 0.7rem;
           font-weight: 800;
           text-transform: uppercase;
-          letter-spacing: 0.15em;
-          color: #64748b;
-          border-left: 3px solid #f97316;
-          padding-left: 0.75rem;
+          letter-spacing: 0.18em;
+          color: #0f172a;
+          background: linear-gradient(135deg, rgba(249,115,22,0.10) 0%, rgba(249,115,22,0.02) 100%);
+          border: 1px solid rgba(249,115,22,0.22);
+          border-radius: 999px;
+          padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+        }
+        .ip-sub-icon {
+          width: 24px; height: 24px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+          color: #ffffff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 10px rgba(249,115,22,0.35);
+          flex-shrink: 0;
         }
 
         /* ── Grid ── */
         .ip-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 1.25rem;
+          gap: 1.5rem;
         }
         @media (min-width: 768px) {
-          .ip-grid { grid-template-columns: repeat(4, 1fr); }
+          .ip-grid { grid-template-columns: repeat(4, 1fr); gap: 1.75rem; }
         }
 
         /* ── Card ── */
         .ip-card {
-          border-radius: 14px;
+          border-radius: 22px;
           overflow: hidden;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
+          background: #ffffff;
+          border: 1px solid rgba(226, 232, 240, 0.85);
           cursor: pointer;
-          transition: box-shadow 0.22s ease, transform 0.22s ease;
+          position: relative;
+          box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 4px 12px -2px rgba(15,23,42,0.05);
+          transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                      box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                      border-color 0.35s ease;
+          outline: none;
         }
-        .ip-card:hover {
-          box-shadow: 0 8px 32px rgba(15,23,42,0.10);
-          transform: translateY(-3px);
+        .ip-card:hover,
+        .ip-card:focus-visible {
+          box-shadow: 0 24px 50px -12px rgba(249,115,22,0.22),
+                      0 12px 24px -8px rgba(15,23,42,0.12);
+          transform: translateY(-6px);
+          border-color: rgba(249,115,22,0.40);
+        }
+        .ip-card:focus-visible {
+          box-shadow: 0 0 0 3px rgba(249,115,22,0.35),
+                      0 24px 50px -12px rgba(249,115,22,0.22),
+                      0 12px 24px -8px rgba(15,23,42,0.12);
         }
 
         /* ── Card Body ── */
         .ip-card-body {
-          padding: 1.25rem 1rem;
+          padding: 1rem 1.1rem 1.15rem;
           background: #ffffff;
           display: flex;
           flex-direction: column;
-          gap: 0.35rem;
+          gap: 0.5rem;
+          position: relative;
         }
         .ip-card-label {
-          font-size: 0.65rem;
-          font-weight: 800;
-          letter-spacing: 0.12em;
+          align-self: flex-start;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
+          font-size: 0.6rem;
+          font-weight: 900;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #ea580c;
-          display: block;
+          color: #c2410c;
+          background: linear-gradient(135deg, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0.04) 100%);
+          border: 1px solid rgba(249,115,22,0.22);
+          padding: 0.3rem 0.6rem;
+          border-radius: 999px;
+          line-height: 1;
         }
         .ip-card-title {
-          font-size: 0.88rem;
-          font-weight: 700;
+          font-size: 0.92rem;
+          font-weight: 800;
           color: #0f172a;
           margin: 0;
           line-height: 1.4;
+          letter-spacing: -0.005em;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          transition: color 0.25s ease;
+        }
+        .ip-card:hover .ip-card-title { color: #b45309; }
+        .ip-card-cta {
+          margin-top: 0.15rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-size: 0.68rem;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #ea580c;
+          opacity: 0;
+          transform: translateX(-4px);
+          transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .ip-card-cta svg {
+          transition: transform 0.3s ease;
+        }
+        .ip-card:hover .ip-card-cta {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        .ip-card:hover .ip-card-cta svg {
+          transform: translateX(3px);
         }
 
         /* ── Thumbnail ── */
@@ -370,39 +462,80 @@ export default function IndustryPerspective() {
           width: 100%;
           aspect-ratio: 16/10;
           overflow: hidden;
-          background: #1e293b;
+          background: #0f172a;
         }
         .ip-thumb-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
           display: block;
-          transition: transform 0.35s ease;
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .ip-card:hover .ip-thumb-img { transform: scale(1.04); }
+        .ip-card:hover .ip-thumb-img { transform: scale(1.07); }
+        .ip-thumb-gradient {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(15,23,42,0) 45%, rgba(15,23,42,0.55) 100%);
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
         .ip-thumb-overlay {
           position: absolute;
           inset: 0;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(0,0,0,0.28);
+          background: rgba(0,0,0,0.18);
+          transition: background 0.3s ease;
         }
+        .ip-card:hover .ip-thumb-overlay { background: rgba(0,0,0,0.28); }
         .ip-play-icon {
-          width: 52px; height: 52px;
+          width: 58px; height: 58px;
           border-radius: 50%;
-          background: rgba(249,115,22,0.92);
+          background: linear-gradient(135deg, #fb923c 0%, #f97316 50%, #ea580c 100%);
           display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 2px 16px rgba(249,115,22,0.4);
+          box-shadow: 0 8px 24px rgba(249,115,22,0.45),
+                      inset 0 1px 0 rgba(255,255,255,0.25);
           padding-left: 4px;
+          transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                      box-shadow 0.35s ease;
         }
-        .ip-img-expand-icon {
-          position: absolute; inset: 0;
-          display: flex; align-items: center; justify-content: center;
-          background: rgba(0,0,0,0.22);
-          opacity: 0; transition: opacity 0.2s;
+        .ip-card:hover .ip-play-icon {
+          transform: scale(1.1);
+          box-shadow: 0 12px 32px rgba(249,115,22,0.55),
+                      0 0 0 10px rgba(249,115,22,0.14),
+                      inset 0 1px 0 rgba(255,255,255,0.3);
         }
-        .ip-card:hover .ip-img-expand-icon { opacity: 1; }
+
+        /* ── Press card corner pill ── */
+        .ip-card-thumb-press .ip-img-expand-icon {
+          position: absolute;
+          top: 0.7rem;
+          right: 0.7rem;
+          width: 34px;
+          height: 34px;
+          border-radius: 999px;
+          background: rgba(255,255,255,0.92);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #0f172a;
+          opacity: 0;
+          transform: translateY(-4px);
+          transition: opacity 0.3s ease,
+                      transform 0.3s ease,
+                      background 0.3s ease,
+                      color 0.3s ease;
+          box-shadow: 0 6px 16px rgba(15,23,42,0.18);
+        }
+        .ip-card:hover .ip-card-thumb-press .ip-img-expand-icon {
+          opacity: 1;
+          transform: translateY(0);
+          background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+          color: #ffffff;
+        }
 
         /* ── Overlay ── */
         :global(.ip-overlay) {
