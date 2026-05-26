@@ -41,8 +41,8 @@ export default function Navbar() {
       links: [
         { label: "ZICA Courses", href: "/courses?brand=zica", ariaLabel: "ZICA Courses" },
         { label: "ZIMA Courses", href: "/courses?brand=zima", ariaLabel: "ZIMA Courses" },
-        { label: "B.Voc Graphics & Multimedia", href: "/courses?brand=degree&course=bvoc-graphics-multimedia", ariaLabel: "B.Voc in Graphics & Multimedia" },
-        { label: "B.Voc Animation & Graphic Design", href: "/courses?brand=degree&course=bvoc-animation-graphic-design", ariaLabel: "B.Voc in Animation & Graphic Design" },
+        { label: "B.Voc Graphics & Multimedia", href: "/courses/degree/bvoc-graphics-multimedia", ariaLabel: "B.Voc in Graphics & Multimedia" },
+        { label: "B.Voc Animation & Graphic Design", href: "/courses/degree/bvoc-animation-graphic-design", ariaLabel: "B.Voc in Animation & Graphic Design" },
         { label: "All Modules", href: "/courses", ariaLabel: "All Modules" }
       ]
     },
@@ -477,8 +477,8 @@ export default function Navbar() {
 
                       <div className="flex flex-col gap-1">
                         {[
-                          { name: "B.Voc in Graphics & Multimedia", href: "/courses?brand=degree&course=bvoc-graphics-multimedia" },
-                          { name: "B.Voc in Animation & Graphic Design", href: "/courses?brand=degree&course=bvoc-animation-graphic-design" },
+                          { name: "B.Voc in Graphics & Multimedia", href: "/courses/degree/bvoc-graphics-multimedia" },
+                          { name: "B.Voc in Animation & Graphic Design", href: "/courses/degree/bvoc-animation-graphic-design" },
                         ].map((course) => (
                           <Link 
                             key={course.name} 
