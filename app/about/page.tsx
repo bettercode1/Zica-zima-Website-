@@ -131,16 +131,33 @@ export default function AboutPage() {
                   <div className="h-[2px] flex-grow bg-slate-100" />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {[
-                    { name: 'MEDC', icon: 'verified_user' },
-                    { name: 'MKCL', icon: 'school' },
-                    { name: 'Medhavi Skills', icon: 'military_tech' },
-                    { name: 'Skills INDIA', icon: 'public' }
+                    { name: 'ZEE Media', src: '/image/affilations/ZEE_Media.png' },
+                    { name: 'Savitribai Phule Pune University', src: '/image/affilations/Savitribai_Phule_Pune_University_Logo.png' },
+                    { name: 'Medhavi Skills University', src: '/image/affilations/Medhavi.png' },
+                    { name: 'Gedu Global Education', src: '/image/affilations/Gedu_Logo_Extended_RGB.svg' },
+                    { name: 'MKCL', src: '/image/affilations/mkcl.svg' },
+                    { name: 'Skill India', src: '/image/affilations/skill_india.svg' },
                   ].map((item) => (
-                    <div key={item.name} className="p-6 rounded-[2rem] bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-orange-200 transition-all group">
-                      <span className="material-symbols-outlined text-orange-500 mb-3 block group-hover:scale-110 transition-transform">{item.icon}</span>
-                      <p className="font-black text-slate-900 tracking-tight">{item.name}</p>
+                    <div
+                      key={item.name}
+                      className="p-4 rounded-[1.6rem] bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-orange-200 transition-all group"
+                    >
+                      <div className="relative h-16 md:h-20 w-full">
+                        <Image
+                          src={item.src}
+                          alt={item.name}
+                          fill
+                          className="object-contain transition-transform duration-300 group-hover:scale-105"
+                          sizes="(max-width: 768px) 45vw, 18vw"
+                        />
+                      </div>
+                      {item.name !== 'Gedu Global Education' && (
+                        <p className="mt-2 text-[10px] md:text-[11px] font-black text-slate-600 uppercase tracking-wider text-center">
+                          {item.name}
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>

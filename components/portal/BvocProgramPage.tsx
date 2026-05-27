@@ -7,7 +7,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/portal/Navbar';
-import type { BvocProgram, SyllabusSemester } from '@/lib/bvocSyllabus';
+import type { BvocProgram, MedhaviProgramContent, SyllabusSemester } from '@/lib/bvocSyllabus';
 
 const Footer = dynamic(() => import('@/components/portal/Footer'), { ssr: false });
 
@@ -197,6 +197,11 @@ function SemesterColumn({ semester }: { semester: SyllabusSemester }) {
         <h4 className="font-headline text-sm md:text-base font-black uppercase tracking-wide">
           Semester {semester.roman}
         </h4>
+        {semester.subtitle && (
+          <p className="text-[9px] md:text-[10px] font-semibold text-white/90 mt-0.5 leading-tight px-1">
+            {semester.subtitle}
+          </p>
+        )}
       </div>
       <div className="p-1.5 md:p-2 bg-slate-50/50">
         <SyllabusTable title="Theory" items={sections.theory} />
@@ -274,6 +279,128 @@ function YearSyllabusAccordion({
   );
 }
 
+function MedhaviProgramSections({ content }: { content: MedhaviProgramContent }) {
+  return (
+    <>
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-8"
+      >
+        <SectionBanner>Programme Overview</SectionBanner>
+        <div className="rounded-xl border border-slate-200 bg-white p-4 md:p-6 shadow-sm space-y-4">
+          {content.programmeOverview.map((paragraph) => (
+            <p key={paragraph.slice(0, 48)} className="text-[13px] md:text-sm text-slate-700 font-medium leading-relaxed">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-8 grid sm:grid-cols-2 gap-3"
+      >
+        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Degree</p>
+          <p className="font-headline text-2xl font-black text-slate-900">{content.degree}</p>
+        </div>
+        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Eligibility</p>
+          <p className="font-headline text-2xl font-black text-slate-900">{content.eligibility}</p>
+        </div>
+      </motion.section>
+
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-8"
+      >
+        <SectionBanner>Academic Framework</SectionBanner>
+        <div className="rounded-xl border border-slate-200 bg-white p-4 md:p-5 shadow-sm">
+          <p className="text-[13px] md:text-sm text-slate-700 font-medium leading-relaxed">{content.academicFramework}</p>
+        </div>
+      </motion.section>
+
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-8"
+      >
+        <SectionBanner>Programme Features</SectionBanner>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          {content.programmeFeatures.map((feature) => (
+            <div
+              key={feature.title}
+              className="rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm hover:border-emerald-200 transition-colors flex flex-col items-center"
+            >
+              <div className="relative h-14 w-full mb-2 flex items-center justify-center">
+                <Image
+                  src={feature.image}
+                  alt={feature.title}
+                  width={96}
+                  height={56}
+                  className="object-contain max-h-14 w-auto"
+                />
+              </div>
+              <p className="text-[11px] md:text-xs font-black text-slate-900 leading-snug">{feature.title}</p>
+              {feature.lines?.map((line) => (
+                <p key={line} className="text-[10px] font-semibold text-slate-500 mt-0.5">
+                  {line}
+                </p>
+              ))}
+            </div>
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-8"
+      >
+        <SectionBanner>Selection Process</SectionBanner>
+        <ul className="rounded-xl border border-sky-200/80 bg-sky-50/50 p-4 md:p-5 space-y-2">
+          {content.selectionProcess.map((step) => (
+            <li key={step} className="flex gap-2 text-[12px] md:text-[13px] font-semibold text-slate-800 leading-snug">
+              <span className="text-sky-600 font-black shrink-0">•</span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-8"
+      >
+        <SectionBanner>The Medhavi Edge</SectionBanner>
+        <ul className="grid sm:grid-cols-2 gap-2 md:gap-3">
+          {content.medhaviEdge.map((point) => (
+            <li
+              key={point}
+              className="flex gap-2 items-start rounded-lg border border-slate-200 bg-white p-3 shadow-sm"
+            >
+              <span className="shrink-0 w-6 h-6 rounded-md bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center text-xs font-black">
+                +
+              </span>
+              <span className="text-[11px] md:text-[12px] font-semibold text-slate-800 leading-snug">{point}</span>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+    </>
+  );
+}
+
 function SyllabusSection({ program }: { program: BvocProgram }) {
   const [syllabusOpen, setSyllabusOpen] = useState(false);
   const [openYears, setOpenYears] = useState<Record<number, boolean>>({});
@@ -325,8 +452,21 @@ function SyllabusSection({ program }: { program: BvocProgram }) {
 }
 
 export default function BvocProgramPage({ program }: { program: BvocProgram }) {
-  const awardTitles = program.awards.map((a) => a.title);
-  const awardOrgs = program.awards.map((a) => a.organization);
+  const isMedhavi = program.contentVariant === 'medhavi' && !!program.medhavi;
+  const heroProgramLabel =
+    program.id === 'bvoc-animation-graphic-design'
+      ? 'ANIMATION & GRAPHIC DESIGN'
+      : program.id === 'bvoc-animation-visual-effects'
+        ? 'ANIMATION & VISUAL EFFECTS'
+        : 'GRAPHICS & MULTIMEDIA';
+  const heroUniversityName =
+    program.id === 'bvoc-animation-visual-effects'
+      ? 'MEDHAVI SKILLS UNIVERSITY'
+      : 'SAVITRIBAI PHULE PUNE UNIVERSITY';
+  const heroUniversityLogo =
+    program.id === 'bvoc-animation-visual-effects'
+      ? '/image/affilations/Medhavi.png'
+      : '/image/affilations/Savitribai_Phule_Pune_University_Logo.png';
 
   return (
     <main className="min-h-screen bg-[#f1f5f9] selection:bg-emerald-200/60 relative overflow-hidden">
@@ -354,152 +494,119 @@ export default function BvocProgramPage({ program }: { program: BvocProgram }) {
           <motion.header
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative rounded-2xl overflow-hidden mb-6 border border-white/60 shadow-lg"
+            className="relative overflow-hidden mb-6 shadow-lg rounded-[22px] border border-white/10"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-[#1e3a5f] to-[#0f766e]" />
-            <div className="relative p-5 md:p-7">
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-[9px] font-black uppercase tracking-[0.15em]">
-                  <span className="material-symbols-outlined text-xs">school</span>
-                  UGC Recognised B.Voc
-                </span>
-                <span className="text-white/50 text-[9px] font-bold uppercase tracking-widest">
-                  {program.duration}
-                </span>
-              </div>
-              <div className="flex items-center gap-4 sm:gap-5 md:gap-6 mb-2">
-                <div className="min-w-0 flex-1">
-                  <h1 className="font-headline text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
-                    {program.title}
-                  </h1>
-                  <p className="text-emerald-200/90 text-xs md:text-sm font-semibold mt-1.5">
-                    by {program.university}
-                  </p>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1d] via-[#081633] to-[#05060b]" />
+            <div className="relative px-3 py-5 sm:px-5 sm:py-6 md:px-8 md:py-7">
+              <div className="text-[#facc15] font-black uppercase tracking-[0.04em]">
+                <div className="text-[30px] sm:text-[44px] md:text-[52px] leading-[0.95]">
+                  UGC APPROVED 3 YEARS
                 </div>
-                <div
-                  className="shrink-0 w-[5.5rem] h-[5.5rem] sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-2xl bg-white p-2 sm:p-2.5 md:p-3 shadow-xl ring-2 ring-white/25 flex items-center justify-center"
-                  title={program.university}
-                >
-                  <Image
-                    src="/image/affilations/Savitribai_Phule_Pune_University_Logo.png"
-                    alt="Savitribai Phule Pune University (SPPU)"
-                    width={128}
-                    height={128}
-                    className="w-full h-full object-contain"
-                    priority
-                  />
+                <div className="mt-1 text-[30px] sm:text-[44px] md:text-[52px] leading-[0.95]">
+                  B.VOC DEGREE (ENGG) FROM
                 </div>
               </div>
-              <p className="text-white/70 text-sm font-medium leading-snug max-w-2xl mb-4">{program.tagline}</p>
-              <div className="flex flex-wrap gap-1.5">
-                {program.highlights.map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-white/10 border border-white/15 text-white/90 text-[10px] font-bold"
-                  >
-                    <span className="material-symbols-outlined text-[12px] text-emerald-300">check_circle</span>
-                    {item}
-                  </span>
-                ))}
+
+              <div className="mt-4 mx-auto w-fit max-w-[98%] sm:max-w-[42rem] md:max-w-[50rem] lg:max-w-[54rem] bg-white rounded-2xl sm:rounded-[2rem] border border-slate-200/90 shadow-[0_14px_48px_-10px_rgba(15,23,42,0.2)] px-5 py-4 sm:px-6 sm:py-5 md:px-8 md:py-5 lg:px-9 lg:py-6 overflow-hidden">
+                <div className="flex flex-row items-center justify-center gap-5 sm:gap-6 md:gap-8">
+                  <div className="shrink-0 w-[104px] sm:w-[128px] md:w-[148px] lg:w-[168px]">
+                    <Image
+                      src={heroUniversityLogo}
+                      alt={heroUniversityName}
+                      width={220}
+                      height={140}
+                      className="w-full h-auto object-contain"
+                      priority
+                    />
+                  </div>
+                  <div className="text-left min-w-0">
+                    <div className="text-black font-black uppercase tracking-wide text-[28px] sm:text-[34px] md:text-[42px] lg:text-[48px] xl:text-[52px] leading-[1.02]">
+                      {heroUniversityName}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 text-left sm:text-center md:text-left">
+                <div className="text-white font-black uppercase tracking-wide text-[24px] xs:text-[30px] sm:text-[40px] md:text-[52px] lg:text-[64px] leading-[0.92] drop-shadow-[0_3px_0_rgba(0,0,0,0.35)]">
+                  {heroProgramLabel}
+                </div>
               </div>
             </div>
           </motion.header>
 
-          {/* 1. Why B.Voc */}
-          <motion.section
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-8"
-          >
-            <SectionBanner>Why B.Voc Program</SectionBanner>
-            <div className="rounded-xl border-2 border-sky-200/80 bg-gradient-to-br from-sky-50/90 via-white to-blue-50/50 p-4 md:p-5 shadow-sm">
-              <ul className="grid sm:grid-cols-2 gap-2 md:gap-3">
-                {program.whyBVoc.map((point) => (
-                  <li key={point} className="flex gap-2 items-start">
-                    <span className="shrink-0 w-6 h-6 rounded-md bg-gradient-to-br from-sky-500 to-blue-600 text-white flex items-center justify-center text-xs font-black">
-                      +
-                    </span>
-                    <span className="text-[12px] font-semibold text-slate-800 leading-snug">{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.section>
+          {isMedhavi && program.medhavi ? (
+            <MedhaviProgramSections content={program.medhavi} />
+          ) : (
+            <>
+              <motion.section
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mb-8"
+              >
+                <SectionBanner>Why B.Voc Program</SectionBanner>
+                <div className="rounded-xl border-2 border-sky-200/80 bg-gradient-to-br from-sky-50/90 via-white to-blue-50/50 p-4 md:p-5 shadow-sm">
+                  <ul className="grid sm:grid-cols-2 gap-2 md:gap-3">
+                    {program.whyBVoc.map((point) => (
+                      <li key={point} className="flex gap-2 items-start">
+                        <span className="shrink-0 w-6 h-6 rounded-md bg-gradient-to-br from-sky-500 to-blue-600 text-white flex items-center justify-center text-xs font-black">
+                          +
+                        </span>
+                        <span className="text-[12px] font-semibold text-slate-800 leading-snug">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.section>
 
-          {/* 2. Awards */}
-          <motion.section
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-8"
-          >
-            <SectionBanner>Awards to Institute</SectionBanner>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 items-stretch">
-              {program.awards.map((award) => (
-                <article
-                  key={award.title}
-                  className="flex flex-col items-center text-center px-3 py-4 min-h-[10.5rem] md:min-h-[11.5rem] rounded-xl bg-amber-50/80 border border-amber-200/70"
-                >
-                  <GlowingTrophy />
-                  <div className="flex-1 flex flex-col items-center justify-center w-full">
-                    <p
-                      className={`italic text-slate-800 mb-1.5 ${awardTitleFontClass(award.title, awardTitles)}`}
+              <motion.section
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mb-8"
+              >
+                <SectionBanner>Eligibility</SectionBanner>
+                <div className="grid md:grid-cols-3 gap-3 mb-3">
+                  {program.eligibility.map((item) => (
+                    <article
+                      key={item.year}
+                      className="rounded-xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                     >
-                      {award.title}
-                    </p>
-                    <p
-                      className={`text-amber-900/80 font-normal ${awardOrgFontClass(award.organization, awardOrgs)}`}
-                    >
-                      {award.organization}
-                    </p>
-                  </div>
-                  <div className="relative w-full min-h-[3.5rem] sm:min-h-16 md:min-h-[4.5rem] mt-3 pt-3 border-t border-amber-200/60 shrink-0 flex items-center justify-center">
-                    <AwardLogo src={award.image} alt={`${award.organization} award`} />
-                  </div>
-                </article>
-              ))}
-            </div>
-          </motion.section>
+                      <div className="bg-gradient-to-r from-sky-600 to-blue-700 px-3 py-2">
+                        <h3 className="text-white font-black text-xs uppercase tracking-wider">{item.year}</h3>
+                      </div>
+                      <div className="p-3 space-y-2">
+                        {item.requirements.length > 0 ? (
+                          <ul className="space-y-1">
+                            {item.requirements.map((req) => (
+                              <li key={req} className="flex gap-1.5 text-[12px] text-slate-700 font-medium leading-snug">
+                                <span className="text-sky-600 font-black shrink-0">•</span>
+                                <span>{req}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-[12px] text-slate-500 font-medium italic">Lateral entry criteria apply</p>
+                        )}
+                        <p className="text-[10px] font-bold text-sky-800 bg-sky-50 border border-sky-100 rounded-lg px-2 py-1.5 leading-snug">
+                          {item.nsqf}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+                <p className="text-center text-[10px] font-semibold text-slate-500 mb-3">{program.eligibilityNote}</p>
+              </motion.section>
+            </>
+          )}
 
-          {/* 3. Eligibility */}
           <motion.section
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="mb-8"
           >
-            <SectionBanner>Eligibility</SectionBanner>
-            <div className="grid md:grid-cols-3 gap-3 mb-3">
-              {program.eligibility.map((item) => (
-                <article
-                  key={item.year}
-                  className="rounded-xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-                >
-                  <div className="bg-gradient-to-r from-sky-600 to-blue-700 px-3 py-2">
-                    <h3 className="text-white font-black text-xs uppercase tracking-wider">{item.year}</h3>
-                  </div>
-                  <div className="p-3 space-y-2">
-                    {item.requirements.length > 0 ? (
-                      <ul className="space-y-1">
-                        {item.requirements.map((req) => (
-                          <li key={req} className="flex gap-1.5 text-[12px] text-slate-700 font-medium leading-snug">
-                            <span className="text-sky-600 font-black shrink-0">•</span>
-                            <span>{req}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-[12px] text-slate-500 font-medium italic">Lateral entry criteria apply</p>
-                    )}
-                    <p className="text-[10px] font-bold text-sky-800 bg-sky-50 border border-sky-100 rounded-lg px-2 py-1.5 leading-snug">
-                      {item.nsqf}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-            <p className="text-center text-[10px] font-semibold text-slate-500 mb-3">{program.eligibilityNote}</p>
             <div className="rounded-xl overflow-hidden border border-slate-200 shadow-sm">
               <div className="bg-gradient-to-r from-[#1e3a5f] to-blue-800 px-3 py-2 text-center">
                 <p className="text-white font-black text-[10px] uppercase tracking-[0.15em]">Entry &amp; Exit Options</p>
@@ -520,7 +627,6 @@ export default function BvocProgramPage({ program }: { program: BvocProgram }) {
             </div>
           </motion.section>
 
-          {/* 4. Syllabus (collapsible) */}
           <SyllabusSection program={program} />
 
           {/* CTA */}
@@ -532,8 +638,8 @@ export default function BvocProgramPage({ program }: { program: BvocProgram }) {
           >
             <div className="relative w-12 h-12 mx-auto mb-4 rounded-xl bg-white/15 flex items-center justify-center">
               <Image
-                src="/image/affilations/Savitribai_Phule_Pune_University_Logo.png"
-                alt="SPPU"
+                src={isMedhavi ? '/image/affilations/Medhavi.png' : '/image/affilations/Savitribai_Phule_Pune_University_Logo.png'}
+                alt={isMedhavi ? 'Medhavi Skills University' : 'SPPU'}
                 width={40}
                 height={40}
                 className="object-contain"
@@ -541,7 +647,9 @@ export default function BvocProgramPage({ program }: { program: BvocProgram }) {
             </div>
             <h3 className="font-headline text-xl md:text-2xl font-black mb-2">Ready to begin your B.Voc journey?</h3>
             <p className="text-emerald-100/90 font-medium max-w-lg mx-auto mb-5 text-sm">
-              Join ZICA ZIMA PCMC — where classroom learning meets real studio experience from day one.
+              {isMedhavi
+                ? 'Join ZICA ZIMA PCMC in partnership with Medhavi Skills University — studio learning with industry training from day one.'
+                : 'Join ZICA ZIMA PCMC — where classroom learning meets real studio experience from day one.'}
             </p>
             <Link
               href="/#admissions"
