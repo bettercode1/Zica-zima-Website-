@@ -287,6 +287,10 @@ function buildAnimationVisualEffectsSyllabusFromPcdp(): SyllabusYear[] {
 export const BVOC_SYLLABUS_YEARS_ANIMATION_VISUAL_EFFECTS =
   buildAnimationVisualEffectsSyllabusFromPcdp();
 
+export type BvocUniversityName =
+  | (typeof BVOC_SHARED)['university']
+  | 'Medhavi Skills University';
+
 export type BvocProgram = {
   id: string;
   title: string;
@@ -296,7 +300,11 @@ export type BvocProgram = {
   years: SyllabusYear[];
   contentVariant?: 'sppu' | 'medhavi';
   medhavi?: MedhaviProgramContent;
-} & typeof BVOC_SHARED;
+  university: BvocUniversityName;
+  duration: string;
+  eligibilityNote: string;
+  whyBVoc: readonly string[];
+} & Omit<typeof BVOC_SHARED, 'university' | 'duration' | 'eligibilityNote' | 'whyBVoc'>;
 
 export const BVOC_GRAPHICS_MULTIMEDIA: BvocProgram = {
   ...BVOC_SHARED,
