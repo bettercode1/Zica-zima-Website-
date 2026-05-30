@@ -21,7 +21,12 @@ const COURSE_CATEGORIES = {
   MODULAR: [
     'ILLUSTRATOR', 'PHOTOSHOP', 'AFTER EFFECTS', 'PREMIER PRO', 'COREL DRAW', 'ZBRUSH', 'NOTION',
     'FIGMA', 'MAYA', 'UNREAL ENGINE', 'BLENDER'
-  ]
+  ],
+  DEGREE: [
+    'B.Voc in Graphics & Multimedia',
+    'B.Voc in Animation & Graphic Design',
+    'B.Voc in Animation & Visual Effects',
+  ],
 };
 
 function ThankYouModal({ onClose }: { onClose: () => void }) {
@@ -280,6 +285,7 @@ export default function ContactForm() {
                       <option value="ZICA">ZICA Courses</option>
                       <option value="ZIMA">ZIMA Courses</option>
                       <option value="MODULAR">Modular Courses</option>
+                      <option value="DEGREE">Degree Courses</option>
                     </select>
                     <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
                       keyboard_arrow_down

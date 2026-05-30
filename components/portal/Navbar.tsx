@@ -57,6 +57,8 @@ export default function Navbar() {
         { label: "MKCL (Govt. Certification)", href: "https://klic.mkcl.org/klic-courses", ariaLabel: "MKCL Govt. Certification" },
         { label: "Bettercode (Technical Partner)", href: "https://bettercode.co.in/", ariaLabel: "Bettercode Technologies Pvt. Ltd. - Technical Partner" },
         { label: "AIGT (Technical Courses)", href: "https://aiglobtech.com/", ariaLabel: "AIGT Technical Courses" },
+        { label: "Global Education (GEDU)", href: "https://gedu.global/", ariaLabel: "Global Education - GEDU Global" },
+        { label: "NMIET (Engineering & Technology)", href: "https://www.nmiet.edu.in/", ariaLabel: "Nutan Maharashtra Institute of Engineering and Technology" },
         { label: "Get In", href: "/#admissions", ariaLabel: "Enquiry" }
       ]
     }
@@ -561,7 +563,7 @@ export default function Navbar() {
                 <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-blue-600`} />
               </button>
               {/* Dropdown Menu */}
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[220px] bg-white rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-slate-100 p-2 transition-all duration-300 origin-top ${isValueAdditionOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'} z-50`}>
+              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[260px] bg-white rounded-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-slate-100 p-2 transition-all duration-300 origin-top ${isValueAdditionOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible'} z-50`}>
                 <Link 
                   href="https://klic.mkcl.org/klic-courses" 
                   target="_blank" 
@@ -596,6 +598,32 @@ export default function Navbar() {
                   <div className="flex flex-col">
                     <span className="text-[13px] font-black text-slate-800 group-hover/link:text-orange-600 transition-colors">AIGT</span>
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Technical Courses</span>
+                  </div>
+                </Link>
+                <div className="border-b border-slate-100/60 my-1 mx-3" />
+                <Link 
+                  href="https://gedu.global/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block px-4 py-3 hover:bg-slate-50 rounded-sm transition-all duration-200 group/link"
+                  aria-label="Global Education - GEDU Global"
+                >
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-black text-slate-800 group-hover/link:text-orange-600 transition-colors">Global Education</span>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">GEDU Global</span>
+                  </div>
+                </Link>
+                <div className="border-b border-slate-100/60 my-1 mx-3" />
+                <Link 
+                  href="https://www.nmiet.edu.in/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block px-4 py-3 hover:bg-slate-50 rounded-sm transition-all duration-200 group/link"
+                  aria-label="Nutan Maharashtra Institute of Engineering and Technology"
+                >
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-black text-slate-800 group-hover/link:text-orange-600 transition-colors">NMIET</span>
+                    <span className="text-[10px] font-bold text-slate-500 mt-0.5 leading-snug">Nutan Maharashtra Institute of Engineering & Technology</span>
                   </div>
                 </Link>
               </div>

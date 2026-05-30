@@ -15,7 +15,7 @@ const fontMono = Geist_Mono({
 
 import { InteractiveOverlays } from "@/components/ui/InteractiveOverlays"
 import SmoothScroll from "@/components/ui/SmoothScroll"
-import AdmissionsOfferPopup from "@/components/portal/AdmissionsOfferPopup"
+import AdmissionsOfferPopupLoader from "@/components/portal/AdmissionsOfferPopupLoader"
 
 export const metadata: Metadata = {
   title: 'ZICA ZIMA PCMC | Animation & Film Making Institute',
@@ -75,7 +75,7 @@ export default function RootLayout({
             <InteractiveOverlays />
             {children}
           </SmoothScroll>
-          <AdmissionsOfferPopup />
+          <AdmissionsOfferPopupLoader />
         </ThemeProvider>
       </body>
     </html>

@@ -111,8 +111,6 @@ export default function WhyUs() {
             className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full"
           >
             {features.map((f, idx) => {
-              // Bento sizing overrides
-              const cardSpan = idx === 3 ? "md:col-span-2" : "md:col-span-1";
               const glowColor = idx === 0 ? "orange" : idx === 1 ? "purple" : idx === 2 ? "blue" : "green";
               const iconColors = {
                 0: "text-orange-500 bg-orange-500/10 border-orange-500/20",
@@ -122,7 +120,7 @@ export default function WhyUs() {
               }[idx as 0|1|2|3];
 
               return (
-                <motion.div key={f.title} variants={itemVariants} className={`${cardSpan}`}>
+                <motion.div key={f.title} variants={itemVariants} className="md:col-span-1">
                   <div className="group relative h-full bg-slate-50 hover:bg-white border border-slate-100 hover:border-slate-200 rounded-3xl overflow-hidden transition-all duration-500 p-8 flex flex-col justify-between shadow-sm hover:shadow-xl">
                     {/* Ambient Hover Glow inside card */}
                     <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
