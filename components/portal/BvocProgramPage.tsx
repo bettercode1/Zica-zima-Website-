@@ -454,11 +454,11 @@ function SyllabusSection({ program }: { program: BvocProgram }) {
 export default function BvocProgramPage({ program }: { program: BvocProgram }) {
   const isMedhavi = program.contentVariant === 'medhavi' && !!program.medhavi;
   const heroProgramLabel =
-    program.id === 'bvoc-animation-graphic-design'
-      ? 'ANIMATION & GRAPHIC DESIGN'
-      : program.id === 'bvoc-animation-visual-effects'
-        ? 'ANIMATION & VISUAL EFFECTS'
-        : 'GRAPHICS & MULTIMEDIA';
+    program.id === 'bvoc-animation-visual-effects'
+      ? 'ANIMATION & VISUAL EFFECTS'
+      : program.id === 'bvoc-graphics-multimedia'
+        ? 'GRAPHICS & MULTIMEDIA'
+        : null;
   const heroUniversityName =
     program.id === 'bvoc-animation-visual-effects'
       ? 'MEDHAVI SKILLS UNIVERSITY'
@@ -497,7 +497,11 @@ export default function BvocProgramPage({ program }: { program: BvocProgram }) {
             className="relative overflow-hidden mb-6 shadow-lg rounded-[22px] border border-white/10"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1d] via-[#081633] to-[#05060b]" />
-            <div className="relative px-3 py-5 sm:px-5 sm:py-6 md:px-8 md:py-7">
+            <div
+              className={`relative px-3 pt-5 sm:px-5 sm:pt-6 md:px-8 md:pt-7 ${
+                heroProgramLabel ? 'pb-5 sm:pb-6 md:pb-7' : 'pb-4 sm:pb-5 md:pb-6'
+              }`}
+            >
               <div className="text-[#facc15] font-black uppercase tracking-[0.04em]">
                 <div className="text-[30px] sm:text-[44px] md:text-[52px] leading-[0.95]">
                   UGC APPROVED 3 YEARS
@@ -527,11 +531,13 @@ export default function BvocProgramPage({ program }: { program: BvocProgram }) {
                 </div>
               </div>
 
-              <div className="mt-3 text-left sm:text-center md:text-left">
-                <div className="text-white font-black uppercase tracking-wide text-[24px] xs:text-[30px] sm:text-[40px] md:text-[52px] lg:text-[64px] leading-[0.92] drop-shadow-[0_3px_0_rgba(0,0,0,0.35)]">
-                  {heroProgramLabel}
+              {heroProgramLabel && (
+                <div className="mt-3 text-left sm:text-center md:text-left">
+                  <div className="text-white font-black uppercase tracking-wide text-[24px] xs:text-[30px] sm:text-[40px] md:text-[52px] lg:text-[64px] leading-[0.92] drop-shadow-[0_3px_0_rgba(0,0,0,0.35)]">
+                    {heroProgramLabel}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </motion.header>
 

@@ -42,7 +42,7 @@ export default function Navbar() {
         { label: "ZICA Courses", href: "/courses?brand=zica", ariaLabel: "ZICA Courses" },
         { label: "ZIMA Courses", href: "/courses?brand=zima", ariaLabel: "ZIMA Courses" },
         { label: "B.Voc Graphics & Multimedia", href: "/courses/degree/bvoc-graphics-multimedia", ariaLabel: "B.Voc in Graphics & Multimedia" },
-        { label: "B.Voc Animation & Graphic Design", href: "/courses/degree/bvoc-animation-graphic-design", ariaLabel: "B.Voc in Animation & Graphic Design" },
+        { label: "B.Voc Animation", href: "/courses/degree/bvoc-animation", ariaLabel: "B.Voc in Animation" },
         { label: "B.Voc Animation & Visual Effects", href: "/courses/degree/bvoc-animation-visual-effects", ariaLabel: "B.Voc in Animation & Visual Effects" },
         { label: "All Modules", href: "/courses", ariaLabel: "All Modules" }
       ]
@@ -481,7 +481,7 @@ export default function Navbar() {
                       <div className="flex flex-col gap-1">
                         {[
                           { name: "B.Voc in Graphics & Multimedia", href: "/courses/degree/bvoc-graphics-multimedia" },
-                          { name: "B.Voc in Animation & Graphic Design", href: "/courses/degree/bvoc-animation-graphic-design" },
+                          { name: "B.Voc in Animation", href: "/courses/degree/bvoc-animation" },
                           { name: "B.Voc in Animation & Visual Effects", href: "/courses/degree/bvoc-animation-visual-effects" },
                         ].map((course) => (
                           <Link 

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { SocialIcon } from 'react-social-icons';
+import { CAMPUS_ADDRESS_FULL, CAMPUS_MAPS_URL } from '@/lib/campus';
 
 export default function Footer() {
   return (
@@ -91,14 +92,14 @@ export default function Footer() {
               <div className="space-y-3">
                 <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">Visit Studio</p>
                 <a
-                  href="https://maps.app.goo.gl/xbdHwj1onKYMvKUaA"
+                  href={CAMPUS_MAPS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Open ZICA ZIMA PCMC location in Google Maps"
-                  className="inline-flex items-start gap-1.5 text-slate-400 hover:text-orange-300 text-xs xs:text-sm font-medium leading-relaxed max-w-[220px] transition-colors group/map"
+                  aria-label="Open ZICA ZIMA new campus in Google Maps"
+                  className="inline-flex items-start gap-1.5 text-slate-400 hover:text-orange-300 text-xs xs:text-sm font-medium leading-relaxed max-w-[280px] transition-colors group/map"
                 >
                   <span>
-                    ZICA ZIMA PCMC, Pune, Maharashtra, India.
+                    {CAMPUS_ADDRESS_FULL}
                     <span className="material-symbols-outlined text-[14px] align-middle ml-1 -mt-0.5 opacity-0 group-hover/map:opacity-100 transition-opacity">open_in_new</span>
                   </span>
                 </a>

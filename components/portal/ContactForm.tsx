@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SocialIcon } from 'react-social-icons';
+import { CAMPUS_ADDRESS_LINES, CAMPUS_MAPS_URL } from '@/lib/campus';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 type VerifyDetail = { firebaseSaved: boolean; emailSent: boolean; docId?: string } | null;
@@ -24,7 +25,7 @@ const COURSE_CATEGORIES = {
   ],
   DEGREE: [
     'B.Voc in Graphics & Multimedia',
-    'B.Voc in Animation & Graphic Design',
+    'B.Voc in Animation',
     'B.Voc in Animation & Visual Effects',
   ],
 };
@@ -174,13 +175,13 @@ export default function ContactForm() {
                   <div className="flex flex-col gap-1">
                     <span className="text-[10px] font-extrabold text-white/50 uppercase tracking-[0.2em]">Our Campus</span>
                     <a 
-                      href="https://maps.app.goo.gl/xbdHwj1onKYMvKUaA" 
+                      href={CAMPUS_MAPS_URL} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-sm md:text-base text-white hover:text-orange-200 transition-colors leading-relaxed font-medium"
                     >
-                      Ground Floor, Navkar Saraswati Building, <br />
-                      PCMC Link Rd, Chinchwad, Pune - 411033
+                      {CAMPUS_ADDRESS_LINES[0]} <br />
+                      {CAMPUS_ADDRESS_LINES[1]}
                     </a>
                   </div>
                 </div>

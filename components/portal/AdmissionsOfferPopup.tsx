@@ -20,7 +20,7 @@ type Slide = {
 const SLIDES: Slide[] = [
   {
     id: 'admissions-offer',
-    src: '/image/offers/admissions-offer-2026.png',
+    src: '/image/offers/admissions-offer-2026.webp',
     alt:
       'ZICA ZIMA PCMC — Admissions Open: All Degree & 1 Year Above Courses. Exclusive Offer: Free Pen Tab + Adobe License for 1 Year.',
     href: '/#admissions',
@@ -33,7 +33,7 @@ const SLIDES: Slide[] = [
   },
   {
     id: 'zee-media-certificate',
-    src: '/image/offers/zee-media-collaboration-certificate.png',
+    src: '/image/offers/zee-media-collaboration-certificate.webp',
     alt:
       'Certificate of Collaboration between ZICA & ZIMA and Zee Media Corporation Limited — Preferred Partner for Placements, Internships, and Studio Visits at Zee Media.',
     href: '/about',
@@ -46,9 +46,27 @@ const SLIDES: Slide[] = [
   },
 ];
 
-function preloadImage(src: string) {
-  const img = new window.Image();
-  img.src = src;
+function preloadImage(src: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const img = new window.Image();
+    img.onload = () => {
+      if ('decode' in img) {
+        img.decode().then(() => resolve()).catch(() => resolve());
+      } else {
+        resolve();
+      }
+    };
+    img.onerror = () => reject(new Error(`Failed to load ${src}`));
+    img.src = src;
+  });
+}
+
+function scheduleIdle(callback: () => void) {
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(callback, { timeout: 4000 });
+  } else {
+    window.setTimeout(callback, 1200);
+  }
 }
 
 export default function AdmissionsOfferPopup() {
@@ -67,18 +85,23 @@ export default function AdmissionsOfferPopup() {
     }
 
     let cancelled = false;
-    let openTimer: number | undefined;
 
-    preloadImage(SLIDES[0].src);
-    openTimer = window.setTimeout(() => {
-      if (cancelled) return;
-      setIsOpen(true);
-      requestAnimationFrame(() => setVisible(true));
-    }, 300);
+    preloadImage(SLIDES[0].src)
+      .then(() => {
+        if (cancelled) return;
+        setIsOpen(true);
+        requestAnimationFrame(() => setVisible(true));
+
+        if (SLIDES.length > 1) {
+          scheduleIdle(() => {
+            preloadImage(SLIDES[1].src).catch(() => undefined);
+          });
+        }
+      })
+      .catch(() => undefined);
 
     return () => {
       cancelled = true;
-      if (openTimer) window.clearTimeout(openTimer);
     };
   }, []);
 
@@ -103,7 +126,6 @@ export default function AdmissionsOfferPopup() {
 
   const handleClose = useCallback(() => {
     if (!isLastSlide) {
-      preloadImage(SLIDES[activeIndex + 1].src);
       setVisible(false);
       window.setTimeout(() => {
         setActiveIndex((index) => index + 1);
@@ -177,6 +199,8 @@ export default function AdmissionsOfferPopup() {
               alt={activeSlide.alt}
               fill
               sizes={activeSlide.sizes}
+              unoptimized
+              fetchPriority="low"
               loading={activeIndex === 0 ? 'eager' : 'lazy'}
               className="object-contain"
             />

@@ -9,7 +9,7 @@ import Testimonials from "@/components/portal/Testimonials";
 import StarAlumni from "@/components/portal/StarAlumni";
 import Recruiters from "@/components/portal/Recruiters";
 import BlogSection from "@/components/portal/BlogSection";
-import Affiliations from "@/components/portal/Affiliations";
+import NewLocationSection from "@/components/portal/NewLocationSection";
 import Footer from "@/components/portal/Footer";
 
 const ContactForm = dynamic(() => import("@/components/portal/ContactForm"), { 
@@ -21,7 +21,7 @@ export default function Page() {
     <main className="min-h-screen bg-surface-bright selection:bg-primary/20">
       <Navbar />
       <div id="home"><Hero /></div>
-      <Affiliations />
+      <NewLocationSection />
       <div id="about"><IndustryPerspective /><WhyUs /></div>
       <div id="courses">
         <Programs />

@@ -316,12 +316,12 @@ export const BVOC_GRAPHICS_MULTIMEDIA: BvocProgram = {
   years: BVOC_SYLLABUS_YEARS_GRAPHICS_MULTIMEDIA,
 };
 
-export const BVOC_ANIMATION_GRAPHIC_DESIGN: BvocProgram = {
+export const BVOC_ANIMATION: BvocProgram = {
   ...BVOC_SHARED,
-  id: 'bvoc-animation-graphic-design',
-  title: 'B.Voc in Animation & Graphic Design',
-  programName: 'Animation & Graphic Design / Multimedia',
-  fullTitle: 'Bachelor of Vocation (B.Voc.) in Animation and Graphic Design / Multimedia',
+  id: 'bvoc-animation',
+  title: 'B.Voc in Animation',
+  programName: 'Animation / Multimedia',
+  fullTitle: 'Bachelor of Vocation (B.Voc.) in Animation / Multimedia',
   tagline: 'From first sketch to studio-ready professional — a three-year creative journey.',
   years: BVOC_SYLLABUS_YEARS_ANIMATION_GRAPHIC_DESIGN,
 };

@@ -2,6 +2,15 @@
 const nextConfig = {
   // output: 'export',
   trailingSlash: true,
+  async redirects() {
+    return [
+      {
+        source: '/courses/degree/bvoc-animation-graphic-design',
+        destination: '/courses/degree/bvoc-animation',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     // unoptimized: true,
     remotePatterns: [
