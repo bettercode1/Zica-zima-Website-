@@ -22,10 +22,11 @@ function prefetchImage(src: string) {
 }
 
 function scheduleIdle(callback: () => void) {
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(callback, { timeout: IDLE_TIMEOUT_MS });
+  const idle = window.requestIdleCallback;
+  if (typeof idle === 'function') {
+    idle(callback, { timeout: IDLE_TIMEOUT_MS });
   } else {
-    window.setTimeout(callback, 1500);
+    setTimeout(callback, 1500);
   }
 }
 

@@ -62,10 +62,11 @@ function preloadImage(src: string): Promise<void> {
 }
 
 function scheduleIdle(callback: () => void) {
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(callback, { timeout: 4000 });
+  const idle = window.requestIdleCallback;
+  if (typeof idle === 'function') {
+    idle(callback, { timeout: 4000 });
   } else {
-    window.setTimeout(callback, 1200);
+    setTimeout(callback, 1200);
   }
 }
 
