@@ -1,0 +1,24 @@
+'use client';
+
+import { useEffect } from 'react';
+
+const MATERIAL_SYMBOLS_HREF =
+  'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap';
+
+export function MaterialSymbolsFont() {
+  useEffect(() => {
+    const existing = document.querySelector(`link[href="${MATERIAL_SYMBOLS_HREF}"]`);
+    if (existing) return;
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = MATERIAL_SYMBOLS_HREF;
+    link.media = 'print';
+    link.onload = () => {
+      link.media = 'all';
+    };
+    document.head.appendChild(link);
+  }, []);
+
+  return null;
+}

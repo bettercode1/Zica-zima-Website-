@@ -5,19 +5,40 @@ import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getPromotionalOffers, PromotionalOffer } from '@/lib/offers';
+import type { PromotionalOffer } from '@/lib/offers';
 
-const FilmReels = dynamic(() => import('@/components/ui/FilmReels').then(mod => mod.FilmReels), { ssr: false });
-const HorizontalFilmReel = dynamic(() => import('@/components/ui/FilmReels').then(mod => mod.HorizontalFilmReel), { ssr: false });
+const FilmReels = dynamic(
+  () => import('@/components/ui/FilmReels').then((mod) => mod.FilmReels),
+  { ssr: false }
+);
+const HorizontalFilmReel = dynamic(
+  () => import('@/components/ui/FilmReels').then((mod) => mod.HorizontalFilmReel),
+  { ssr: false }
+);
 
 const HERO_VIDEO_SRC = '/Videos/Video_for_HERO-Page.mp4';
 const HERO_POSTER_SRC = '/image/Courses/zica-1.png';
+
+function shouldLoadHeroVideo() {
+  if (typeof window === 'undefined') return false;
+
+  const connection = (navigator as Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+  }).connection;
+  if (connection?.saveData) return false;
+  if (connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g') {
+    return false;
+  }
+
+  return true;
+}
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
   const [offers, setOffers] = useState<PromotionalOffer[]>([]);
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [shouldLoadReels, setShouldLoadReels] = useState(false);
 
   const [particles, setParticles] = useState<{x:number, y:number, top:number, left:number, duration:number, delay:number}[]>([]);
 
@@ -33,26 +54,37 @@ export default function Hero() {
       delay: i * 0.5
     })));
 
-    const videoTimer = window.setTimeout(() => setShouldLoadVideo(true), 1200);
+    let videoTimer: number | undefined;
+    if (shouldLoadHeroVideo()) {
+      videoTimer = window.setTimeout(() => setShouldLoadVideo(true), 3500);
+    }
 
     const loadOffers = () => {
-      void getPromotionalOffers().then((data) => {
-        if (data && data.length > 0) {
-          setOffers(data);
-        } else {
-          setOffers([{ id: 'default', text: 'Offers are Coming Soon! Stay in Touch.', active: true, priority: 0, createdAt: new Date() }]);
-        }
-      });
+      void import('@/lib/offers')
+        .then(({ getPromotionalOffers }) => getPromotionalOffers())
+        .then((data) => {
+          if (data && data.length > 0) {
+            setOffers(data);
+          } else {
+            setOffers([{ id: 'default', text: 'Offers are Coming Soon! Stay in Touch.', active: true, priority: 0, createdAt: new Date() }]);
+          }
+        });
     };
+
+    const loadReels = () => setShouldLoadReels(true);
 
     const idleCallback = window.requestIdleCallback;
     if (typeof idleCallback === 'function') {
-      idleCallback(loadOffers, { timeout: 3000 });
+      idleCallback(loadOffers, { timeout: 5000 });
+      idleCallback(loadReels, { timeout: 7000 });
     } else {
-      setTimeout(loadOffers, 2000);
+      setTimeout(loadOffers, 3000);
+      setTimeout(loadReels, 5000);
     }
 
-    return () => window.clearTimeout(videoTimer);
+    return () => {
+      if (videoTimer) window.clearTimeout(videoTimer);
+    };
   }, []);
 
   useEffect(() => {
@@ -90,7 +122,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60 z-20" />
       </div>
-      <FilmReels />
+      {shouldLoadReels && <FilmReels />}
 
       {/* Offers Top Ticker — in document flow on mobile so headline sits below it */}
       <div className="relative md:absolute md:top-0 md:left-0 w-full z-40 shrink-0 bg-orange-600/90 backdrop-blur-md py-2 md:py-2 overflow-hidden border-b border-orange-400/30">
@@ -166,10 +198,11 @@ export default function Hero() {
                 </button>
               </Link>
 
-              {/* Mobile Horizontal Reel */}
-              <div className="w-full md:hidden">
-                <HorizontalFilmReel />
-              </div>
+              {shouldLoadReels && (
+                <div className="w-full md:hidden">
+                  <HorizontalFilmReel />
+                </div>
+              )}
             </motion.div>
 
           </motion.div>

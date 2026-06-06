@@ -38,7 +38,14 @@ const nextConfig = {
     ],
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', 'react-icons', '@tabler/icons-react', 'framer-motion'],
+    optimizePackageImports: [
+      'lucide-react',
+      'react-icons',
+      '@tabler/icons-react',
+      'framer-motion',
+      'firebase/firestore',
+      'firebase/app',
+    ],
   },
 }
 

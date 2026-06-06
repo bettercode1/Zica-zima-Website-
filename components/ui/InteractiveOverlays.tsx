@@ -3,8 +3,19 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-const SmoothCursorInternal = dynamic(() => import("@/components/ui/smooth-cursor").then(mod => mod.SmoothCursor), { ssr: false });
-const SplashCursorInternal = dynamic(() => import("@/components/ui/SplashCursor"), { ssr: false });
+const SmoothCursorInternal = dynamic(
+  () => import('@/components/ui/smooth-cursor').then((mod) => mod.SmoothCursor),
+  { ssr: false }
+);
+
+type NetworkInformation = {
+  saveData?: boolean;
+  effectiveType?: string;
+};
+
+function getNetworkInfo(): NetworkInformation | undefined {
+  return (navigator as Navigator & { connection?: NetworkInformation }).connection;
+}
 
 function shouldEnableInteractiveOverlays() {
   if (typeof window === 'undefined') return false;
@@ -12,38 +23,32 @@ function shouldEnableInteractiveOverlays() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
   const isSmallScreen = window.matchMedia('(max-width: 767px)').matches;
+  const connection = getNetworkInfo();
+  const saveData = connection?.saveData === true;
+  const slowConnection =
+    connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g';
 
-  return !prefersReducedMotion && !isCoarsePointer && !isSmallScreen;
+  return !prefersReducedMotion && !isCoarsePointer && !isSmallScreen && !saveData && !slowConnection;
+}
+
+function scheduleIdle(callback: () => void) {
+  const idle = window.requestIdleCallback;
+  if (typeof idle === 'function') {
+    idle(callback, { timeout: 8000 });
+  } else {
+    window.setTimeout(callback, 4000);
+  }
 }
 
 export function InteractiveOverlays() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (shouldEnableInteractiveOverlays()) {
-      setEnabled(true);
-    }
+    if (!shouldEnableInteractiveOverlays()) return;
+    scheduleIdle(() => setEnabled(true));
   }, []);
 
   if (!enabled) return null;
 
-  return (
-    <>
-      <SplashCursorInternal 
-        SIM_RESOLUTION={24}
-        DYE_RESOLUTION={256}
-        DENSITY_DISSIPATION={2.8}
-        VELOCITY_DISSIPATION={2.0}
-        PRESSURE={0.2}
-        PRESSURE_ITERATIONS={2}
-        CURL={8}
-        SPLAT_RADIUS={0.12}
-        SPLAT_FORCE={3500}
-        COLOR_UPDATE_SPEED={10}
-        SHADING={false}
-        RAINBOW_MODE={true}
-      />
-      <SmoothCursorInternal />
-    </>
-  );
+  return <SmoothCursorInternal />;
 }

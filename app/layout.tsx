@@ -1,23 +1,14 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google"
+import { Inter, Plus_Jakarta_Sans } from "next/font/google"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import { GoogleTagManagerBody, GoogleTagManagerHead } from "@/components/analytics/GoogleTagManager"
+import { ClientShell } from "@/components/layout/ClientShell"
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
-const plusJakarta = Plus_Jakarta_Sans({subsets:['latin'],variable:'--font-headline'})
-
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
-
-import { InteractiveOverlays } from "@/components/ui/InteractiveOverlays"
-import SmoothScroll from "@/components/ui/SmoothScroll"
-import AdmissionsOfferPopupLoader from "@/components/portal/AdmissionsOfferPopupLoader"
+const inter = Inter({subsets:['latin'],variable:'--font-sans', display: 'swap'})
+const plusJakarta = Plus_Jakarta_Sans({subsets:['latin'],variable:'--font-headline', display: 'swap'})
 
 export const metadata: Metadata = {
   title: 'ZICA ZIMA PCMC | Animation & Film Making Institute',
@@ -68,31 +59,15 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased scroll-smooth", fontMono.variable, inter.variable, plusJakarta.variable)}
+      className={cn("antialiased scroll-smooth", inter.variable, plusJakarta.variable)}
     >
       <head>
         <GoogleAnalytics />
         <GoogleTagManagerHead />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
-        />
-        {/* Fallback for older browsers or if Symbols fail */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
-        />
       </head>
       <body className="md:cursor-none" suppressHydrationWarning>
         <GoogleTagManagerBody />
-        <ThemeProvider>
-          <SmoothScroll>
-            <InteractiveOverlays />
-            {children}
-          </SmoothScroll>
-          <AdmissionsOfferPopupLoader />
-        </ThemeProvider>
+        <ClientShell>{children}</ClientShell>
       </body>
     </html>
   )

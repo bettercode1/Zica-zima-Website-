@@ -63,7 +63,7 @@ export default function Recruiters() {
                   alt={`Recruiter Logo ${index + 1}`}
                   fill
                   sizes="(max-width: 768px) 100px, 160px"
-                  priority={index < 10} // Load first half eagerly to prevent animation stuttering
+                  loading="lazy"
                   className="object-contain"
                 />
               </div>

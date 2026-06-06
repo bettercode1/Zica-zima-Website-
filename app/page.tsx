@@ -1,7 +1,10 @@
 import dynamic from 'next/dynamic';
-import Navbar from "@/components/portal/Navbar";
-import Hero from "@/components/portal/Hero";
-import Footer from "@/components/portal/Footer";
+
+const Navbar = dynamic(() => import("@/components/portal/Navbar"), {
+  loading: () => <div className="h-16 md:h-24 bg-white/80 animate-pulse" />,
+});
+const Hero = dynamic(() => import("@/components/portal/Hero"));
+const Footer = dynamic(() => import("@/components/portal/Footer"));
 
 const IndustryPerspective = dynamic(() => import("@/components/portal/IndustryPerspective"));
 const WhyUs = dynamic(() => import("@/components/portal/WhyUs"));
