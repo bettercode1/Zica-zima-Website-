@@ -4,6 +4,8 @@ import { Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
+import { GoogleTagManagerBody, GoogleTagManagerHead } from "@/components/analytics/GoogleTagManager"
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'})
 const plusJakarta = Plus_Jakarta_Sans({subsets:['latin'],variable:'--font-headline'})
@@ -48,6 +50,13 @@ export const metadata: Metadata = {
     'animation certification', 'pre-production courses', 'post-production training', 'motion capture', 
     'virtual production'
   ],
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? {
+        verification: {
+          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+        },
+      }
+    : {}),
 }
 
 export default function RootLayout({
@@ -62,14 +71,21 @@ export default function RootLayout({
       className={cn("antialiased scroll-smooth", fontMono.variable, inter.variable, plusJakarta.variable)}
     >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <GoogleAnalytics />
+        <GoogleTagManagerHead />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        />
         {/* Fallback for older browsers or if Symbols fail */}
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+        />
       </head>
-      <body className="cursor-none" suppressHydrationWarning>
+      <body className="md:cursor-none" suppressHydrationWarning>
+        <GoogleTagManagerBody />
         <ThemeProvider>
           <SmoothScroll>
             <InteractiveOverlays />

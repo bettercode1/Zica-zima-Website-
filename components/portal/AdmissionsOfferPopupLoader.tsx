@@ -5,8 +5,8 @@ import dynamic from 'next/dynamic';
 
 const STORAGE_KEY = 'zicazimapcmc:offer-popup:dismissed-v2';
 const FIRST_SLIDE_SRC = '/image/offers/admissions-offer-2026.webp';
-const POPUP_MOUNT_DELAY_MS = 500;
-const IDLE_TIMEOUT_MS = 4000;
+const POPUP_MOUNT_DELAY_MS = 2500;
+const IDLE_TIMEOUT_MS = 6000;
 
 const AdmissionsOfferPopup = dynamic(
   () => import('./AdmissionsOfferPopup'),

@@ -244,7 +244,7 @@ export default function NewLocationSection() {
             <SectionHeader
               eyebrow="Our New Location"
               title="We Are Now in the"
-              accent="Heart of PCMC"
+              accent="Heart of PCMC PUNE"
               subtitle="Expanding Opportunities. Improving Accessibility."
             />
 

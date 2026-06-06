@@ -1,16 +1,17 @@
 import dynamic from 'next/dynamic';
 import Navbar from "@/components/portal/Navbar";
 import Hero from "@/components/portal/Hero";
-import IndustryPerspective from "@/components/portal/IndustryPerspective";
-import WhyUs from "@/components/portal/WhyUs";
-import Programs from "@/components/portal/Programs";
-import CourseShowcase from "@/components/portal/CourseShowcase";
-import Testimonials from "@/components/portal/Testimonials";
-import StarAlumni from "@/components/portal/StarAlumni";
-import Recruiters from "@/components/portal/Recruiters";
-import BlogSection from "@/components/portal/BlogSection";
-import NewLocationSection from "@/components/portal/NewLocationSection";
 import Footer from "@/components/portal/Footer";
+
+const IndustryPerspective = dynamic(() => import("@/components/portal/IndustryPerspective"));
+const WhyUs = dynamic(() => import("@/components/portal/WhyUs"));
+const Programs = dynamic(() => import("@/components/portal/Programs"));
+const CourseShowcase = dynamic(() => import("@/components/portal/CourseShowcase"));
+const Testimonials = dynamic(() => import("@/components/portal/Testimonials"));
+const StarAlumni = dynamic(() => import("@/components/portal/StarAlumni"));
+const Recruiters = dynamic(() => import("@/components/portal/Recruiters"));
+const BlogSection = dynamic(() => import("@/components/portal/BlogSection"));
+const NewLocationSection = dynamic(() => import("@/components/portal/NewLocationSection"));
 
 const ContactForm = dynamic(() => import("@/components/portal/ContactForm"), { 
   loading: () => <div className="h-96 animate-pulse bg-slate-100 rounded-3xl" />

@@ -12,6 +12,7 @@ const nextConfig = {
     ];
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     // unoptimized: true,
     remotePatterns: [
       {
@@ -37,7 +38,7 @@ const nextConfig = {
     ],
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', 'react-icons', '@tabler/icons-react'],
+    optimizePackageImports: ['lucide-react', 'react-icons', '@tabler/icons-react', 'framer-motion'],
   },
 }
 

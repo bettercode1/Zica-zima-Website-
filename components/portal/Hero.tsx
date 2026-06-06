@@ -3,14 +3,21 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FilmReels, HorizontalFilmReel } from '@/components/ui/FilmReels';
 import { getPromotionalOffers, PromotionalOffer } from '@/lib/offers';
+
+const FilmReels = dynamic(() => import('@/components/ui/FilmReels').then(mod => mod.FilmReels), { ssr: false });
+const HorizontalFilmReel = dynamic(() => import('@/components/ui/FilmReels').then(mod => mod.HorizontalFilmReel), { ssr: false });
+
+const HERO_VIDEO_SRC = '/Videos/Video_for_HERO-Page.mp4';
+const HERO_POSTER_SRC = '/image/Courses/zica-1.png';
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
   const [offers, setOffers] = useState<PromotionalOffer[]>([]);
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
   const [particles, setParticles] = useState<{x:number, y:number, top:number, left:number, duration:number, delay:number}[]>([]);
 
@@ -26,17 +33,26 @@ export default function Hero() {
       delay: i * 0.5
     })));
 
-    async function loadOffers() {
-      const data = await getPromotionalOffers();
-      
-      if (data && data.length > 0) {
-        setOffers(data);
-      } else {
-        // Fallback placeholder if Firebase is empty
-        setOffers([{ id: 'default', text: 'Offers are Coming Soon! Stay in Touch.', active: true, priority: 0, createdAt: new Date() }]);
-      }
+    const videoTimer = window.setTimeout(() => setShouldLoadVideo(true), 1200);
+
+    const loadOffers = () => {
+      void getPromotionalOffers().then((data) => {
+        if (data && data.length > 0) {
+          setOffers(data);
+        } else {
+          setOffers([{ id: 'default', text: 'Offers are Coming Soon! Stay in Touch.', active: true, priority: 0, createdAt: new Date() }]);
+        }
+      });
+    };
+
+    const idleCallback = window.requestIdleCallback;
+    if (typeof idleCallback === 'function') {
+      idleCallback(loadOffers, { timeout: 3000 });
+    } else {
+      setTimeout(loadOffers, 2000);
     }
-    loadOffers();
+
+    return () => window.clearTimeout(videoTimer);
   }, []);
 
   useEffect(() => {
@@ -48,27 +64,70 @@ export default function Hero() {
   }, [offers]);
 
   return (
-    <section className="relative min-h-[85vh] md:h-[90vh] flex items-center justify-center overflow-hidden bg-black px-4 sm:px-8 lg:px-24 pt-[100px] md:pt-0">
+    <section className="relative min-h-[85vh] md:h-[90vh] flex flex-col overflow-hidden bg-black sm:px-8 lg:px-24">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <video
-          src="/Videos/Video_for_HERO-Page.mp4"
-          poster="/image/Courses/zica-1.png" 
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover opacity-60"
+        <Image
+          src={HERO_POSTER_SRC}
+          alt="ZICA ZIMA animation and VFX institute in Pimpri Chinchwad Pune"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-60"
         />
+        {shouldLoadVideo && (
+          <video
+            src={HERO_VIDEO_SRC}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            className="absolute inset-0 w-full h-full object-cover opacity-60"
+          />
+        )}
         {/* Black Glassmorphism Overlay */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60 z-20" />
       </div>
       <FilmReels />
+
+      {/* Offers Top Ticker — in document flow on mobile so headline sits below it */}
+      <div className="relative md:absolute md:top-0 md:left-0 w-full z-40 shrink-0 bg-orange-600/90 backdrop-blur-md py-2 md:py-2 overflow-hidden border-b border-orange-400/30">
+        <motion.div 
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="flex whitespace-nowrap items-center gap-6 md:gap-10 w-max"
+        >
+          {/* We repeat the group of offers to create a seamless loop */}
+          {[...Array(4)].map((_, groupIndex) => (
+            <div key={groupIndex} className="flex items-center gap-6 md:gap-10">
+              {offers.length > 0 ? (
+                offers.map((offer, i) => (
+                  <div key={`${groupIndex}-${i}`} className="flex items-center gap-6 md:gap-10">
+                    <span className="text-white font-black text-[10px] md:text-sm uppercase tracking-[0.15em] md:tracking-[0.2em] flex items-center gap-2 md:gap-3 px-3 md:px-0">
+                      <span className="material-symbols-outlined text-[12px] md:text-sm animate-pulse shrink-0">stars</span>
+                      {offer.text}
+                    </span>
+                    <span className="text-white/30 font-black text-sm uppercase tracking-[0.2em]">•••</span>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center gap-6 md:gap-10">
+                  <span className="text-white font-black text-[10px] md:text-sm uppercase tracking-[0.15em] md:tracking-[0.2em] flex items-center gap-2 md:gap-3 px-3 md:px-0">
+                    <span className="material-symbols-outlined text-[12px] md:text-sm animate-pulse shrink-0">stars</span>
+                    Loading Offers...
+                  </span>
+                  <span className="text-white/30 font-black text-sm uppercase tracking-[0.2em]">•••</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </motion.div>
+      </div>
       
-      <div className="container mx-auto relative z-30 flex flex-col items-center md:items-start justify-center py-10 md:py-0 mt-6 md:mt-10">
-        <div className="max-w-4xl w-full px-4 sm:px-0 text-center md:text-left">
+      <div className="container mx-auto relative z-30 flex flex-col items-center md:items-start justify-center flex-1 w-full px-4 sm:px-0 pt-8 pb-10 md:pt-14 md:pb-0">
+        <div className="max-w-4xl w-full text-center md:text-left">
           {/* Main Content Area */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -82,35 +141,28 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="font-headline text-[clamp(2.2rem,8vw,5.5rem)] font-black leading-[1.1] md:leading-[1.02] tracking-tight text-white md:max-w-[12ch] text-balance"
+              className="font-headline text-[clamp(2rem,6.5vw,5rem)] font-black leading-[1.22] md:leading-[1.18] tracking-tight text-white text-center md:text-left overflow-visible"
             >
-              Where Every{' '}
-              <span className="relative inline-block italic">
-                <span className="bg-clip-text text-transparent bg-gradient-to-br from-[#ff7b1c] to-[#f1711c] pr-4">Frame</span>
-              </span> Tells a Story.
+              <span className="block pb-0.5">Best</span>
+              <span className="block py-1 md:py-1.5 leading-[1.3]">
+                <span className="inline-block italic text-[#ff7b1c] drop-shadow-[0_0_24px_rgba(255,123,28,0.25)]">
+                  Animation and VFX
+                </span>
+              </span>
+              <span className="block pt-0.5 max-w-[16ch] md:max-w-2xl mx-auto md:mx-0">
+                Institute in Pimpri Chinchwad Pune.
+              </span>
             </motion.h1>
-
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              className="text-sm xs:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-xl md:max-w-xs lg:max-w-2xl font-medium"
-            >
-              Master the art of visual storytelling at India&apos;s premier animation
-              institute. From 2D classics to 3D blockbusters, we give your
-              creativity the kinetic energy it needs to defy boundaries.
-            </motion.p>
-
 
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
               className="flex flex-col items-center md:items-start gap-8 w-full"
             >
               <Link href="/courses">
                 <button className="kinetic-gradient text-white px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-base md:text-lg shadow-xl hover:shadow-orange-500/40 transition-all active:scale-95 duration-200">
-                  Know More About Courses
+                  Start Your Creative Journey
                 </button>
               </Link>
 
@@ -166,40 +218,6 @@ export default function Hero() {
       >
         <span className="material-symbols-outlined text-8xl">movie</span>
       </motion.div>
-
-      {/* Offers Top Ticker */}
-      <div className="absolute top-0 left-0 w-full z-40 bg-orange-600/90 backdrop-blur-md py-1.5 md:py-2 overflow-hidden border-b border-orange-400/30">
-        <motion.div 
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="flex whitespace-nowrap items-center gap-6 md:gap-10 w-max"
-        >
-          {/* We repeat the group of offers to create a seamless loop */}
-          {[...Array(4)].map((_, groupIndex) => (
-            <div key={groupIndex} className="flex items-center gap-6 md:gap-10">
-              {offers.length > 0 ? (
-                offers.map((offer, i) => (
-                  <div key={`${groupIndex}-${i}`} className="flex items-center gap-6 md:gap-10">
-                    <span className="text-white font-black text-[10px] md:text-sm uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3">
-                      <span className="material-symbols-outlined text-[12px] md:text-sm animate-pulse">stars</span>
-                      {offer.text}
-                    </span>
-                    <span className="text-white/30 font-black text-sm uppercase tracking-[0.2em]">•••</span>
-                  </div>
-                ))
-              ) : (
-                <div className="flex items-center gap-6 md:gap-10">
-                  <span className="text-white font-black text-[10px] md:text-sm uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3">
-                    <span className="material-symbols-outlined text-[12px] md:text-sm animate-pulse">stars</span>
-                    Loading Offers...
-                  </span>
-                  <span className="text-white/30 font-black text-sm uppercase tracking-[0.2em]">•••</span>
-                </div>
-              )}
-            </div>
-          ))}
-        </motion.div>
-      </div>
     </section>
   );
 }
