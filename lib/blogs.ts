@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { doc, getDoc, collection, getDocs, orderBy, query, limit, startAfter, Timestamp } from "firebase/firestore";
+import { collection, getDocs, query, where, Timestamp } from "firebase/firestore";
 
 export interface BlogSection {
   type: 'text_block' | 'grid_list' | 'image' | 'comparison_table';
@@ -29,6 +29,7 @@ export interface BlogData {
     description: string;
     keywords: string;
   };
+  status?: 'draft' | 'published';
 }
 
 // Local fallback data for development
@@ -368,6 +369,10 @@ export const LOCAL_BLOGS: Record<string, BlogData> = {
 };
 
 // Helper to transform Firestore data safely
+function isPublishedBlog(data: { status?: string }): boolean {
+  return !data.status || data.status === 'published';
+}
+
 function transformBlogData(data: any): BlogData {
   const blog = { ...data } as BlogData;
   
@@ -393,9 +398,14 @@ function transformBlogData(data: any): BlogData {
 export async function getBlogBySlug(slug: string): Promise<BlogData | null> {
   try {
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
-      const blogDoc = await getDoc(doc(db, "blogs", slug));
-      if (blogDoc.exists()) {
-        return transformBlogData(blogDoc.data());
+      const blogsQuery = query(collection(db, "blogs"), where("slug", "==", slug));
+      const blogsSnapshot = await getDocs(blogsQuery);
+      if (!blogsSnapshot.empty) {
+        const data = blogsSnapshot.docs[0].data();
+        if (!isPublishedBlog(data)) {
+          return null;
+        }
+        return transformBlogData(data);
       }
     }
     const blog = LOCAL_BLOGS[slug] || null;
@@ -413,7 +423,10 @@ export async function getAllBlogs(): Promise<BlogData[]> {
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
       const blogsSnapshot = await getDocs(collection(db, "blogs"));
       if (!blogsSnapshot.empty) {
-        allBlogs = blogsSnapshot.docs.map(doc => transformBlogData(doc.data()));
+        allBlogs = blogsSnapshot.docs
+          .map(doc => doc.data())
+          .filter(isPublishedBlog)
+          .map(transformBlogData);
       }
     }
     
@@ -436,10 +449,8 @@ export async function getTotalBlogsCount(): Promise<number> {
   let firebaseCount = 0;
   try {
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
-      const { getCountFromServer } = await import("firebase/firestore");
-      const coll = collection(db, "blogs");
-      const snapshot = await getCountFromServer(coll);
-      firebaseCount = snapshot.data().count;
+      const blogsSnapshot = await getDocs(collection(db, "blogs"));
+      firebaseCount = blogsSnapshot.docs.filter(doc => isPublishedBlog(doc.data())).length;
     }
   } catch (e) {}
   
@@ -455,7 +466,10 @@ export async function getBlogsPaginated(limitCount: number = 15, lastVisible?: a
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
       const blogsSnapshot = await getDocs(collection(db, "blogs"));
       if (!blogsSnapshot.empty) {
-        allBlogs = blogsSnapshot.docs.map(doc => transformBlogData(doc.data()));
+        allBlogs = blogsSnapshot.docs
+          .map(doc => doc.data())
+          .filter(isPublishedBlog)
+          .map(transformBlogData);
       }
     }
     
