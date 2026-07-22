@@ -1,9 +1,8 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/portal/Navbar';
 import Footer from '@/components/portal/Footer';
-import BlogContentRenderer from '@/components/portal/BlogContentRenderer';
+import BlogContentRenderer, { BlogMediaImage } from '@/components/portal/BlogContentRenderer';
 import { getBlogBySlug, getAllBlogs } from '@/lib/blogs';
 import { logger } from '@/lib/logger';
 import { notFound } from 'next/navigation';
@@ -13,15 +12,12 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-// Required for static export
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   try {
     const blogs = await getAllBlogs();
     
-    // If no blogs are found, we MUST return at least one valid path 
-    // to satisfy the 'output: export' requirement for dynamic routes.
     if (!blogs || blogs.length === 0) {
       logger.warn("No blogs found. Returning sample path to prevent build failure.");
       return [{ slug: 'notebooklm-digital-marketing-ai' }]; 
@@ -36,7 +32,6 @@ export async function generateStaticParams() {
   }
 }
 
-// Generate dynamic metadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const blog = await getBlogBySlug(slug);
@@ -57,65 +52,75 @@ export default async function BlogDetail({ params }: Props) {
     notFound();
   }
 
+  const hasCover = Boolean(blog.coverImage);
+
   return (
-    <main className="bg-white min-h-screen">
+    <main className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-        <Image
-          src={blog.coverImage}
-          alt={blog.title}
-          fill
-          className="object-cover brightness-50"
-          priority
-        />
+      {/* Hero — dark fallback so white title stays readable without cover */}
+      <section className="relative flex h-[50vh] min-h-[320px] items-center justify-center overflow-hidden md:h-[60vh]">
+        {hasCover ? (
+          <BlogMediaImage
+            src={blog.coverImage}
+            alt={blog.title}
+            fill
+            className="object-cover brightness-50"
+            priority
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-orange-900" />
+        )}
+        <div className="absolute inset-0 bg-slate-950/45" />
         <div className="container relative z-10 mx-auto px-4 text-center">
-          <div className="inline-block px-4 py-1.5 mb-6 bg-orange-600 text-white text-xs font-bold uppercase tracking-widest rounded-full">
+          <div className="mb-6 inline-block rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white">
             {blog.category}
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white max-w-5xl mx-auto leading-tight mb-8">
+          <h1 className="mx-auto mb-8 max-w-5xl text-4xl font-extrabold leading-tight text-white md:text-6xl lg:text-7xl drop-shadow-lg">
             {blog.title}
           </h1>
-          <div className="flex items-center justify-center gap-6 text-white/80 font-medium">
-            <span className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-orange-500">calendar_today</span>
-              {blog.date}
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-orange-500">schedule</span>
-              {blog.readTime}
-            </span>
+          <div className="flex items-center justify-center gap-6 font-medium text-white/90">
+            {blog.date && (
+              <span className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-orange-500">calendar_today</span>
+                {blog.date}
+              </span>
+            )}
+            {blog.readTime && (
+              <span className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-orange-500">schedule</span>
+                {blog.readTime}
+              </span>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Article Content */}
-      <article className="py-20 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Main content sections rendered dynamically */}
+      {/* Force dark slate text so system/dark theme doesn't make TipTap HTML white-on-white */}
+      <article className="bg-white px-4 py-20 text-slate-800 md:px-8">
+        <div className="mx-auto max-w-4xl text-slate-800">
           <BlogContentRenderer sections={blog.sections} />
 
-          {/* Call to Action */}
-          <div className="mt-20 bg-orange-600 rounded-3xl p-10 md:p-16 text-center text-white mb-20 shadow-2xl shadow-orange-500/20">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to lead the AI Revolution?</h2>
-            <p className="text-xl mb-10 text-white/90">Join our masterclass and master the tools shaping the future of design and marketing.</p>
+          <div className="mb-20 mt-20 rounded-3xl bg-orange-600 p-10 text-center text-white shadow-2xl shadow-orange-500/20 md:p-16">
+            <h2 className="mb-6 text-3xl font-bold md:text-4xl">Ready to start your creative career?</h2>
+            <p className="mb-10 text-xl text-white/90">
+              Join ZICA ZIMA PCMC and learn animation, VFX, and digital design with industry mentors.
+            </p>
             <Link 
               href="/"
-              className="inline-block bg-white text-orange-600 px-10 py-4 rounded-full font-extrabold text-lg hover:scale-105 transition-transform shadow-xl"
+              className="inline-block rounded-full bg-white px-10 py-4 text-lg font-extrabold text-orange-600 shadow-xl transition-transform hover:scale-105"
             >
               Learn More at ZICA ZIMA PCMC
             </Link>
           </div>
 
-          {/* FAQs */}
           {blog.faqs && blog.faqs.length > 0 && (
             <section className="mb-20">
-              <h2 className="text-3xl font-bold text-slate-900 mb-10 text-center">Frequently Asked Questions</h2>
+              <h2 className="mb-10 text-center text-3xl font-bold text-slate-900">Frequently Asked Questions</h2>
               <div className="space-y-6">
                 {blog.faqs.map((faq, index) => (
-                  <div key={index} className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
-                    <h4 className="font-bold text-lg mb-2">{index + 1}. {faq.question}</h4>
+                  <div key={index} className="rounded-2xl border border-slate-100 bg-slate-50 p-6">
+                    <h4 className="mb-2 text-lg font-bold">{index + 1}. {faq.question}</h4>
                     <p className="text-slate-600">{faq.answer}</p>
                   </div>
                 ))}

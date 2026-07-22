@@ -204,6 +204,114 @@
   width: max-content;
 }
 
+/* CRM rich-text HTML — force readable colors on white article background */
+.blog-html-body {
+  color: #334155 !important;
+  line-height: 1.75;
+  font-size: 1.0625rem;
+}
+
+.blog-html-body * {
+  color: inherit;
+}
+
+.blog-html-body h1,
+.blog-html-body h2,
+.blog-html-body h3,
+.blog-html-body h4,
+.blog-html-body h5,
+.blog-html-body h6 {
+  color: #0f172a !important;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.blog-html-body h1 { font-size: 2rem; }
+.blog-html-body h2 { font-size: 1.75rem; }
+.blog-html-body h3 { font-size: 1.375rem; }
+.blog-html-body h4 { font-size: 1.2rem; }
+.blog-html-body h5 { font-size: 1.05rem; }
+.blog-html-body h6 { font-size: 1rem; color: #1e293b !important; }
+
+.blog-html-body p {
+  margin-bottom: 1rem;
+  color: #334155 !important;
+}
+
+.blog-html-body ul {
+  list-style: disc;
+  margin: 1rem 0 1rem 1.5rem;
+  color: #334155 !important;
+}
+
+.blog-html-body ol {
+  list-style: decimal;
+  margin: 1rem 0 1rem 1.5rem;
+  color: #334155 !important;
+}
+
+.blog-html-body li {
+  margin-bottom: 0.5rem;
+  color: #334155 !important;
+}
+
+.blog-html-body a {
+  color: #ea580c !important;
+  text-decoration: underline;
+}
+
+.blog-html-body strong,
+.blog-html-body b {
+  color: #0f172a !important;
+  font-weight: 700;
+}
+
+.blog-html-body em,
+.blog-html-body i {
+  color: inherit;
+  font-style: italic;
+}
+
+.blog-html-body u {
+  text-decoration: underline;
+}
+
+.blog-html-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  margin: 1.5rem 0;
+}
+
+.blog-html-body blockquote {
+  border-left: 4px solid #f97316;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: #475569 !important;
+  font-style: italic;
+}
+
+.blog-html-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.blog-html-body th,
+.blog-html-body td {
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+  color: #334155 !important;
+}
+
+.blog-html-body th {
+  background: #f8fafc;
+  color: #0f172a !important;
+  font-weight: 700;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

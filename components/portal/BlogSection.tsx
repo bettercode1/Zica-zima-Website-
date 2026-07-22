@@ -2,18 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import styles from "./BlogSection.module.css";
 import { getAllBlogs, BlogData } from "@/lib/blogs";
+import { BlogMediaImage } from "@/components/portal/BlogContentRenderer";
 
 const BlogCard = ({ title, desc, link, bgImage, date }: { title: string, desc: string, link: string, bgImage?: string, date?: string }) => {
   return (
     <div className={`${styles.card} group bg-slate-900 p-px`}>
-      <div className="absolute inset-px overflow-hidden rounded-[0.9rem]">
+      <div className="absolute inset-px overflow-hidden rounded-[0.9rem] bg-slate-800">
         {bgImage && (
-          <Image 
-            src={bgImage} 
-            alt={title} 
+          <BlogMediaImage
+            src={bgImage}
+            alt={title}
             fill
             className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-500"
           />
@@ -78,7 +78,7 @@ export default function BlogSection() {
                 <BlogCard 
                   key={blog.slug}
                   title={blog.title}
-                  desc={blog.meta.description.slice(0, 100) + "..."}
+                  desc={(blog.meta?.description || blog.title || '').slice(0, 100) + (blog.meta?.description ? '...' : '')}
                   link={`/blogs/${blog.slug}`}
                   bgImage={blog.coverImage}
                   date={blog.date}

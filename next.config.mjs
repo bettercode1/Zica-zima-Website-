@@ -13,7 +13,6 @@ const nextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    // unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -34,7 +33,27 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
         pathname: '/**',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.firebasestorage.app',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'zica-zima-crm.firebasestorage.app',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'zica-zima-testing.firebasestorage.app',
+        pathname: '/**',
+      },
     ],
   },
   experimental: {

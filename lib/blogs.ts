@@ -2,10 +2,11 @@ import { db } from "./firebase";
 import { collection, getDocs, query, where, Timestamp } from "firebase/firestore";
 
 export interface BlogSection {
-  type: 'text_block' | 'grid_list' | 'image' | 'comparison_table';
+  type: 'text_block' | 'heading' | 'grid_list' | 'image' | 'comparison_table';
   title?: string;
   content?: string;
   style?: string;
+  level?: 2 | 3;
   items?: { text: string; icon: string }[];
   url?: string;
   alt?: string;
@@ -369,49 +370,285 @@ export const LOCAL_BLOGS: Record<string, BlogData> = {
 };
 
 // Helper to transform Firestore data safely
-function isPublishedBlog(data: { status?: string }): boolean {
-  return !data.status || data.status === 'published';
+function isPublishedBlog(data: {
+  status?: string;
+  published?: boolean;
+  isPublished?: boolean;
+}): boolean {
+  if (data.published === true || data.isPublished === true) return true;
+
+  if (!data.status) return true;
+
+  const normalized = String(data.status).toLowerCase().trim();
+  if (['published', 'live', 'active', 'public'].includes(normalized)) return true;
+  if (['draft', 'archived', 'inactive', 'unpublished'].includes(normalized)) return false;
+
+  return normalized === 'published';
 }
 
-function transformBlogData(data: any): BlogData {
-  const blog = { ...data } as BlogData;
-  
-  // 1. Convert Timestamp to String for display if needed
-  if (blog.date && typeof blog.date === 'object' && 'seconds' in blog.date) {
-    const ts = blog.date as any;
-    const dateObj = new Date(ts.seconds * 1000);
-    blog.date = dateObj.toLocaleDateString('en-GB', {
+/** Slug variants for CRM URLs (spaces, encoding, hyphen styles). */
+function slugLookupVariants(slug: string): string[] {
+  const decoded = decodeURIComponent(slug).trim();
+  const variants = new Set<string>([
+    slug,
+    decoded,
+    decoded.toLowerCase(),
+    decoded.replace(/\s+/g, '-').toLowerCase(),
+    decoded.replace(/-+/g, ' ').toLowerCase(),
+  ]);
+  return [...variants].filter(Boolean);
+}
+
+function dedupeBlogsBySlug(blogs: BlogData[]): BlogData[] {
+  const bySlug = new Map<string, BlogData>();
+  for (const blog of blogs) {
+    if (blog.slug) bySlug.set(blog.slug, blog);
+  }
+  return [...bySlug.values()];
+}
+
+function formatBlogDate(value: unknown): string {
+  if (!value) return '';
+  if (typeof value === 'string') {
+    const parsed = new Date(value);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+      });
+    }
+    return value;
+  }
+  if (typeof value === 'object' && value !== null && 'seconds' in value) {
+    const ts = value as { seconds: number };
+    return new Date(ts.seconds * 1000).toLocaleDateString('en-GB', {
       day: '2-digit',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   }
+  if (value instanceof Date) {
+    return value.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
+  }
+  return '';
+}
 
-  // 2. Handle Base64 images (ensures they have the correct prefix if missing)
-  if (blog.coverImage && blog.coverImage.length > 100 && !blog.coverImage.startsWith('http') && !blog.coverImage.startsWith('data:')) {
-    blog.coverImage = `data:image/png;base64,${blog.coverImage}`;
+function normalizeImageSrc(src?: string): string {
+  if (!src) return '';
+  if (src.startsWith('http') || src.startsWith('data:') || src.startsWith('/')) return src;
+  if (src.length > 100) return `data:image/png;base64,${src}`;
+  return src;
+}
+
+/** Convert CRM nested section shapes into website renderer shape. */
+export function normalizeSections(rawSections: unknown): BlogSection[] {
+  if (!Array.isArray(rawSections)) return [];
+
+  return rawSections
+    .map((raw: unknown) => normalizeSection(raw))
+    .filter((section): section is BlogSection => Boolean(section?.content || section?.url || section?.items?.length || section?.headers?.length));
+}
+
+function normalizeSection(raw: unknown): BlogSection | null {
+  if (typeof raw === 'string') {
+    const trimmed = raw.trim();
+    return trimmed ? { type: 'text_block', content: trimmed } : null;
   }
 
+  if (!raw || typeof raw !== 'object') return null;
+
+  const section = raw as Record<string, unknown>;
+  const type = String(section.type || 'text_block').toLowerCase();
+  const nested = section.content;
+
+  if (type === 'heading') {
+    if (nested && typeof nested === 'object') {
+      const nestedObj = nested as Record<string, unknown>;
+      return {
+        type: 'heading',
+        level: nestedObj.level === 3 ? 3 : 2,
+        content: String(nestedObj.text || nestedObj.content || ''),
+      };
+    }
+    return {
+      type: 'heading',
+      level: 2,
+      content: typeof nested === 'string' ? nested : String(section.title || ''),
+    };
+  }
+
+  if (type === 'html' || type === 'rich_text' || type === 'richtext' || type === 'paragraph') {
+    const htmlContent =
+      (typeof nested === 'string' ? nested : '') ||
+      String((section as { html?: string }).html || '') ||
+      String((section as { body?: string }).body || '') ||
+      (nested && typeof nested === 'object'
+        ? String((nested as Record<string, unknown>).html || (nested as Record<string, unknown>).body || (nested as Record<string, unknown>).content || '')
+        : '') ||
+      String(section.content || '');
+
+    return htmlContent.trim()
+      ? { type: 'text_block', title: section.title as string | undefined, content: htmlContent, style: section.style as string | undefined }
+      : null;
+  }
+
+  if (type === 'text_block' || type === 'text') {
+    if (typeof nested === 'string') {
+      return { type: 'text_block', title: section.title as string | undefined, content: nested, style: section.style as string | undefined };
+    }
+    if (nested && typeof nested === 'object') {
+      const nestedObj = nested as Record<string, unknown>;
+      return {
+        type: 'text_block',
+        title: String(nestedObj.title || section.title || ''),
+        content: String(nestedObj.body || nestedObj.content || nestedObj.html || ''),
+        style: String(nestedObj.style || section.style || ''),
+      };
+    }
+    return {
+      type: 'text_block',
+      title: section.title as string | undefined,
+      content: String(section.content || section.body || section.html || ''),
+      style: section.style as string | undefined,
+    };
+  }
+
+  if (type === 'image') {
+    if (nested && typeof nested === 'object') {
+      const nestedObj = nested as Record<string, unknown>;
+      return {
+        type: 'image',
+        url: normalizeImageSrc(String(nestedObj.url || nestedObj.src || '')),
+        alt: String(nestedObj.alt || nestedObj.caption || 'Blog image'),
+        title: String(nestedObj.caption || section.title || ''),
+      };
+    }
+    return {
+      type: 'image',
+      url: normalizeImageSrc(String(section.url || section.src || '')),
+      alt: String(section.alt || 'Blog image'),
+      title: section.title as string | undefined,
+    };
+  }
+
+  if (type === 'grid_list') {
+    if (Array.isArray(nested)) {
+      return {
+        type: 'grid_list',
+        title: section.title as string | undefined,
+        items: nested.map((item: Record<string, unknown>) => ({
+          text: String(item.text || item.title || ''),
+          icon: String(item.icon || 'check_circle'),
+        })),
+      };
+    }
+    const items = (section.items as Array<Record<string, unknown>> | undefined) || [];
+    return {
+      type: 'grid_list',
+      title: section.title as string | undefined,
+      items: items.map((item) => ({
+        text: String(item.text || item.title || ''),
+        icon: String(item.icon || 'check_circle'),
+      })),
+    };
+  }
+
+  if (type === 'comparison_table') {
+    if (nested && typeof nested === 'object') {
+      const nestedObj = nested as Record<string, unknown>;
+      const headers: string[] = (nestedObj.headers as string[]) || [];
+      const rows: string[][] = ((nestedObj.rows as unknown[]) || []).map((row) => {
+        if (Array.isArray(row)) return row.map(String);
+        if (row && typeof row === 'object') {
+          const rowObj = row as Record<string, unknown>;
+          return [String(rowObj.label || ''), ...((rowObj.values as unknown[]) || []).map(String)];
+        }
+        return [];
+      });
+      return { type: 'comparison_table', title: section.title as string | undefined, headers, rows };
+    }
+    return {
+      type: 'comparison_table',
+      title: section.title as string | undefined,
+      headers: (section.headers as string[]) || [],
+      rows: (section.rows as string[][]) || [],
+    };
+  }
+
+  const fallbackContent =
+    (typeof nested === 'string' ? nested : '') ||
+    String(section.content || section.body || section.html || '');
+
+  return fallbackContent.trim()
+    ? { type: 'text_block', title: section.title as string | undefined, content: fallbackContent }
+    : null;
+}
+
+function buildSectionsFromBlogRoot(data: Record<string, unknown>): BlogSection[] {
+  const fromArray = normalizeSections(data.sections);
+  if (fromArray.length > 0) return fromArray;
+
+  const rootContent = [data.body, data.html, data.content, data.richText, data.rich_text]
+    .find((value) => typeof value === 'string' && value.trim()) as string | undefined;
+
+  if (rootContent) {
+    return [{ type: 'text_block', content: rootContent }];
+  }
+
+  return [];
+}
+
+function transformBlogData(data: Record<string, unknown>): BlogData {
+  const blog = { ...(data as unknown as BlogData) };
+
+  blog.date = formatBlogDate(data.date) || formatBlogDate(data.publishedAt) || formatBlogDate(data.createdAt) || '';
+  blog.coverImage = normalizeImageSrc(String(blog.coverImage || data.coverImageUrl || data.image || ''));
+  blog.sections = buildSectionsFromBlogRoot(data);
+  blog.meta = {
+    title: String((data.meta as { title?: string } | undefined)?.title || data.title || ''),
+    description: String((data.meta as { description?: string } | undefined)?.description || data.excerpt || data.summary || ''),
+    keywords: String((data.meta as { keywords?: string } | undefined)?.keywords || ''),
+  };
+  blog.readTime = String(data.readTime || '5 min read');
+  blog.category = String(blog.category || data.category || 'Blog');
+  blog.title = String(blog.title || blog.meta.title || 'Untitled');
+
   return blog;
+}
+
+async function fetchBlogFromFirestore(slug: string): Promise<BlogData | null> {
+  for (const candidate of slugLookupVariants(slug)) {
+    const blogsQuery = query(collection(db, 'blogs'), where('slug', '==', candidate));
+    const blogsSnapshot = await getDocs(blogsQuery);
+    if (!blogsSnapshot.empty) {
+      const data = blogsSnapshot.docs[0].data();
+      if (!isPublishedBlog(data)) return null;
+      return transformBlogData(data as Record<string, unknown>);
+    }
+  }
+  return null;
 }
 
 export async function getBlogBySlug(slug: string): Promise<BlogData | null> {
   try {
     if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== "placeholder") {
-      const blogsQuery = query(collection(db, "blogs"), where("slug", "==", slug));
-      const blogsSnapshot = await getDocs(blogsQuery);
-      if (!blogsSnapshot.empty) {
-        const data = blogsSnapshot.docs[0].data();
-        if (!isPublishedBlog(data)) {
-          return null;
-        }
-        return transformBlogData(data);
-      }
+      const blog = await fetchBlogFromFirestore(slug);
+      if (blog) return blog;
     }
-    const blog = LOCAL_BLOGS[slug] || null;
-    return blog;
-  } catch (error) {
-    return LOCAL_BLOGS[slug] || null;
+    for (const candidate of slugLookupVariants(slug)) {
+      if (LOCAL_BLOGS[candidate]) return LOCAL_BLOGS[candidate];
+    }
+    return null;
+  } catch {
+    for (const candidate of slugLookupVariants(slug)) {
+      if (LOCAL_BLOGS[candidate]) return LOCAL_BLOGS[candidate];
+    }
+    return null;
   }
 }
 
@@ -426,13 +663,13 @@ export async function getAllBlogs(): Promise<BlogData[]> {
         allBlogs = blogsSnapshot.docs
           .map(doc => doc.data())
           .filter(isPublishedBlog)
-          .map(transformBlogData);
+          .map((data) => transformBlogData(data as Record<string, unknown>));
       }
     }
     
-    // 2. Add Static Blogs
-    const staticBlogs = Object.values(LOCAL_BLOGS).map(b => transformBlogData(b));
-    allBlogs = [...allBlogs, ...staticBlogs];
+    // 2. Add Static Blogs (Firebase wins on duplicate slug)
+    const staticBlogs = Object.values(LOCAL_BLOGS).map(b => transformBlogData(b as unknown as Record<string, unknown>));
+    allBlogs = dedupeBlogsBySlug([...staticBlogs, ...allBlogs]);
 
     // 3. Sort by Date
     return allBlogs.sort((a, b) => {
@@ -440,8 +677,8 @@ export async function getAllBlogs(): Promise<BlogData[]> {
       const dateB = new Date(b.date).getTime();
       return dateB - dateA;
     });
-  } catch (error) {
-    return Object.values(LOCAL_BLOGS).map(b => transformBlogData(b));
+  } catch {
+    return Object.values(LOCAL_BLOGS).map(b => transformBlogData(b as unknown as Record<string, unknown>));
   }
 }
 
@@ -469,13 +706,13 @@ export async function getBlogsPaginated(limitCount: number = 15, lastVisible?: a
         allBlogs = blogsSnapshot.docs
           .map(doc => doc.data())
           .filter(isPublishedBlog)
-          .map(transformBlogData);
+          .map((data) => transformBlogData(data as Record<string, unknown>));
       }
     }
     
-    // 2. Add Static Blogs
-    const staticBlogs = Object.values(LOCAL_BLOGS).map(b => transformBlogData(b));
-    allBlogs = [...allBlogs, ...staticBlogs];
+    // 2. Add Static Blogs (Firebase wins on duplicate slug)
+    const staticBlogs = Object.values(LOCAL_BLOGS).map(b => transformBlogData(b as unknown as Record<string, unknown>));
+    allBlogs = dedupeBlogsBySlug([...staticBlogs, ...allBlogs]);
 
     // 3. Sort by Date
     allBlogs.sort((a, b) => {

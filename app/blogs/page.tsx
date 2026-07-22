@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Navbar from "@/components/portal/Navbar";
 import Footer from "@/components/portal/Footer";
 import { getBlogsPaginated, BlogData, getTotalBlogsCount } from "@/lib/blogs";
+import { BlogMediaImage } from "@/components/portal/BlogContentRenderer";
 import { motion, AnimatePresence } from "framer-motion";
 
 const BLOG_LIMIT = 15;
@@ -18,13 +18,15 @@ const BlogCard = ({ blog, index }: { blog: BlogData, index: number }) => {
       transition={{ duration: 0.5, delay: (index % BLOG_LIMIT) * 0.1 }}
       className="group bg-slate-900 rounded-[2.5rem] overflow-hidden relative h-[450px] shadow-2xl flex flex-col justify-end"
     >
-      <div className="absolute inset-0">
-        <Image
-          src={blog.coverImage}
-          alt={blog.title}
-          fill
-          className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-700 ease-out"
-        />
+      <div className="absolute inset-0 bg-slate-800">
+        {blog.coverImage ? (
+          <BlogMediaImage
+            src={blog.coverImage}
+            alt={blog.title}
+            fill
+            className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-700 ease-out"
+          />
+        ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
       </div>
 
@@ -43,7 +45,7 @@ const BlogCard = ({ blog, index }: { blog: BlogData, index: number }) => {
         </h2>
         
         <p className="text-slate-300 text-sm md:text-base line-clamp-2 opacity-80 font-medium">
-          {blog.meta.description}
+          {blog.meta?.description || ''}
         </p>
 
         <div className="pt-2">
@@ -102,7 +104,7 @@ export default function BlogsPage() {
   };
 
   return (
-    <main className="bg-slate-50 min-h-screen font-sans">
+    <main className="min-h-screen bg-slate-50 font-sans text-slate-900">
       <Navbar />
 
       {/* Cinematic Hero */}
