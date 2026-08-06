@@ -11,6 +11,7 @@ const inter = Inter({subsets:['latin'],variable:'--font-sans', display: 'swap'})
 const plusJakarta = Plus_Jakarta_Sans({subsets:['latin'],variable:'--font-headline', display: 'swap'})
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.zicazimapcmc.com'),
   title: 'ZICA ZIMA PCMC | Animation & Film Making Institute',
   description: 'Premier Animation, VFX, and Film Making Institute in PCMC. Backed by Zee Learn.',
   keywords: [
