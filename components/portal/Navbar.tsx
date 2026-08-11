@@ -53,7 +53,7 @@ export default function Navbar() {
       textColor: "#c2410c",
       links: [
         { label: "What's Live", href: "/blogs", ariaLabel: "Read our blogs" },
-        { label: "The Drop", href: "/gallery", ariaLabel: "Gallary" },
+        { label: "Gallery", href: "/gallery", ariaLabel: "Gallery" },
         { label: "MKCL (Govt. Certification)", href: "https://klic.mkcl.org/klic-courses", ariaLabel: "MKCL Govt. Certification" },
         { label: "Bettercode (Technical Partner)", href: "https://bettercode.co.in/", ariaLabel: "Bettercode Technologies Pvt. Ltd. - Technical Partner" },
         { label: "AIGT (Technical Courses)", href: "https://aiglobtech.com/", ariaLabel: "AIGT Technical Courses" },
@@ -533,7 +533,7 @@ export default function Navbar() {
                 activeSection === 'gallery' ? 'text-orange-600' : 'text-slate-900 hover:text-blue-600'
               }`}
             >
-              The Drop
+              Gallery
               {activeSection === 'gallery' && (
                 <motion.span 
                   layoutId="active-nav-underline"
@@ -649,6 +649,7 @@ export default function Navbar() {
           logo="/image/ZICA ZIMA PCMC LOGO.png"
           logoAlt="ZICA ZIMA PCMC"
           items={navItems}
+          quickLinks={[{ label: 'Gallery', href: '/gallery', ariaLabel: 'Gallery' }]}
           baseColor={isScrolled ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.85)"}
           menuColor="#000"
           buttonBgColor="#f97316"

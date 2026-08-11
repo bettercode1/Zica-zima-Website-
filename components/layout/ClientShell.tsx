@@ -6,10 +6,6 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { MaterialSymbolsFont } from '@/components/ui/MaterialSymbolsFont';
 
 const SmoothScroll = dynamic(() => import('@/components/ui/SmoothScroll'));
-const InteractiveOverlays = dynamic(
-  () => import('@/components/ui/InteractiveOverlays').then((mod) => mod.InteractiveOverlays),
-  { ssr: false }
-);
 const AdmissionsOfferPopupLoader = dynamic(
   () => import('@/components/portal/AdmissionsOfferPopupLoader'),
   { ssr: false }
@@ -25,7 +21,6 @@ export function ClientShell({ children }: ClientShellProps) {
       <MaterialSymbolsFont />
       <ThemeProvider>
         <SmoothScroll>
-          <InteractiveOverlays />
           {children}
         </SmoothScroll>
         <AdmissionsOfferPopupLoader />

@@ -333,7 +333,8 @@
     button,
     a,
     [role="button"] {
-      cursor: none !important;
+      /* Keep the standard OS mouse cursor visible on desktop */
+      cursor: auto !important;
     }
     
     input,

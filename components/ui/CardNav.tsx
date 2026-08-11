@@ -26,6 +26,7 @@ interface CardNavProps {
   logo: string;
   logoAlt?: string;
   items: NavItem[];
+  quickLinks?: NavLink[];
   className?: string;
   ease?: string;
   baseColor?: string;
@@ -38,6 +39,7 @@ const CardNav = ({
   logo,
   logoAlt = 'Logo',
   items,
+  quickLinks = [],
   className = '',
   ease = 'power3.out',
   baseColor = '#fff',
@@ -207,15 +209,27 @@ const CardNav = ({
             </div>
           </div>
 
-          <Link href="/#admissions" className="order-2 sm:order-none ml-auto mr-1">
-            <button
-              className="flex items-center gap-1 kinetic-gradient text-on-primary px-2.5 py-1.5 xs:px-4 xs:py-2 rounded-full font-bold shadow-lg transition-all active:scale-95 duration-200 group text-[10px] xs:text-xs sm:text-sm"
-            >
-              <span className="hidden xs:inline">Enquiry Now</span>
-              <span className="inline xs:hidden">Enquiry</span>
-              <PhoneCallIcon size={12} className="text-white ml-0.5 sm:size-4" />
-            </button>
-          </Link>
+          <div className="flex items-center gap-2 sm:gap-3 order-2 sm:order-none ml-auto mr-1">
+            {quickLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href ?? '#'}
+                aria-label={link.ariaLabel ?? link.label}
+                className="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-2 rounded-full text-[10px] xs:text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 hover:text-orange-600 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link href="/#admissions">
+              <button
+                className="flex items-center gap-1 kinetic-gradient text-on-primary px-2.5 py-1.5 xs:px-4 xs:py-2 rounded-full font-bold shadow-lg transition-all active:scale-95 duration-200 group text-[10px] xs:text-xs sm:text-sm"
+              >
+                <span className="hidden xs:inline">Enquiry Now</span>
+                <span className="inline xs:hidden">Enquiry</span>
+                <PhoneCallIcon size={12} className="text-white ml-0.5 sm:size-4" />
+              </button>
+            </Link>
+          </div>
         </div>
 
         <div className="card-nav-content" aria-hidden={!isExpanded}>

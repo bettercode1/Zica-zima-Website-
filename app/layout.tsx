@@ -66,7 +66,7 @@ export default function RootLayout({
         <GoogleAnalytics />
         <GoogleTagManagerHead />
       </head>
-      <body className="md:cursor-none" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <GoogleTagManagerBody />
         <ClientShell>{children}</ClientShell>
       </body>
