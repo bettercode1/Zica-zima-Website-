@@ -42,13 +42,11 @@ export const metadata: Metadata = {
     'animation certification', 'pre-production courses', 'post-production training', 'motion capture', 
     'virtual production'
   ],
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-    ? {
-        verification: {
-          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-        },
-      }
-    : {}),
+  verification: {
+    google:
+      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+      'CnZ7sBHio1f9I0-0MVEVsRoTJLg5a8j8fcLORPJho3g',
+  },
 }
 
 export default function RootLayout({
