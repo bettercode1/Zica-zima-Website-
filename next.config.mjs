@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // output: 'export',
+  // The live build folder was created as root, so deploys write a folder the deploy user can replace.
+  distDir: '.next-deploy',
   trailingSlash: true,
   async redirects() {
     return [
