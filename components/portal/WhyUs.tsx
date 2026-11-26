@@ -36,7 +36,7 @@ const features = [
 
 export default function WhyUs() {
   const containerVariants: Variants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 1 },
     visible: {
       opacity: 1,
       transition: {
@@ -46,7 +46,7 @@ export default function WhyUs() {
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 1, y: 0 },
     visible: { 
       opacity: 1, 
       y: 0,
@@ -57,14 +57,14 @@ export default function WhyUs() {
   return (
     <section id="about" className="py-20 md:py-32 px-4 sm:px-8 lg:px-24 bg-white text-slate-900 overflow-hidden relative">
       {/* Dynamic Mesh Background Blobs */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ff7b1c]/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#38bdf8]/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
+      <div className="hidden md:block absolute top-0 right-0 w-[500px] h-[500px] bg-[#ff7b1c]/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+      <div className="hidden md:block absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#38bdf8]/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
 
       <div className="container mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row gap-12 md:gap-20 items-center lg:items-start">
           {/* Left Sticky Text */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
+            initial={false}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}

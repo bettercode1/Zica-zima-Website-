@@ -1,34 +1,52 @@
-'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { unstable_cache } from 'next/cache';
+import styles from './BlogSection.module.css';
+import { getAllBlogs, type BlogData } from '@/lib/blogs';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import styles from "./BlogSection.module.css";
-import { getAllBlogs, BlogData } from "@/lib/blogs";
-import { BlogMediaImage } from "@/components/portal/BlogContentRenderer";
+const getHomeBlogs = unstable_cache(
+  async () => (await getAllBlogs()).slice(0, 4),
+  ['home-blogs'],
+  { revalidate: 3600 }
+);
 
-const BlogCard = ({ title, desc, link, bgImage, date }: { title: string, desc: string, link: string, bgImage?: string, date?: string }) => {
+const BlogCard = ({
+  title,
+  desc,
+  link,
+  bgImage,
+  date,
+}: {
+  title: string;
+  desc: string;
+  link: string;
+  bgImage?: string;
+  date?: string;
+}) => {
+  const canOptimize = Boolean(bgImage) && !bgImage?.startsWith('data:');
+
   return (
     <div className={`${styles.card} group bg-slate-900 p-px`}>
       <div className="absolute inset-px overflow-hidden rounded-[0.9rem] bg-slate-800">
-        {bgImage && (
-          <BlogMediaImage
+        {canOptimize && bgImage ? (
+          <Image
             src={bgImage}
             alt={title}
             fill
-            className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-500"
+            sizes="(max-width: 768px) 100vw, 25vw"
+            quality={60}
+            className="object-cover opacity-60"
           />
-        )}
+        ) : null}
       </div>
       <div className={`${styles.cardContent} relative z-10`}>
         <h2 className={`text-xl md:text-2xl font-bold ${styles.cardTitle}`}>{title}</h2>
-        {date && (
+        {date ? (
           <p className={`${styles.cardBody} text-orange-400 text-xs font-bold uppercase tracking-widest opacity-80`}>
             {date}
           </p>
-        )}
-        <p className={styles.cardBody}>
-          {desc}
-        </p>
+        ) : null}
+        <p className={styles.cardBody}>{desc}</p>
         <Link href={link} className={styles.button}>
           Learn More
         </Link>
@@ -37,25 +55,16 @@ const BlogCard = ({ title, desc, link, bgImage, date }: { title: string, desc: s
   );
 };
 
-export default function BlogSection() {
-  const [blogs, setBlogs] = useState<BlogData[]>([]);
-  const [loading, setLoading] = useState(true);
+function cardDescription(blog: BlogData) {
+  const description = blog.meta?.description || blog.title || '';
+  return description.slice(0, 100) + (blog.meta?.description ? '...' : '');
+}
 
-  useEffect(() => {
-    async function fetchBlogs() {
-      const data = await getAllBlogs();
-      setBlogs(data);
-      setLoading(false);
-    }
-    fetchBlogs();
-  }, []);
+export default async function BlogSection() {
+  const blogs = await getHomeBlogs();
 
   return (
     <section className="py-20 bg-surface relative overflow-hidden" id="blogs">
-      {/* Decorative background elements */}
-      <div className="absolute top-1/4 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl -z-10 animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-tertiary-container/5 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
-      
       <div className="w-full px-2 md:px-4">
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-on-surface mb-4 sm:mb-6 tracking-tight leading-tight">
@@ -65,58 +74,22 @@ export default function BlogSection() {
             Insights, updates, and stories from the world of animation, VFX, and design.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 justify-items-center w-full min-h-[400px]">
-          {loading ? (
-            <div className="col-span-full flex flex-col items-center justify-center py-20">
-              <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-              <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Loading Insights...</p>
-            </div>
-          ) : (
-            <>
-              {blogs.slice(0, 4).map((blog) => (
-                <BlogCard 
-                  key={blog.slug}
-                  title={blog.title}
-                  desc={(blog.meta?.description || blog.title || '').slice(0, 100) + (blog.meta?.description ? '...' : '')}
-                  link={`/blogs/${blog.slug}`}
-                  bgImage={blog.coverImage}
-                  date={blog.date}
-                />
-              ))}
-              
-              {/* Hardcoded placeholders - Only showing enough to fill a total of 4 cards */}
-              {blogs.length < 1 && (
-                <BlogCard 
-                  title="Animation Trends"
-                  desc="Explore the latest trends in 3D animation and what studios are looking for in new talent."
-                  link="#"
-                  bgImage="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80"
-                />
-              )}
-              {blogs.length < 2 && (
-                <BlogCard 
-                  title="Design Masterclass"
-                  desc="Learn the core principles of UI/UX design that every aspiring designer needs to know."
-                  link="#"
-                  bgImage="https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&w=800&q=80"
-                />
-              )}
-              {blogs.length < 3 && (
-                <BlogCard 
-                  title="Careers in UI/UX"
-                  desc="A deep dive into why UI/UX design is one of the most highly sought-after creative careers today."
-                  link="#"
-                  bgImage="https://images.unsplash.com/photo-1541462608141-ad1557d44c02?auto=format&fit=crop&w=800&q=80"
-                />
-              )}
-            </>
-          )}
+          {blogs.map((blog) => (
+            <BlogCard
+              key={blog.slug}
+              title={blog.title}
+              desc={cardDescription(blog)}
+              link={`/blogs/${blog.slug}`}
+              bgImage={blog.coverImage}
+              date={blog.date}
+            />
+          ))}
         </div>
 
-        {/* Footer Link */}
         <div className="flex flex-col items-center mt-16">
-          <Link 
+          <Link
             href="/blogs"
             className="group flex items-center gap-3 text-slate-900 font-extrabold text-lg transition-colors hover:text-orange-600"
           >

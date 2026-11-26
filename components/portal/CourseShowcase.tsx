@@ -93,7 +93,7 @@ export default function CourseShowcase() {
             {courses.map((course, index) => (
               <motion.div
                 key={`${activeTab}-${course.title}`}
-                initial={{ opacity: 0, y: 20 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: index * 0.1 }}
@@ -109,7 +109,7 @@ export default function CourseShowcase() {
                         fill 
                         className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                        priority={index === 0}
+                        priority={false}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     </div>

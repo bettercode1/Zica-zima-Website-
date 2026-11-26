@@ -73,7 +73,7 @@ export default function Testimonials() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -20, scale: 0.98 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
@@ -95,6 +95,8 @@ export default function Testimonials() {
                         alt={testimonials[currentIndex].name}
                         fill
                         className="object-cover"
+                        sizes="96px"
+                        quality={60}
                       />
                     </div>
                   </div>

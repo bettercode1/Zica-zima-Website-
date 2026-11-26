@@ -76,7 +76,7 @@ const AFFILIATION_PARTNERS: AffiliationPartner[] = [
 ];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 1, y: 0 },
   visible: { opacity: 1, y: 0 },
 };
 
@@ -122,7 +122,7 @@ function SectionHeader({
 function PuneUniversityCertCard() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.55 }}
@@ -222,11 +222,8 @@ export default function NewLocationSection() {
             backgroundSize: '32px 32px',
           }}
         />
-        <div className="absolute top-[-15%] left-[-10%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-orange-500/10 rounded-full blur-[80px] md:blur-[120px] animate-pulse" />
-        <div
-          className="absolute bottom-[-15%] right-[-10%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] bg-sky-500/10 rounded-full blur-[70px] md:blur-[100px] animate-pulse"
-          style={{ animationDelay: '2s' }}
-        />
+        <div className="hidden md:block absolute top-[-15%] left-[-10%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-orange-500/10 rounded-full blur-[80px] md:blur-[120px]" />
+        <div className="hidden md:block absolute bottom-[-15%] right-[-10%] w-[350px] h-[350px] md:w-[500px] md:h-[500px] bg-sky-500/10 rounded-full blur-[70px] md:blur-[100px]" />
         <div className="absolute inset-0 bg-gradient-to-br from-orange-50/30 via-transparent to-sky-50/40" />
       </div>
 
@@ -277,7 +274,7 @@ export default function NewLocationSection() {
               {HIGHLIGHTS.map((item, i) => (
                 <motion.li
                   key={item}
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={false}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.05 * i }}
@@ -343,7 +340,7 @@ export default function NewLocationSection() {
                 {AFFILIATION_PARTNERS.map((partner, index) => (
                   <motion.div
                     key={partner.alt}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={false}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.45, delay: 0.06 * index }}

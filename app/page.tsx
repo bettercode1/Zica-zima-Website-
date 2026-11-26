@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import BlogSection from '@/components/portal/BlogSection';
 
 const Navbar = dynamic(() => import("@/components/portal/Navbar"), {
   loading: () => <div className="h-16 md:h-24 bg-white/80 animate-pulse" />,
@@ -13,7 +14,6 @@ const CourseShowcase = dynamic(() => import("@/components/portal/CourseShowcase"
 const Testimonials = dynamic(() => import("@/components/portal/Testimonials"));
 const StarAlumni = dynamic(() => import("@/components/portal/StarAlumni"));
 const Recruiters = dynamic(() => import("@/components/portal/Recruiters"));
-const BlogSection = dynamic(() => import("@/components/portal/BlogSection"));
 const NewLocationSection = dynamic(() => import("@/components/portal/NewLocationSection"));
 
 const ContactForm = dynamic(() => import("@/components/portal/ContactForm"), { 

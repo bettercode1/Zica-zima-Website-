@@ -25,8 +25,13 @@ function shouldLoadHeroVideo() {
   const connection = (navigator as Navigator & {
     connection?: { saveData?: boolean; effectiveType?: string };
   }).connection;
+  if (window.matchMedia('(max-width: 767px)').matches) return false;
   if (connection?.saveData) return false;
-  if (connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g') {
+  if (
+    connection?.effectiveType === 'slow-2g' ||
+    connection?.effectiveType === '2g' ||
+    connection?.effectiveType === '3g'
+  ) {
     return false;
   }
 
@@ -56,7 +61,7 @@ export default function Hero() {
 
     let videoTimer: number | undefined;
     if (shouldLoadHeroVideo()) {
-      videoTimer = window.setTimeout(() => setShouldLoadVideo(true), 3500);
+      videoTimer = window.setTimeout(() => setShouldLoadVideo(true), 8000);
     }
 
     const loadOffers = () => {
@@ -105,6 +110,7 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
+          quality={60}
           className="object-cover opacity-60"
         />
         {shouldLoadVideo && (
@@ -119,7 +125,7 @@ export default function Hero() {
           />
         )}
         {/* Black Glassmorphism Overlay */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-10" />
+        <div className="absolute inset-0 bg-black/50 z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60 z-20" />
       </div>
       {shouldLoadReels && <FilmReels />}
@@ -162,7 +168,7 @@ export default function Hero() {
         <div className="max-w-4xl w-full text-center md:text-left">
           {/* Main Content Area */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="space-y-6 md:space-y-8 min-w-0"
@@ -170,7 +176,7 @@ export default function Hero() {
 
 
             <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="font-headline text-[clamp(2rem,6.5vw,5rem)] font-black leading-[1.22] md:leading-[1.18] tracking-tight text-white text-center md:text-left overflow-visible"
@@ -187,7 +193,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
               className="flex flex-col items-center md:items-start gap-8 w-full"

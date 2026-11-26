@@ -112,7 +112,7 @@ export function AlumniCard({ alumni, index, dark = true }: { alumni: AlumniEntry
     return (
       <motion.div
         key={index}
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: (index % 4) * 0.12, duration: 0.5 }}
@@ -121,7 +121,6 @@ export function AlumniCard({ alumni, index, dark = true }: { alumni: AlumniEntry
         style={{
           background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
           border: '1px solid rgba(255,255,255,0.08)',
-          backdropFilter: 'blur(12px)',
           boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
         }}
       >
@@ -182,7 +181,7 @@ export function AlumniCard({ alumni, index, dark = true }: { alumni: AlumniEntry
   return (
     <motion.div
       key={index}
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: (index % 4) * 0.1, duration: 0.5 }}
@@ -257,11 +256,11 @@ export default function StarAlumni() {
       />
 
       {/* Glowing orbs */}
-      <div className="absolute top-[-10%] left-[-8%] w-[300px] sm:w-[420px] h-[300px] sm:h-[420px] rounded-full opacity-20 blur-[100px] pointer-events-none"
+      <div className="hidden md:block absolute top-[-10%] left-[-8%] w-[300px] sm:w-[420px] h-[300px] sm:h-[420px] rounded-full opacity-20 blur-[100px] pointer-events-none"
         style={{ background: 'radial-gradient(circle, #f1711c, transparent 70%)' }} />
-      <div className="absolute bottom-[-12%] right-[-6%] w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] rounded-full opacity-15 blur-[120px] pointer-events-none"
+      <div className="hidden md:block absolute bottom-[-12%] right-[-6%] w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] rounded-full opacity-15 blur-[120px] pointer-events-none"
         style={{ background: 'radial-gradient(circle, #6d28d9, transparent 70%)' }} />
-      <div className="absolute top-[40%] left-1/2 -translate-x-1/2 w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full opacity-10 blur-[80px] pointer-events-none"
+      <div className="hidden md:block absolute top-[40%] left-1/2 -translate-x-1/2 w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full opacity-10 blur-[80px] pointer-events-none"
         style={{ background: 'radial-gradient(circle, #3b82f6, transparent 70%)' }} />
 
       {/* Pulsing rings */}
@@ -289,7 +288,7 @@ export default function StarAlumni() {
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-10 sm:mb-14 md:mb-20">
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 text-orange-400 font-extrabold text-[10px] uppercase tracking-[0.25em] px-4 py-1.5 rounded-full mb-4"
@@ -298,7 +297,7 @@ export default function StarAlumni() {
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 12 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
@@ -311,7 +310,7 @@ export default function StarAlumni() {
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0 }}
+            initial={false}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Image, { ImageProps } from 'next/image';
 import { logger } from '@/lib/logger';
 
@@ -8,57 +8,34 @@ interface LazyImageProps extends ImageProps {
   containerClassName?: string;
 }
 
-const LazyImage: React.FC<LazyImageProps> = ({ 
-  src, 
-  alt, 
-  containerClassName = "", 
-  className = "",
-  ...props 
+const LazyImage: React.FC<LazyImageProps> = ({
+  src,
+  alt,
+  containerClassName = '',
+  className = '',
+  ...props
 }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  // Next.js handles onLoad reliably in recent versions, even for cached images.
-  // We can rely entirely on the native onLoad prop to trigger the fade-in,
-  // preventing artificial delays or "lagging" from a timeout.
-  useEffect(() => {
-    if (imgRef.current?.complete) {
-      setIsLoaded(true);
-    }
-  }, []);
-
-  // If it's a priority image, we should ideally show it faster
-  const displayLoaded = props.priority || isLoaded;
 
   return (
     <div className={`relative overflow-hidden w-full h-full ${containerClassName}`}>
-      {/* 
-        NOTE: We don't need a custom placeholder here because the parent components 
-        (like CourseCardVisual) already provide a beautiful generative design as a fallback.
-      */}
-      
       {!error ? (
         <Image
-          ref={imgRef}
           src={src}
           alt={alt}
           {...props}
-          className={`transition-all duration-700 ease-out ${
-            displayLoaded ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-105 blur-md'
-          } ${className}`}
-          onLoad={(e) => {
-            setIsLoaded(true);
-            if (props.onLoad) (props.onLoad as any)(e);
+          className={className}
+          onLoad={(event) => {
+            if (props.onLoad) (props.onLoad as (e: React.SyntheticEvent<HTMLImageElement>) => void)(event);
           }}
-          onError={(e) => {
+          onError={(event) => {
             logger.error(`Image load error: ${src}`);
             setError(true);
-            if (props.onError) (props.onError as any)(e);
+            if (props.onError) (props.onError as (e: React.SyntheticEvent<HTMLImageElement>) => void)(event);
           }}
         />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-100/10 backdrop-blur-sm">
+        <div className="absolute inset-0 flex items-center justify-center bg-slate-100/10">
           <span className="material-symbols-outlined text-white/20 text-4xl">image_not_supported</span>
         </div>
       )}

@@ -193,7 +193,7 @@ export default function IndustryPerspective() {
           <motion.div
             key={video.id}
             className="ip-card"
-            initial={{ opacity: 0, y: 18 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
@@ -242,7 +242,7 @@ export default function IndustryPerspective() {
           <motion.div
             key={image.src}
             className="ip-card"
-            initial={{ opacity: 0, y: 18 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
@@ -258,6 +258,7 @@ export default function IndustryPerspective() {
                 fill
                 className="ip-thumb-img object-cover"
                 sizes="(max-width:768px) 100vw, 25vw"
+                quality={55}
               />
               <div className="ip-thumb-gradient" aria-hidden="true" />
               <span className="ip-img-expand-icon" aria-hidden="true">
