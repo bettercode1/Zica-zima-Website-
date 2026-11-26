@@ -332,7 +332,7 @@ export default function StarAlumni() {
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mt-10 sm:mt-14 flex justify-center"
