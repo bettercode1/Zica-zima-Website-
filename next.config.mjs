@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // output: 'export',
-  // The live build folder was created as root, so deploys write a folder the deploy user can replace.
-  distDir: '.next-deploy',
+  // Each deploy builds into a new folder, then points .next-current at it.
+  // The running app writes cache files as root, so deploys must not delete the old folder.
+  distDir: process.env.NEXT_BUILD_DIR || '.next-current',
   trailingSlash: true,
   async redirects() {
     return [
